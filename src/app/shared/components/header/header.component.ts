@@ -3,7 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   faChevronCircleDown,
   faStore,
+  faUser,
+  faPowerOff,
 } from '@fortawesome/free-solid-svg-icons';
+import { fromLogin } from '../../../login/store/selectors';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { LoginActions } from '../../../login/store/actions';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +18,23 @@ import {
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
+  public selectLoginState$ = this.store.select(fromLogin.selectLoginState);
+
+  public isAuth = false;
+
   faChevronCircleDown = faChevronCircleDown;
   faStore = faStore;
+  faUser = faUser;
+  faPowerOff = faPowerOff;
   formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  private unsubscribe$ = new Subject<void>();
+
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private router: Router
+  ) {
     this.formGroup = this.fb.group({
       step1: this.fb.group({
         field1: ['', Validators.required],
@@ -30,11 +49,27 @@ export class HeaderComponent implements OnInit {
         field6: ['', Validators.required],
       }),
     });
+    this.unsubscribe$ = new Subject<void>();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.selectLoginState$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((loginState) => {
+        if (loginState.isAuthenticated) {
+          this.isAuth = true;
+        } else {
+          this.router.navigate(['']);
+        }
+      });
+  }
 
-  onModalSave() {
-    console.log('open modal');
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  logOut() {
+    this.store.dispatch(LoginActions.signOff());
   }
 }

@@ -1,12 +1,75 @@
-<nav id="navScroll" class="navbar fixed-top px-vw-5" tabindex="0">
-  <div class="container">
-    <a class="navbar-brand pe-md-4 fs-4 col-12 col-md-auto text-center">
-      <span class="ms-md-1 mt-1 fw-bolder me-md-5"
-        ><fa-icon [icon]="faStore"></fa-icon> Garbrix</span
-      >
-    </a>
-    <button class="btn btn-outline-dark d-none d-md-block">
-      <small>Ir a inicio</small>
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"
+      ><fa-icon [icon]="faStore"></fa-icon> Garbrix</a
+    >
+    <div
+      class="nav-link d-none d-sm-block"
+      id="navbarSupportedContent"
+      *ngIf="isAuth"
+    >
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <fa-icon [icon]="faUser"></fa-icon>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li>
+              <button
+                class="dropdown-item"
+                data-bs-toggle="modal"
+                data-bs-target="#logOutModal"
+              >
+                <fa-icon [icon]="faPowerOff"></fa-icon> Cerrar sesión
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <button
+      *ngIf="isAuth"
+      class="nav-link d-block d-sm-none"
+      data-bs-toggle="modal"
+      data-bs-target="#logOutModal"
+    >
+      <fa-icon [icon]="faPowerOff"></fa-icon>
     </button>
   </div>
 </nav>
+<div
+  class="modal fade"
+  id="logOutModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">¿Estás seguro de que deseas cerrar sesión?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          data-bs-dismiss="modal"
+          (click)="logOut()"
+        >
+          Cerrar sesión
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Me equivoqué
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

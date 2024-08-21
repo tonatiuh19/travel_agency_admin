@@ -5,12 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderModule } from './shared/components/header/header.module';
 import { FooterModule } from './shared/components/footer/footer.module';
-import { StoreModule } from '@ngrx/store';
 import { LoginModule } from './login/login.module';
 import { StoreModule as NgrxStoreModule } from '@ngrx/store';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { WelcomeModule } from './welcome/welcome.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +28,7 @@ import { EffectsModule } from '@ngrx/effects';
     HeaderModule,
     FooterModule,
     LoginModule,
+    WelcomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

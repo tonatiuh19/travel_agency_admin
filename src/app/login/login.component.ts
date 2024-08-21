@@ -43,12 +43,11 @@ export class LoginComponent implements OnInit {
       .subscribe((loginState) => {
         this.isLoading = !loginState.isLoading;
         this.isError = !loginState.isError;
-        console.log('loginState', loginState);
-        /*if (loginState.isAuthenticated) {
-          this.router.navigate(['/bienvenido']);
+        if (loginState.isAuthenticated) {
+          this.router.navigate(['bienvenido']);
         } else {
           this.router.navigate(['']);
-        }*/
+        }
       });
   }
 
