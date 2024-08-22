@@ -15,72 +15,93 @@
       >
         <h2 class="text-center my-5">{{ step.title }}</h2>
         <div *ngFor="let field of step.fields">
-          <input
-            *ngIf="field.type === 'text'"
-            [class]="
-              wizardForm.get(field.name)?.status === 'VALID'
-                ? 'form-control my-2'
-                : 'form-control my-2 border-danger'
-            "
-            [id]="field.name"
-            [formControlName]="field.name"
-            [type]="field.type"
-            [placeholder]="field.label"
-          />
-          <input
-            *ngIf="field.type === 'number'"
-            [class]="
-              wizardForm.get(field.name)?.status === 'VALID'
-                ? 'form-control my-2'
-                : 'form-control my-2 border-danger'
-            "
-            [id]="field.name"
-            [formControlName]="field.name"
-            [type]="field.type"
-            [placeholder]="field.label"
-          />
-          <select
-            *ngIf="field.type === 'select'"
-            [class]="
-              wizardForm.get(field.name)?.status === 'VALID'
-                ? 'form-select my-2 mb-3'
-                : 'form-select my-2 mb-3 border-danger'
-            "
-            [formControlName]="field.name"
-          >
-            <option value="" disabled selected>{{ field.label }}</option>
-            <option *ngFor="let option of field.options" [value]="option.value">
-              {{ option.label }}
-            </option>
-          </select>
-          <div
-            class="input-group my-2 mb-3"
-            *ngIf="field.specialType === 'currency'"
-          >
-            <span
-              [class]="
-                wizardForm.get(field.name)?.status === 'VALID'
-                  ? 'input-group-text input-group-addon no-right-border-input-group'
-                  : 'input-group-text input-group-addon no-right-border-input-group border-danger'
-              "
-              id="basic-addon1"
-              >$</span
+          <div *ngIf="field.type === 'text'" class="my-2">
+            <label [for]="field.name"
+              ><strong>{{ field.label }}</strong></label
             >
             <input
-              *ngIf="field.type === 'number'"
               [class]="
                 wizardForm.get(field.name)?.status === 'VALID'
-                  ? 'form-control no-left-border-input-group'
-                  : 'form-control no-left-border-input-group border-danger'
+                  ? 'form-control my-2'
+                  : 'form-control my-2 border-danger'
               "
               [id]="field.name"
               [formControlName]="field.name"
               [type]="field.type"
-              [placeholder]="field.label"
+              [placeholder]="field.hint"
             />
           </div>
+          <div *ngIf="field.type === 'text-area'" class="my-2">
+            <label [for]="field.name"
+              ><strong>{{ field.label }}</strong></label
+            >
+            <textarea
+              [class]="
+                wizardForm.get(field.name)?.status === 'VALID'
+                  ? 'form-control my-2'
+                  : 'form-control my-2 border-danger'
+              "
+              [id]="field.name"
+              [formControlName]="field.name"
+              rows="3"
+              [placeholder]="field.hint"
+            ></textarea>
+          </div>
+
+          <div *ngIf="field.type === 'select'" class="my-2">
+            <label [for]="field.name"
+              ><strong>{{ field.label }}</strong></label
+            >
+            <select
+              [class]="
+                wizardForm.get(field.name)?.status === 'VALID'
+                  ? 'form-select my-2 mb-3'
+                  : 'form-select my-2 mb-3 border-danger'
+              "
+              [formControlName]="field.name"
+            >
+              <option value="" disabled selected>{{ field.label }}</option>
+              <option
+                *ngFor="let option of field.options"
+                [value]="option.value"
+              >
+                {{ option.label }}
+              </option>
+            </select>
+          </div>
+          <div
+            *ngIf="field.type === 'number' && field.specialType === 'currency'"
+            class="my-2"
+          >
+            <label [for]="field.name"
+              ><strong>{{ field.label }}</strong></label
+            >
+            <div class="input-group my-2 mb-3">
+              <span
+                [class]="
+                  wizardForm.get(field.name)?.status === 'VALID'
+                    ? 'input-group-text input-group-addon no-right-border-input-group'
+                    : 'input-group-text input-group-addon no-right-border-input-group border-danger'
+                "
+                id="basic-addon1"
+                >$</span
+              >
+              <input
+                [class]="
+                  wizardForm.get(field.name)?.status === 'VALID'
+                    ? 'form-control no-left-border-input-group'
+                    : 'form-control no-left-border-input-group border-danger'
+                "
+                [id]="field.name"
+                [formControlName]="field.name"
+                [type]="field.type"
+                [placeholder]="field.hint"
+              />
+            </div>
+          </div>
         </div>
-        <footer class="fixed-bottom wizard-footer">
+        <section class="vh-20"></section>
+        <footer class="fixed-bottom wizard-footer bg-light mt-5">
           <button
             class="btn btn-outline-danger me-1 ms-1 mb-1"
             (click)="goBackToNewPackage()"
@@ -107,7 +128,6 @@
             class="btn btn-success me-1 mb-1"
             type="submit"
             *ngIf="i === steps.length - 1"
-            [disabled]="wizardForm.invalid"
           >
             Guardar
           </button>
