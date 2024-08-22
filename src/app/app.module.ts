@@ -11,6 +11,9 @@ import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { WelcomeModule } from './welcome/welcome.module';
+import { PackagesModule } from './packages/packages.module';
+import { FullScreenWizardModule } from './shared/components/full-screen-wizard/full-screen-wizard.module';
+import { FullScreenWizardNewPackageModule } from './packages/components/full-screen-wizard/full-screen-wizard-new-package.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +32,8 @@ import { WelcomeModule } from './welcome/welcome.module';
     FooterModule,
     LoginModule,
     WelcomeModule,
+    PackagesModule,
+    FullScreenWizardNewPackageModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

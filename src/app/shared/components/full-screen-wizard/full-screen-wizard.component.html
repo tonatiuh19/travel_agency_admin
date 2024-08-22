@@ -1,0 +1,66 @@
+<div class="wizard-container">
+  <div class="wizard-header">
+    <div
+      *ngFor="let step of steps; let i = index"
+      [class.active]="currentStep === i + 1"
+    >
+      {{ step.title }}
+    </div>
+  </div>
+  <div class="wizard-content">
+    <form [formGroup]="wizardForm" (ngSubmit)="onSubmit()">
+      <div
+        *ngFor="let step of steps; let i = index"
+        [hidden]="currentStep !== i + 1"
+      >
+        <h2>{{ step.title }}</h2>
+        <div *ngFor="let field of step.fields">
+          <label [for]="field.name">{{ field.label }}</label>
+          <input
+            *ngIf="field.type === 'text'"
+            [id]="field.name"
+            [formControlName]="field.name"
+            [type]="field.type"
+          />
+          <div
+            *ngIf="
+              wizardForm.get(field.name)?.invalid &&
+              wizardForm.get(field.name)?.touched
+            "
+          >
+            {{ field.error }}
+          </div>
+        </div>
+        <footer class="fixed-bottom wizard-footer">
+          <button class="btn btn-outline-danger me-1 ms-1 mb-1">
+            Cancelar
+          </button>
+          <button
+            class="btn btn-dark me-1 mb-1"
+            type="button"
+            *ngIf="i > 0"
+            (click)="previousStep()"
+          >
+            Previous
+          </button>
+          <button
+            class="btn btn-dark me-1 mb-1"
+            type="button"
+            *ngIf="i < steps.length - 1"
+            (click)="nextStep()"
+          >
+            Next
+          </button>
+          <button
+            class="btn btn-success me-1 mb-1"
+            type="submit"
+            *ngIf="i === steps.length - 1"
+            [disabled]="wizardForm.invalid"
+          >
+            Submit
+          </button>
+        </footer>
+      </div>
+    </form>
+  </div>
+</div>

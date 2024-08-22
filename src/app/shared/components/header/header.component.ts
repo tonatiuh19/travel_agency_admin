@@ -69,6 +69,10 @@ export class HeaderComponent implements OnInit {
     this.unsubscribe$.complete();
   }
 
+  goToPackages() {
+    this.router.navigate(['paquetes']);
+  }
+
   logOut() {
     this.store.dispatch(LoginActions.signOff());
   }

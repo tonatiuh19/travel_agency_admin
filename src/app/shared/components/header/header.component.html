@@ -1,13 +1,38 @@
-<nav class="navbar navbar-expand-lg">
+<nav
+  [class]="
+    isAuth
+      ? 'navbar navbar-expand-lg fixed-top bg-light navbar-border-bottom'
+      : 'navbar navbar-expand-lg fixed-top'
+  "
+>
   <div class="container-fluid">
     <a class="navbar-brand" href="#"
       ><fa-icon [icon]="faStore"></fa-icon> Garbrix</a
     >
-    <div
-      class="nav-link d-none d-sm-block"
-      id="navbarSupportedContent"
-      *ngIf="isAuth"
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <button
+            class="nav-link active"
+            aria-current="page"
+            (click)="goToPackages()"
+          >
+            Paquetes
+          </button>
+        </li>
+      </ul>
+
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
           <a
@@ -37,14 +62,6 @@
         </li>
       </ul>
     </div>
-    <button
-      *ngIf="isAuth"
-      class="nav-link d-block d-sm-none"
-      data-bs-toggle="modal"
-      data-bs-target="#logOutModal"
-    >
-      <fa-icon [icon]="faPowerOff"></fa-icon>
-    </button>
   </div>
 </nav>
 <div

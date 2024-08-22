@@ -1,0 +1,106 @@
+<div class="wizard-container">
+  <div class="wizard-header">
+    <div
+      *ngFor="let step of steps; let i = index"
+      [class.active]="currentStep === i + 1"
+    >
+      <span class="badge rounded-pill bg-dark">{{ i + 1 }}</span>
+    </div>
+  </div>
+  <div class="wizard-content">
+    <form [formGroup]="wizardForm" (ngSubmit)="onSubmit()">
+      <div
+        *ngFor="let step of steps; let i = index"
+        [hidden]="currentStep !== i + 1"
+      >
+        <h2 class="text-center my-5">{{ step.title }}</h2>
+        <div *ngFor="let field of step.fields">
+          <input
+            *ngIf="field.type === 'text'"
+            [class]="
+              wizardForm.get(field.name)?.status === 'VALID'
+                ? 'form-control my-2'
+                : 'form-control my-2 border-danger'
+            "
+            [id]="field.name"
+            [formControlName]="field.name"
+            [type]="field.type"
+            [placeholder]="field.label"
+          />
+          <select
+            *ngIf="field.type === 'select'"
+            [class]="
+              wizardForm.get(field.name)?.status === 'VALID'
+                ? 'form-select my-2 mb-3'
+                : 'form-select my-2 mb-3 border-danger'
+            "
+            [formControlName]="field.name"
+          >
+            <option value="" disabled selected>{{ field.label }}</option>
+            <option *ngFor="let option of field.options" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+          <div
+            class="input-group my-2 mb-3"
+            *ngIf="field.specialType === 'currency'"
+          >
+            <span
+              [class]="
+                wizardForm.get(field.name)?.status === 'VALID'
+                  ? 'input-group-text input-group-addon no-right-border-input-group'
+                  : 'input-group-text input-group-addon no-right-border-input-group border-danger'
+              "
+              id="basic-addon1"
+              >$</span
+            >
+            <input
+              *ngIf="field.type === 'number'"
+              [class]="
+                wizardForm.get(field.name)?.status === 'VALID'
+                  ? 'form-control no-left-border-input-group'
+                  : 'form-control no-left-border-input-group border-danger'
+              "
+              [id]="field.name"
+              [formControlName]="field.name"
+              [type]="field.type"
+              [placeholder]="field.label"
+            />
+          </div>
+        </div>
+        <footer class="fixed-bottom wizard-footer">
+          <button
+            class="btn btn-outline-danger me-1 ms-1 mb-1"
+            (click)="goBackToNewPackage()"
+          >
+            Cancelar
+          </button>
+          <button
+            class="btn btn-dark me-1 mb-1"
+            type="button"
+            *ngIf="i > 0"
+            (click)="previousStep()"
+          >
+            Atras
+          </button>
+          <button
+            class="btn btn-dark me-1 mb-1"
+            type="button"
+            *ngIf="i < steps.length - 1"
+            (click)="nextStep()"
+          >
+            Siguiente
+          </button>
+          <button
+            class="btn btn-success me-1 mb-1"
+            type="submit"
+            *ngIf="i === steps.length - 1"
+            [disabled]="wizardForm.invalid"
+          >
+            Guardar
+          </button>
+        </footer>
+      </div>
+    </form>
+  </div>
+</div>
