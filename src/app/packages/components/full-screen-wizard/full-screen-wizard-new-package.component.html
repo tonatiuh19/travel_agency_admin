@@ -27,6 +27,18 @@
             [type]="field.type"
             [placeholder]="field.label"
           />
+          <input
+            *ngIf="field.type === 'number'"
+            [class]="
+              wizardForm.get(field.name)?.status === 'VALID'
+                ? 'form-control my-2'
+                : 'form-control my-2 border-danger'
+            "
+            [id]="field.name"
+            [formControlName]="field.name"
+            [type]="field.type"
+            [placeholder]="field.label"
+          />
           <select
             *ngIf="field.type === 'select'"
             [class]="

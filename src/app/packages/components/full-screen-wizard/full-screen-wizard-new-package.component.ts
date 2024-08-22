@@ -42,6 +42,24 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
           validators: [Validators.required],
           error: 'Gender is required.',
         },
+        {
+          name: 'hosting',
+          label: '¿El paquete incluye alojamiento?',
+          type: 'select',
+          options: [
+            { label: 'Si', value: true },
+            { label: 'No', value: false },
+          ],
+          validators: [Validators.required],
+          error: 'Gender is required.',
+        },
+        {
+          name: 'limit',
+          label: '¿Cual es el limite de personas?',
+          type: 'number',
+          validators: [Validators.required],
+          error: 'Name is required.',
+        },
       ],
     },
     {
@@ -77,13 +95,14 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
       name: ['', Validators.required],
       price: ['', Validators.required],
       transport: ['', Validators.required],
+      hosting: ['', Validators.required],
+      limit: ['', Validators.required],
       email: ['', Validators.email],
       password: ['', Validators.required],
     });
   }
 
   nextStep(): void {
-    console.log('Current Step:', this.wizardForm.get('name'));
     if (this.currentStep < this.steps.length && this.isCurrentStepValid()) {
       this.currentStep++;
     }

@@ -38,6 +38,11 @@
   width: 100%;
 }
 
+
+::placeholder {
+  color: #000; /* Change this to your desired color */
+}
+
 .input-group-addon {
   background-color: #fff;
 }
