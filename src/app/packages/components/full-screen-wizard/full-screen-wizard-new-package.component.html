@@ -43,7 +43,7 @@
               "
               [id]="field.name"
               [formControlName]="field.name"
-              rows="3"
+              rows="7"
               [placeholder]="field.hint"
             ></textarea>
           </div>
@@ -60,7 +60,6 @@
               "
               [formControlName]="field.name"
             >
-              <option value="" disabled selected>{{ field.label }}</option>
               <option
                 *ngFor="let option of field.options"
                 [value]="option.value"
@@ -99,7 +98,78 @@
               />
             </div>
           </div>
+          <div class="my-3" *ngIf="field.type === 'date'">
+            <label [for]="field.name"
+              ><strong>{{ field.label }}</strong></label
+            >
+            <small
+              *ngIf="wizardForm.get(field.name)?.status !== 'VALID'"
+              class="d-block my-3 text-danger"
+              >{{ field.error }}</small
+            >
+            <p class="mt-3 text-center">
+              <ngx-daterangepicker-material
+                [locale]="{ applyLabel: 'Aceptar', format: 'DD-MM-YYYY' }"
+                [minDate]="todayDate"
+                (choosedDate)="choosedDate($event)"
+              >
+              </ngx-daterangepicker-material>
+            </p>
+          </div>
         </div>
+
+        <div *ngIf="i === steps.length - 1" class="special-div">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">Nombre del paquete:</th>
+                <td>{{ wizardForm.get("name")?.value }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Precio del paquete:</th>
+                <td>{{ wizardForm.get("price")?.value | currency }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Rango de fechas:</th>
+                <td>
+                  {{ wizardForm.get("date")?.value }}
+                </td>
+                .
+              </tr>
+              <tr>
+                <th scope="row">Limite de pasajeros:</th>
+                <td>{{ wizardForm.get("limit")?.value }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Descripción del paquete:</th>
+                <td>{{ wizardForm.get("generalDescription")?.value }}</td>
+              </tr>
+              <tr *ngIf="wizardForm.get('transport')?.value !== '0'">
+                <th scope="row">Transporte:</th>
+                <td>
+                  {{
+                    getTransportValue(wizardForm.get("transportType")?.value)
+                  }}
+                </td>
+              </tr>
+              <tr *ngIf="wizardForm.get('transport')?.value !== '0'">
+                <th scope="row">Descripción del transporte:</th>
+                <td>{{ wizardForm.get("transportDescription")?.value }}</td>
+              </tr>
+              <tr class="mt-2" *ngIf="wizardForm.get('hosting')?.value !== '0'">
+                <th scope="row">Hospedaje:</th>
+                <td>
+                  {{ getHostingValue(wizardForm.get("hostingType")?.value) }}
+                </td>
+              </tr>
+              <tr *ngIf="wizardForm.get('hosting')?.value !== '0'">
+                <th scope="row">Descripción del hospedaje:</th>
+                <td>{{ wizardForm.get("hotelDescription")?.value }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <section class="vh-20"></section>
         <footer class="fixed-bottom wizard-footer bg-light mt-5">
           <button

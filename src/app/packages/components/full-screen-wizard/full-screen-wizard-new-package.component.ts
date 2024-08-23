@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { getTodayDate } from '../../../shared/utils/get-date';
 
 @Component({
   selector: 'app-full-screen-wizard-new-package',
@@ -14,6 +15,8 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
 
   currentStep = 1;
 
+  todayDate = getTodayDate();
+
   steps = [
     {
       title: 'Información del paquete',
@@ -21,7 +24,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
         {
           name: 'name',
           label: '¿Cual es el nombre del paquete?',
-          hint: 'Ejemplo: Paquete para conocer Guadalajara',
+          hint: 'Ejemplo: Paquete para conocer Lagos de Moreno',
           type: 'text',
           validators: [Validators.required],
           error: 'Name is required.',
@@ -34,6 +37,14 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
           specialType: 'currency',
           validators: [Validators.required],
           error: 'Name is required.',
+        },
+        {
+          name: 'date',
+          label: '¿Cual es el rango de fechas del paquete?',
+          hint: 'Ejemplo: 1000',
+          type: 'date',
+          validators: [Validators.required],
+          error: 'El rango de fechas es requerido.',
         },
         {
           name: 'transport',
@@ -143,7 +154,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
       ],
     },
     {
-      title: 'Step 3',
+      title: 'Resumen del paquete',
       fields: [],
     },
   ];
@@ -154,6 +165,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     this.wizardForm = this.fb.group({
       name: ['', Validators.required],
       price: ['', Validators.required],
+      date: ['', Validators.required],
       transport: ['', Validators.required],
       hosting: ['', Validators.required],
       limit: ['', Validators.required],
@@ -188,6 +200,11 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
   isCurrentStepValid(): boolean {
     const step = this.steps[this.currentStep - 1];
     return step.fields.every((field) => this.wizardForm.get(field.name)?.valid);
+  }
+
+  choosedDate(event: any) {
+    console.log('event', event);
+    this.wizardForm.get('date')?.setValue(event.chosenLabel);
   }
 
   onSubmit(): void {
@@ -282,5 +299,33 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     } else {
       this.steps = [...this.steps];
     }
+  }
+
+  getTransportValue(type: string): string {
+    const transportTypes: { [key: string]: string } = {
+      '1': 'Vuelos',
+      '2': 'Trenes',
+      '3': 'Autobuses',
+      '4': 'Automóviles de alquiler',
+      '5': 'Transporte marítimo',
+      '6': 'Servicios de traslado',
+    };
+
+    return transportTypes[type] || '';
+  }
+
+  getHostingValue(type: string): string {
+    const hostingTypes: { [key: string]: string } = {
+      '1': 'Hoteles',
+      '2': 'Apartamento',
+      '3': 'Alojamiento en casas de huéspedes',
+      '4': 'Hostales',
+      '5': 'Resorts',
+      '6': 'Cabañas',
+      '7': 'Camping',
+      '8': 'Villas',
+    };
+
+    return hostingTypes[type] || '';
   }
 }

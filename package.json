@@ -27,6 +27,8 @@
     "@ngrx/store-devtools": "^18.0.2",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
+    "igniteui-angular": "^18.1.6",
+    "ngx-daterangepicker-material": "^6.0.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

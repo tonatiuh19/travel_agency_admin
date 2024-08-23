@@ -5,6 +5,7 @@ import { LoginModule } from '../login/login.module';
 import { FooterModule } from '../shared/components/footer/footer.module';
 import { HeaderModule } from '../shared/components/header/header.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DatePickerModule } from './components/date-picker/date-picker.module';
 
 @NgModule({
   declarations: [PackagesComponent],
@@ -14,6 +15,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FooterModule,
     HeaderModule,
     FontAwesomeModule,
+    DatePickerModule,
   ],
   exports: [PackagesComponent],
 })
