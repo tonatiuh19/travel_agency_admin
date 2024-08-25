@@ -6,6 +6,7 @@ import { FooterModule } from '../shared/components/footer/footer.module';
 import { HeaderModule } from '../shared/components/header/header.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DatePickerModule } from './components/date-picker/date-picker.module';
+import { FullLoadingMaskModule } from '../shared/components/full-loading-mask/full-loading-mask.module';
 
 @NgModule({
   declarations: [PackagesComponent],
@@ -16,6 +17,7 @@ import { DatePickerModule } from './components/date-picker/date-picker.module';
     HeaderModule,
     FontAwesomeModule,
     DatePickerModule,
+    FullLoadingMaskModule,
   ],
   exports: [PackagesComponent],
 })

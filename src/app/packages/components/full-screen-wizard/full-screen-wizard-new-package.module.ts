@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FullScreenWizardNewPackageComponent } from './full-screen-wizard-new-package.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { LocationSelectModule } from '../../../shared/components/location-select/location-select.module';
+import { PackageStoreModule } from '../../store/package.store.module';
+import { FullLoadingMaskModule } from '../../../shared/components/full-loading-mask/full-loading-mask.module';
 
 @NgModule({
   declarations: [FullScreenWizardNewPackageComponent],
@@ -11,6 +14,9 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
     ReactiveFormsModule,
     FormsModule,
     NgxDaterangepickerMd.forRoot(),
+    LocationSelectModule,
+    PackageStoreModule,
+    FullLoadingMaskModule,
   ],
   exports: [FullScreenWizardNewPackageComponent],
   providers: [],

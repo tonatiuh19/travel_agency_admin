@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <div class="form-group">
+        <select
+          id="continent"
+          class="form-control"
+          (change)="onContinentChange($event)"
+        >
+          <option value="" disabled selected>Continente</option>
+          <option
+            *ngFor="let continent of data.continents"
+            [value]="continent.id"
+          >
+            {{ continent.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group" *ngIf="filteredCountries.length > 0">
+        <select
+          id="country"
+          class="form-control"
+          (change)="onCountryChange($event)"
+        >
+          <option value="" disabled selected>Pais</option>
+          <option
+            *ngFor="let country of filteredCountries"
+            [value]="country.id"
+          >
+            {{ country.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group" *ngIf="filteredCities.length > 0">
+        <select id="city" class="form-control" (change)="onCityChange($event)">
+          <option value="" disabled selected>Ciudad</option>
+          <option *ngFor="let city of filteredCities" [value]="city.id">
+            {{ city.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

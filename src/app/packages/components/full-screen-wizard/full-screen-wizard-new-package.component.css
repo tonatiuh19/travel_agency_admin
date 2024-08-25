@@ -38,6 +38,9 @@
   width: 100%;
 }
 
+.section-bottom{
+  height: 50vh;
+}
 
 ::placeholder {
   color: #000; /* Change this to your desired color */

@@ -1,3 +1,4 @@
+<app-full-loading-mask *ngIf="selectIsLoading$ | async"></app-full-loading-mask>
 <div class="wizard-container">
   <div class="wizard-header">
     <div
@@ -116,6 +117,19 @@
               </ngx-daterangepicker-material>
             </p>
           </div>
+          <div class="my-3 mb-4" *ngIf="field.type === 'location'">
+            <label [for]="field.name"
+              ><strong>{{ field.label }}</strong></label
+            >
+            <small
+              *ngIf="wizardForm.get(field.name)?.status !== 'VALID'"
+              class="d-block mt-2 text-danger"
+              >{{ field.error }}</small
+            >
+            <app-location-select
+              (citySelected)="choosedCity($event)"
+            ></app-location-select>
+          </div>
         </div>
 
         <div *ngIf="i === steps.length - 1" class="special-div">
@@ -170,7 +184,7 @@
           </table>
         </div>
 
-        <section class="vh-20"></section>
+        <section class="section-bottom"></section>
         <footer class="fixed-bottom wizard-footer bg-light mt-5">
           <button
             class="btn btn-outline-danger me-1 ms-1 mb-1"

@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { getTodayDate } from '../../../shared/utils/get-date';
+import { Store } from '@ngrx/store';
+import { PackageActions } from '../../store/actions';
+import { fromPackage } from '../../store/selectors';
+import { fromLogin } from '../../../login/store/selectors';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-full-screen-wizard-new-package',
@@ -9,6 +14,10 @@ import { getTodayDate } from '../../../shared/utils/get-date';
   styleUrl: './full-screen-wizard-new-package.component.css',
 })
 export class FullScreenWizardNewPackageComponent implements OnInit {
+  public selectIsLoading$ = this.store.select(fromPackage.selectIsLoading);
+
+  public selectUserId$ = this.store.select(fromLogin.selectUserId);
+
   wizardForm: FormGroup = new FormGroup({});
 
   showTransportSection = true;
@@ -37,6 +46,14 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
           specialType: 'currency',
           validators: [Validators.required],
           error: 'Name is required.',
+        },
+        {
+          name: 'location',
+          label: 'Selecciona el lugar de destino:',
+          hint: 'Ejemplo: 1000',
+          type: 'location',
+          validators: [Validators.required],
+          error: 'La ciudad es requerida.',
         },
         {
           name: 'date',
@@ -159,12 +176,17 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     },
   ];
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.wizardForm = this.fb.group({
       name: ['', Validators.required],
       price: ['', Validators.required],
+      location: ['', Validators.required],
       date: ['', Validators.required],
       transport: ['', Validators.required],
       hosting: ['', Validators.required],
@@ -203,13 +225,29 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
   }
 
   choosedDate(event: any) {
-    console.log('event', event);
     this.wizardForm.get('date')?.setValue(event.chosenLabel);
   }
 
+  choosedCity(event: any) {
+    this.wizardForm.get('location')?.setValue(event);
+  }
+
   onSubmit(): void {
+    const userId = '';
     //if (this.wizardForm.valid) {
-    console.log('Form Submitted', this.wizardForm.value);
+    this.selectUserId$.pipe(take(1)).subscribe((userId) => {
+      userId = userId;
+
+      this.store.dispatch(
+        PackageActions.newPackage({
+          packageEntity: {
+            ...this.wizardForm.value,
+            id_user: userId,
+          },
+        })
+      );
+      this.goBackToNewPackage();
+    });
     //}
   }
 

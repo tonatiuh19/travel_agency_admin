@@ -1,12 +1,16 @@
+<app-full-loading-mask *ngIf="!isLoading"></app-full-loading-mask>
 <app-header></app-header>
-<div class="main-container">
+<div class="">
   <div class="row">
     <div class="col-12 mt-5 full-width-bg">
       <h1 class="text-center my-5">Paquetes</h1>
     </div>
   </div>
   <div class="row">
-    <div class="col-12 centered-container">
+    <div
+      class="main-container col-12 centered-container"
+      *ngIf="packages.length === 0"
+    >
       <div class="centered-text">
         <div class="row centered-text">
           <div class="col-12">
@@ -28,6 +32,30 @@
             <button class="btn btn-primary mt-2" (click)="goToNewPackage()">
               <fa-icon [icon]="faPlusCircle"></fa-icon> Crear paquete
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 p-1" *ngFor="let package of packages">
+          <div class="card mb-3" style="max-width: 540px">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="..." class="img-fluid rounded-start" alt="..." />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ package.packTitle }}</h5>
+                  <p class="card-text">
+                    {{ package.packDescription }}
+                  </p>
+                  <p class="card-text">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
