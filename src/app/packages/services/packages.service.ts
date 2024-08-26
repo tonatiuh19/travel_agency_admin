@@ -10,6 +10,7 @@ import { NewPackageModel } from '../package.model';
 export class PackagesService {
   public NEW_PACKAGE = `${DOMAIN}/insertPackage.php`;
   public GET_PACKAGES = `${DOMAIN}/getPackages.php`;
+  public DELETE_PACKAGE = `${DOMAIN}/deletePackage.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -51,6 +52,27 @@ export class PackagesService {
           return response;
         })
       );
+  }
+
+  public deletePackage(id: string): Observable<any> {
+    return this.httpClient
+      .post(this.DELETE_PACKAGE, {
+        packID: id,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public getImageFileNames(
+    userId: string,
+    productId: string
+  ): Observable<string[]> {
+    return this.httpClient.get<string[]>(
+      `https://garbrix.com/images/${userId}/${productId}`
+    );
   }
 
   extractFirstDate(dateRange: string): string {

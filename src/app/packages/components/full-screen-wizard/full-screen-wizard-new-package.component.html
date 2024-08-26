@@ -32,6 +32,24 @@
               [placeholder]="field.hint"
             />
           </div>
+          <div *ngIf="field.type === 'file'" class="my-2">
+            <label [for]="field.name"
+              ><strong>{{ field.label }}</strong></label
+            >
+            <small
+              *ngIf="wizardForm.get(field.name)?.status !== 'VALID'"
+              class="d-block mt-2 text-danger"
+              >{{ field.error }}</small
+            >
+            <input
+              class="form-control my-2"
+              [id]="field.name"
+              [formControlName]="field.name"
+              [type]="field.type"
+              (change)="onFileSelected($event)"
+              accept=".png, .jpg, .jpeg"
+            />
+          </div>
           <div *ngIf="field.type === 'text-area'" class="my-2">
             <label [for]="field.name"
               ><strong>{{ field.label }}</strong></label

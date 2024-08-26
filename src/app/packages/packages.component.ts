@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { fromPackage } from './store/selectors';
 import { Store } from '@ngrx/store';
 import { Subject, take, takeUntil } from 'rxjs';
 import { PackageActions } from './store/actions';
 import { fromLogin } from '../login/store/selectors';
 import { PackageModel } from './package.model';
+import { PackagesService } from './services/packages.service';
+import { truncateText } from '../shared/utils/truncate-text';
 
 @Component({
   selector: 'app-packages',
@@ -18,11 +20,19 @@ export class PackagesComponent implements OnInit {
   public selectUserId$ = this.store.select(fromLogin.selectUserId);
   public isLoading = false;
   public packages: PackageModel[] = [];
+
+  public deletingIdPackage: string = '';
+
   faPlusCircle = faPlusCircle;
+  faTrashAlt = faTrashAlt;
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private router: Router, private store: Store) {
+  constructor(
+    private router: Router,
+    private store: Store,
+    private packagesService: PackagesService
+  ) {
     this.unsubscribe$ = new Subject<void>();
   }
 
@@ -36,7 +46,6 @@ export class PackagesComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((packages) => {
         this.isLoading = !packages.isLoading;
-        console.log('packages', packages.packages);
         this.packages = packages.packages;
       });
   }
@@ -48,5 +57,30 @@ export class PackagesComponent implements OnInit {
 
   goToNewPackage() {
     this.router.navigate(['paquetes', 'nuevo-paquete']);
+  }
+
+  getPackageImage(images: string[]): string {
+    console.log('images', images);
+    if (images.length > 0 || !images) {
+      return `https://garbrix.com/images/${images[0]}`;
+    } else {
+      console.log('No image found');
+      return 'https://static.thenounproject.com/png/3314673-200.png';
+    }
+  }
+
+  truncateText(text: string, limit: number): string {
+    if (!text) return '';
+    return text.length > limit ? text.substring(0, limit) + '...' : text;
+  }
+
+  deletingPackage(id: number) {
+    this.deletingIdPackage = id.toString();
+  }
+
+  deletePackage() {
+    this.store.dispatch(
+      PackageActions.deletePackage({ id: this.deletingIdPackage })
+    );
   }
 }

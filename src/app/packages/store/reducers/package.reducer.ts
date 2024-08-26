@@ -68,5 +68,32 @@ export const PackageReducer = createRehydrateReducer(
         isError: true,
       };
     }
+  ),
+  on(PackageActions.deletePackage, (state: PackageState, { id }: any) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    PackageActions.deletePackageSuccess,
+    (state: PackageState, { deletePackageResponse }: any) => {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    PackageActions.deletePackageFailure,
+    (state: PackageState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialPackageState,
+        isLoading: false,
+        isError: true,
+      };
+    }
   )
 );

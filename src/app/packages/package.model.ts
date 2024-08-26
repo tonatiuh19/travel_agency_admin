@@ -17,6 +17,7 @@ export interface PackageModel {
   packTransportDescription: number | string;
   packDateRange: string;
   hotLabel: string;
+  imageUrls: string[];
 }
 
 export interface NewPackageModel {

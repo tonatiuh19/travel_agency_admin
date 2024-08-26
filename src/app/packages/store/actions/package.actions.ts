@@ -31,3 +31,18 @@ export const getPackagesFailure = createAction(
   `${actor} Get Packages Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const deletePackage = createAction(
+  `${actor} Delete Package`,
+  props<{ id: string }>()
+);
+
+export const deletePackageSuccess = createAction(
+  `${actor} Delete Package Success`,
+  props<{ deletePackageResponse: any }>()
+);
+
+export const deletePackageFailure = createAction(
+  `${actor} Delete Package Failure`,
+  props<{ errorResponse: any }>()
+);

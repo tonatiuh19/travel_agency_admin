@@ -7,6 +7,7 @@ import { PackageActions } from '../../store/actions';
 import { fromPackage } from '../../store/selectors';
 import { fromLogin } from '../../../login/store/selectors';
 import { take } from 'rxjs';
+import { ImageUploadService } from '../../../shared/services/image-upload.service';
 
 @Component({
   selector: 'app-full-screen-wizard-new-package',
@@ -26,6 +27,10 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
 
   todayDate = getTodayDate();
 
+  fileError: string | null = null;
+
+  selectedFile: File | null = null;
+
   steps = [
     {
       title: 'Información del paquete',
@@ -38,6 +43,15 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
           validators: [Validators.required],
           error: 'Name is required.',
         },
+        /* {
+          name: 'image',
+          label: 'Inserta una imagen del paquete:',
+          hint: 'Ejemplo: Paquete para conocer Lagos de Moreno',
+          type: 'file',
+          validators: [Validators.required],
+          error:
+            'Una imagen es requerida. Solo se permiten archivos PNG, JPG y JPEG.',
+        },*/
         {
           name: 'price',
           label: '¿Cual es el precio del paquete?',
@@ -179,12 +193,14 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private imageUploadService: ImageUploadService
   ) {}
 
   ngOnInit(): void {
     this.wizardForm = this.fb.group({
       name: ['', Validators.required],
+      //image: ['', Validators.required],
       price: ['', Validators.required],
       location: ['', Validators.required],
       date: ['', Validators.required],
@@ -232,12 +248,40 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     this.wizardForm.get('location')?.setValue(event);
   }
 
+  onFileSelected(event: any): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const fileType = file.type;
+
+      if (!this.isValidFileType(fileType)) {
+        this.fileError = 'Only PNG, JPG, and JPEG files are allowed.';
+        this.wizardForm.get('image')?.setErrors({ invalidFileType: true });
+      } else {
+        this.fileError = null;
+        this.selectedFile = event.target.files[0];
+      }
+    }
+  }
+
+  /*onUpload(): void {
+    if (this.selectedFile) {
+      this.imageUploadService.uploadImage(this.selectedFile).subscribe(
+        (response) => {
+          console.log('Upload successful', response);
+        },
+        (error) => {
+          console.error('Upload failed', error);
+        }
+      );
+    } else {
+      console.error('No file selected');
+    }
+  }*/
+
   onSubmit(): void {
-    const userId = '';
     //if (this.wizardForm.valid) {
     this.selectUserId$.pipe(take(1)).subscribe((userId) => {
-      userId = userId;
-
       this.store.dispatch(
         PackageActions.newPackage({
           packageEntity: {
@@ -365,5 +409,10 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     };
 
     return hostingTypes[type] || '';
+  }
+
+  private isValidFileType(fileType: string): boolean {
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+    return allowedTypes.includes(fileType);
   }
 }

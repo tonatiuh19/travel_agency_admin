@@ -3,7 +3,18 @@
 <div class="">
   <div class="row">
     <div class="col-12 mt-5 full-width-bg">
-      <h1 class="text-center my-5">Paquetes</h1>
+      <h1
+        [class]="
+          packages.length > 0 ? 'text-center mt-5' : 'text-center mt-5 mb-5'
+        "
+      >
+        Paquetes
+      </h1>
+      <div *ngIf="packages.length > 0" class="text-center">
+        <button class="btn btn-primary mt-2 mb-5" (click)="goToNewPackage()">
+          <fa-icon [icon]="faPlusCircle"></fa-icon> Agregar paquete
+        </button>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -36,22 +47,33 @@
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="row">
+    <div class="container mt-2">
+      <div class="row mx-3">
         <div class="col-sm-6 p-1" *ngFor="let package of packages">
-          <div class="card mb-3" style="max-width: 540px">
-            <div class="row g-0">
+          <div class="card mb-3 h-100" style="max-width: 540px">
+            <div class="row g-0 h-100">
               <div class="col-md-4">
-                <img src="..." class="img-fluid rounded-start" alt="..." />
+                <img
+                  src="https://static.thenounproject.com/png/3314673-200.png"
+                  class="img-fluid rounded-start"
+                />
               </div>
-              <div class="col-md-8">
-                <div class="card-body">
+              <div class="col-md-8 d-flex flex-column">
+                <div class="card-body flex-grow-1">
                   <h5 class="card-title">{{ package.packTitle }}</h5>
                   <p class="card-text">
-                    {{ package.packDescription }}
+                    {{ truncateText(package.packDescription, 50) }}
                   </p>
                   <p class="card-text">
-                    <small class="text-muted">Last updated 3 mins ago</small>
+                    <button class="btn btn-primary btn-sm m-1">Editar</button>
+                    <button
+                      data-bs-toggle="modal"
+                      data-bs-target="#deletePackageModal"
+                      class="btn btn-danger btn-sm m-1"
+                      (click)="deletingPackage(package.packID)"
+                    >
+                      <fa-icon [icon]="faTrashAlt"></fa-icon>
+                    </button>
                   </p>
                 </div>
               </div>
@@ -59,7 +81,34 @@
           </div>
         </div>
       </div>
+      <section class="container-with-extra-bottom-margin"></section>
     </div>
   </div>
 </div>
 <app-footer></app-footer>
+<div
+  class="modal fade"
+  id="deletePackageModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">¿Estás seguro de eliminar este paquete?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          data-bs-dismiss="modal"
+          (click)="deletePackage()"
+        >
+          Eliminar
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Me equivoqué
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

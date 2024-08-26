@@ -21,3 +21,7 @@
 .centered-text {
   text-align: center;
 }
+
+.container-with-extra-bottom-margin {
+  height: 70vh;
+}
