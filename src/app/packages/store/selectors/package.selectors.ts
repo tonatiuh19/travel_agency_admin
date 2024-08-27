@@ -14,3 +14,8 @@ export const selectPackages = createSelector(
   selectPackageState,
   (state: PackageState) => state.packages
 );
+
+export const selectGetCityById = createSelector(
+  selectPackageState,
+  (state: PackageState) => state.cities
+);

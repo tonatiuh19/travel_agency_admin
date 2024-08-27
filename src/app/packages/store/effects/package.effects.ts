@@ -103,6 +103,98 @@ export class PackageEffects {
     );
   });
 
+  gettingPackageById$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(PackageActions.getPackageById),
+      withLatestFrom(this.store.select(fromLogin.selectLoginState)),
+      switchMap(([packageEntity]) => {
+        return this.PackagesService.getPackagesById(
+          packageEntity.userId,
+          packageEntity.packID
+        ).pipe(
+          map((response) => {
+            if (response) {
+              return PackageActions.getPackageByIdSuccess({
+                packageByIdResponse: response,
+              });
+            } else {
+              return PackageActions.getPackageByIdFailure({
+                errorResponse: 'Invalid credentials',
+              });
+            }
+          }),
+          catchError((error) => {
+            return of(
+              PackageActions.getPackageByIdFailure({ errorResponse: error })
+            );
+          })
+        );
+      })
+    );
+  });
+
+  updatePackage$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(PackageActions.updatePackage),
+      withLatestFrom(this.store.select(fromPackage.selectPackageState)),
+      switchMap(([packageEntity]) => {
+        return this.PackagesService.updatePackage({
+          ...packageEntity.packageEntity,
+        }).pipe(
+          map((response) => {
+            console.log('response', response);
+            if (response == 1) {
+              return PackageActions.updatePackageSuccess(response);
+            } else {
+              return PackageActions.updatePackageFailure({
+                errorResponse: 'Invalid credentials',
+              });
+            }
+          }),
+          catchError((error) => {
+            return of(
+              PackageActions.updatePackageFailure({ errorResponse: error })
+            );
+          })
+        );
+      })
+    );
+  });
+
+  getCityById$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(PackageActions.getPackageById),
+        withLatestFrom(this.store.select(fromLogin.selectLoginState)),
+        switchMap(([cityEntity]) => {
+          console.log('cityEntity', cityEntity);
+          /*return this.PackagesService.getCityById(
+          packageEntity.cityId,
+        ).pipe(
+          map((response) => {
+            if (response) {
+              return PackageActions.getPackageByIdSuccess({
+                packageByIdResponse: response,
+              });
+            } else {
+              return PackageActions.getPackageByIdFailure({
+                errorResponse: 'Invalid credentials',
+              });
+            }
+          }),
+          catchError((error) => {
+            return of(
+              PackageActions.getPackageByIdFailure({ errorResponse: error })
+            );
+          })
+        );*/
+          return of(1);
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   constructor(
     private actions$: Actions,
     private store: Store,

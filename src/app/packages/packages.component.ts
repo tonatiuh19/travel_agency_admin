@@ -83,4 +83,8 @@ export class PackagesComponent implements OnInit {
       PackageActions.deletePackage({ id: this.deletingIdPackage })
     );
   }
+
+  goToEditPackage(id: number) {
+    this.router.navigate(['paquetes', 'editar-paquete', id]);
+  }
 }

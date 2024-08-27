@@ -95,5 +95,94 @@ export const PackageReducer = createRehydrateReducer(
         isError: true,
       };
     }
+  ),
+  on(
+    PackageActions.getPackageById,
+    (state: PackageState, { userId, packID }: any) => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+  ),
+  on(
+    PackageActions.getPackageByIdSuccess,
+    (state: PackageState, { packageByIdResponse }: any) => {
+      return {
+        ...state,
+        packages: packageByIdResponse,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    PackageActions.getPackageByIdFailure,
+    (state: PackageState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialPackageState,
+        isLoading: false,
+        isError: true,
+      };
+    }
+  ),
+  on(
+    PackageActions.updatePackage,
+    (state: PackageState, { packageEntity }: any) => {
+      return {
+        ...state,
+        ...packageEntity,
+        isLoading: true,
+      };
+    }
+  ),
+  on(
+    PackageActions.updatePackageSuccess,
+    (state: PackageState, { updatePackageResponse }: any) => {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    PackageActions.updatePackageFailure,
+    (state: PackageState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialPackageState,
+        isLoading: false,
+        isError: true,
+      };
+    }
+  ),
+  on(PackageActions.getCityById, (state: PackageState, { cityId }: any) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    PackageActions.getCityByIdSuccess,
+    (state: PackageState, { cityResponse }: any) => {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    PackageActions.getCityByIdFailure,
+    (state: PackageState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialPackageState,
+        isLoading: false,
+        isError: true,
+      };
+    }
   )
 );

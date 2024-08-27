@@ -65,7 +65,12 @@
                     {{ truncateText(package.packDescription, 50) }}
                   </p>
                   <p class="card-text">
-                    <button class="btn btn-primary btn-sm m-1">Editar</button>
+                    <button
+                      class="btn btn-primary btn-sm m-1"
+                      (click)="goToEditPackage(package.packID)"
+                    >
+                      Editar
+                    </button>
                     <button
                       data-bs-toggle="modal"
                       data-bs-target="#deletePackageModal"

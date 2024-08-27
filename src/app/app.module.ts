@@ -13,6 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { WelcomeModule } from './welcome/welcome.module';
 import { PackagesModule } from './packages/packages.module';
 import { FullScreenWizardNewPackageModule } from './packages/components/full-screen-wizard/full-screen-wizard-new-package.module';
+import { FullEditScreenWizardModule } from './packages/components/full-edit-screen-wizard/full-edit-screen-wizard.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,7 @@ import { FullScreenWizardNewPackageModule } from './packages/components/full-scr
     WelcomeModule,
     PackagesModule,
     FullScreenWizardNewPackageModule,
+    FullEditScreenWizardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

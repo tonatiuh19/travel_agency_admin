@@ -1,0 +1,87 @@
+.wizard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  .wizard-header {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f8f9fa;
+    padding: 10px;
+  }
+  
+  .wizard-header div {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .wizard-header .active {
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+  }
+  
+  .wizard-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .wizard-footer {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .wizard-footer button {
+    width: 100%;
+  }
+  
+  .section-bottom{
+    height: 50vh;
+  }
+  
+  ::placeholder {
+    color: #000; /* Change this to your desired color */
+  }
+  
+  .input-group-addon {
+    background-color: #fff;
+  }
+  
+  .no-right-border-input-group {
+    border-right: none;
+  }
+  
+  .no-left-border-input-group {
+    border-left: none;
+  }
+  
+  :host ::ng-deep 
+  .md-drppicker td.active, .md-drppicker td.active {
+    background-color: #000;
+  }
+  
+  :host ::ng-deep .md-drppicker .btn {
+      position: relative;
+      overflow: hidden;
+      border-width: 0;
+      outline: none;
+      padding: 0 6px;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 4px #0009;
+      background-color: #000;
+      color: #ecf0f1;
+      transition: background-color .4s;
+      height: auto;
+      text-transform: capitalize;
+      line-height: 36px;
+      border: none;
+  }
+  
+  :host ::ng-deep .md-drppicker th {
+    color: #000;
+  }
+  

@@ -10,7 +10,10 @@ import { NewPackageModel } from '../package.model';
 export class PackagesService {
   public NEW_PACKAGE = `${DOMAIN}/insertPackage.php`;
   public GET_PACKAGES = `${DOMAIN}/getPackages.php`;
+  public GET_PACKAGES_BY_ID = `${DOMAIN}/getPackagesById.php`;
   public DELETE_PACKAGE = `${DOMAIN}/deletePackage.php`;
+  public UPDATE_PACKAGE = `${DOMAIN}/updatePackage.php`;
+  public GET_CITY_BY_ID = `${DOMAIN}/getCityById.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -54,6 +57,50 @@ export class PackagesService {
       );
   }
 
+  public getPackagesById(userId: string, packID: number): Observable<any> {
+    return this.httpClient
+      .post(this.GET_PACKAGES_BY_ID, {
+        empID: userId,
+        packID: packID,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public updatePackage(entity: NewPackageModel): Observable<any> {
+    let hostingType = '0';
+    if (entity.hosting !== '0') {
+      hostingType = entity.hostingType;
+    }
+    return this.httpClient
+      .post(this.UPDATE_PACKAGE, {
+        ...entity,
+        startDate: this.extractFirstDate(entity.date),
+        endDate: this.extractSecondDate(entity.date),
+        hostingType: hostingType,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public getCityById(citID: number): Observable<any> {
+    return this.httpClient
+      .post(this.GET_CITY_BY_ID, {
+        citID: citID,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
   public deletePackage(id: string): Observable<any> {
     return this.httpClient
       .post(this.DELETE_PACKAGE, {
@@ -75,13 +122,13 @@ export class PackagesService {
     );
   }
 
-  extractFirstDate(dateRange: string): string {
+  public extractFirstDate(dateRange: string): string {
     const parts = dateRange.split(' ');
     const firstDatePart = parts[0].trim();
     return firstDatePart;
   }
 
-  extractSecondDate(dateRange: string): string {
+  public extractSecondDate(dateRange: string): string {
     const parts = dateRange.split(' ');
     const dateAfterSecondSpace = parts[2].trim();
     return dateAfterSecondSpace;

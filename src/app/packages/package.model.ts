@@ -1,5 +1,6 @@
 export interface PackageState {
   packages: PackageModel[];
+  cities?: CitiesModel[];
   isLoading?: boolean;
   isError?: boolean;
 }
@@ -18,6 +19,7 @@ export interface PackageModel {
   packDateRange: string;
   hotLabel: string;
   imageUrls: string[];
+  citName?: string;
 }
 
 export interface NewPackageModel {
@@ -33,4 +35,9 @@ export interface NewPackageModel {
   hostingType: string;
   hotelDescription: string;
   generalDescription: string;
+}
+
+export interface CitiesModel {
+  citID: number;
+  citName: string;
 }
