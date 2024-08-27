@@ -9,6 +9,8 @@ import { PackageActions } from '../../store/actions';
 import { getTodayDate } from '../../../shared/utils/get-date';
 import { PackageModel } from '../../package.model';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { fromSettings } from '../../../settings/store/selectors';
+import { SettingsActions } from '../../../settings/store/actions';
 
 @Component({
   selector: 'app-full-edit-screen-wizard',
@@ -19,7 +21,13 @@ export class FullEditScreenWizardComponent implements OnInit {
   public selectPackages$ = this.store.select(fromPackage.selectPackageState);
   public selectIsLoading$ = this.store.select(fromPackage.selectIsLoading);
 
+  public selectHostings$ = this.store.select(fromSettings.selectHostings);
+  public selectTransports$ = this.store.select(fromSettings.selectTransports);
+
   public selectUserId$ = this.store.select(fromLogin.selectUserId);
+
+  public hostings = [] as any;
+  public transports = [] as any;
 
   public locationEntity = {
     id: 0,
@@ -208,6 +216,53 @@ export class FullEditScreenWizardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(SettingsActions.getHostings());
+    this.store.dispatch(SettingsActions.getTransports());
+
+    this.selectHostings$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((hostings) => {
+        this.hostings = hostings.hostings || [];
+        const hostingOptions = this.hostings.map((hosting: any) => ({
+          label: hosting.hotLabel,
+          value: hosting.hotID.toString(),
+        }));
+
+        const hospedajeStep = this.steps.find(
+          (step: any) => step.title === 'Hospedaje'
+        );
+        if (hospedajeStep) {
+          const hostingTypeField = hospedajeStep.fields.find(
+            (field: any) => field.name === 'hostingType'
+          );
+          if (hostingTypeField) {
+            hostingTypeField.options = hostingOptions;
+          }
+        }
+      });
+
+    this.selectTransports$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((transports) => {
+        this.transports = transports.transports || [];
+        const transportOptions = this.transports.map((transport: any) => ({
+          label: transport.transportLabel,
+          value: transport.transportId.toString(),
+        }));
+
+        const transportStep = this.steps.find(
+          (step: any) => step.title === 'Transporte'
+        );
+        if (transportStep) {
+          const transportTypeField = transportStep.fields.find(
+            (field: any) => field.name === 'transportType'
+          );
+          if (transportTypeField) {
+            transportTypeField.options = transportOptions;
+          }
+        }
+      });
+
     this.route.paramMap.pipe(take(1)).subscribe((params) => {
       const packID = params.get('id');
       this.packageId = packID;

@@ -1,5 +1,10 @@
 <div class="container">
-  <div class="row">
+  <div class="row text-center" *ngIf="!isLoading">
+    <div class="col-sm-12">
+      <app-loading></app-loading>
+    </div>
+  </div>
+  <div class="row" *ngIf="isLoading">
     <div class="col-4">
       <div class="form-group">
         <select
@@ -27,9 +32,9 @@
           <option value="" disabled selected>Pais</option>
           <option
             *ngFor="let country of filteredCountries"
-            [value]="country.id"
+            [value]="country.ctryID"
           >
-            {{ country.name }}
+            {{ country.ctryName }}
           </option>
         </select>
       </div>
@@ -38,8 +43,8 @@
       <div class="form-group" *ngIf="filteredCities.length > 0">
         <select id="city" class="form-control" (change)="onCityChange($event)">
           <option value="" disabled selected>Ciudad</option>
-          <option *ngFor="let city of filteredCities" [value]="city.id">
-            {{ city.name }}
+          <option *ngFor="let city of filteredCities" [value]="city.citID">
+            {{ city.citName }}
           </option>
         </select>
       </div>

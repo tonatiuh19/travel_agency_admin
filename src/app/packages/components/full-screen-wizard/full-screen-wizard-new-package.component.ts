@@ -6,9 +6,11 @@ import { Store } from '@ngrx/store';
 import { PackageActions } from '../../store/actions';
 import { fromPackage } from '../../store/selectors';
 import { fromLogin } from '../../../login/store/selectors';
-import { take } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import { ImageUploadService } from '../../../shared/services/image-upload.service';
 import { Editor } from 'ngx-editor';
+import { SettingsActions } from '../../../settings/store/actions';
+import { fromSettings } from '../../../settings/store/selectors';
 
 @Component({
   selector: 'app-full-screen-wizard-new-package',
@@ -18,7 +20,13 @@ import { Editor } from 'ngx-editor';
 export class FullScreenWizardNewPackageComponent implements OnInit {
   public selectIsLoading$ = this.store.select(fromPackage.selectIsLoading);
 
+  public selectHostings$ = this.store.select(fromSettings.selectHostings);
+  public selectTransports$ = this.store.select(fromSettings.selectTransports);
+
   public selectUserId$ = this.store.select(fromLogin.selectUserId);
+
+  public hostings = [] as any;
+  public transports = [] as any;
 
   wizardForm: FormGroup = new FormGroup({});
 
@@ -194,6 +202,8 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
   editor!: Editor;
   html = '';
 
+  private unsubscribe$ = new Subject<void>();
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -202,7 +212,52 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.editor = new Editor();
+    this.store.dispatch(SettingsActions.getHostings());
+    this.store.dispatch(SettingsActions.getTransports());
+
+    this.selectHostings$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((hostings) => {
+        this.hostings = hostings.hostings || [];
+        const hostingOptions = this.hostings.map((hosting: any) => ({
+          label: hosting.hotLabel,
+          value: hosting.hotID.toString(),
+        }));
+
+        const hospedajeStep = this.steps.find(
+          (step: any) => step.title === 'Hospedaje'
+        );
+        if (hospedajeStep) {
+          const hostingTypeField = hospedajeStep.fields.find(
+            (field: any) => field.name === 'hostingType'
+          );
+          if (hostingTypeField) {
+            hostingTypeField.options = hostingOptions;
+          }
+        }
+      });
+
+    this.selectTransports$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((transports) => {
+        this.transports = transports.transports || [];
+        const transportOptions = this.transports.map((transport: any) => ({
+          label: transport.transportLabel,
+          value: transport.transportId.toString(),
+        }));
+
+        const transportStep = this.steps.find(
+          (step: any) => step.title === 'Transporte'
+        );
+        if (transportStep) {
+          const transportTypeField = transportStep.fields.find(
+            (field: any) => field.name === 'transportType'
+          );
+          if (transportTypeField) {
+            transportTypeField.options = transportOptions;
+          }
+        }
+      });
 
     this.wizardForm = this.fb.group({
       name: ['', Validators.required],
@@ -230,7 +285,8 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.editor.destroy();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   nextStep(): void {
