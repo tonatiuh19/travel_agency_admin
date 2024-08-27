@@ -8,6 +8,7 @@ import { fromPackage } from '../../store/selectors';
 import { fromLogin } from '../../../login/store/selectors';
 import { take } from 'rxjs';
 import { ImageUploadService } from '../../../shared/services/image-upload.service';
+import { Editor } from 'ngx-editor';
 
 @Component({
   selector: 'app-full-screen-wizard-new-package',
@@ -190,6 +191,9 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     },
   ];
 
+  editor!: Editor;
+  html = '';
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -198,6 +202,8 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.editor = new Editor();
+
     this.wizardForm = this.fb.group({
       name: ['', Validators.required],
       //image: ['', Validators.required],
@@ -221,6 +227,10 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     this.wizardForm.get('hosting')?.valueChanges.subscribe((value) => {
       this.filterHostingSteps(value);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.editor.destroy();
   }
 
   nextStep(): void {

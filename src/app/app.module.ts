@@ -14,6 +14,7 @@ import { WelcomeModule } from './welcome/welcome.module';
 import { PackagesModule } from './packages/packages.module';
 import { FullScreenWizardNewPackageModule } from './packages/components/full-screen-wizard/full-screen-wizard-new-package.module';
 import { FullEditScreenWizardModule } from './packages/components/full-edit-screen-wizard/full-edit-screen-wizard.module';
+import { SettingsModule } from './settings/settings.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +37,7 @@ import { FullEditScreenWizardModule } from './packages/components/full-edit-scre
     PackagesModule,
     FullScreenWizardNewPackageModule,
     FullEditScreenWizardModule,
+    SettingsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

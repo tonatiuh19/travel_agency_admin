@@ -5,6 +5,7 @@ import {
   faStore,
   faUser,
   faPowerOff,
+  faCog,
 } from '@fortawesome/free-solid-svg-icons';
 import { fromLogin } from '../../../login/store/selectors';
 import { Store } from '@ngrx/store';
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit {
   faStore = faStore;
   faUser = faUser;
   faPowerOff = faPowerOff;
+  faCog = faCog;
   formGroup: FormGroup;
 
   private unsubscribe$ = new Subject<void>();
@@ -71,6 +73,10 @@ export class HeaderComponent implements OnInit {
 
   goToPackages() {
     this.router.navigate(['paquetes']);
+  }
+
+  goToSettings() {
+    this.router.navigate(['ajustes']);
   }
 
   logOut() {

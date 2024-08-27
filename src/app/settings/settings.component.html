@@ -1,0 +1,151 @@
+<app-full-loading-mask *ngIf="!isLoading"></app-full-loading-mask>
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-5">
+      <h1 class="text-center mt-5 mb-5">Ajustes</h1>
+    </div>
+  </div>
+</div>
+<div class="settings-border-bottom"></div>
+<div class="container h-100 mt-2 mb-5" *ngIf="isLoading">
+  <div class="row h-100">
+    <div class="col-sm-4 list-container">
+      <h3 class="text-center">Ciudades</h3>
+      <div class="text-center">
+        <button class="btn btn-primary btn-sm m-1" (click)="openModal('Pais')">
+          Agregar Pais
+        </button>
+        <button
+          class="btn btn-primary btn-sm m-1"
+          (click)="openModal('Ciudad')"
+        >
+          Agregar Ciudad
+        </button>
+      </div>
+      <ul class="list-group infinite-list">
+        <li
+          class="list-group-item d-flex justify-content-between align-items-start"
+          *ngFor="let item of cities"
+        >
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">{{ item.citName }}</div>
+            {{ item.ctryName }}, {{ item.contName }}
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-4 list-container">
+      <h3 class="text-center">Transportes</h3>
+      <div class="text-center">
+        <button
+          class="btn btn-primary btn-sm m-1"
+          (click)="openModal('Transporte')"
+        >
+          Agregar Transporte
+        </button>
+      </div>
+      <ul class="list-group infinite-list">
+        <li class="list-group-item" *ngFor="let item of transports">
+          {{ item.transportLabel ? item.transportLabel : "" }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-4 list-container">
+      <h3 class="text-center">Hospedajes</h3>
+      <div class="text-center">
+        <button
+          class="btn btn-primary btn-sm m-1"
+          (click)="openModal('Hospedaje')"
+        >
+          Agregar Hospedaje
+        </button>
+      </div>
+      <ul class="list-group infinite-list">
+        <li class="list-group-item" *ngFor="let item of hostings">
+          {{ item.hotLabel ? item.hotLabel : "" }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<app-footer *ngIf="isLoading"></app-footer>
+
+<div
+  class="modal fade"
+  id="addItemModal"
+  tabindex="-1"
+  aria-labelledby="addItemModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addItemModalLabel">
+          Agregar {{ currentItemType }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="addItemForm.reset()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+          <div
+            *ngIf="currentItemType === 'Pais' || currentItemType === 'Ciudad'"
+            class="mb-3"
+          >
+            <select
+              *ngIf="currentItemType === 'Pais'"
+              id="extraSelect"
+              formControlName="extraSelect"
+              class="form-control"
+            >
+              <option value="" disabled selected>
+                Selecciona un continente
+              </option>
+              <option
+                *ngFor="let option of continentOptions"
+                [value]="option.id"
+              >
+                {{ option.name }}
+              </option>
+            </select>
+            <select
+              *ngIf="currentItemType === 'Ciudad'"
+              id="extraSelect"
+              formControlName="extraSelect"
+              class="form-control"
+            >
+              <option value="" disabled selected>Selecciona un pais</option>
+              <option *ngFor="let option of countries" [value]="option.ctryID">
+                {{ option.ctryName }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="name" class="form-label"
+              >Nombre de {{ currentItemType }}</label
+            >
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="form-control"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="addItemForm.invalid"
+          >
+            Agregar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
