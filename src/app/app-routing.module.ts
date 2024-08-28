@@ -6,6 +6,7 @@ import { PackagesComponent } from './packages/packages.component';
 import { FullScreenWizardNewPackageComponent } from './packages/components/full-screen-wizard/full-screen-wizard-new-package.component';
 import { FullEditScreenWizardComponent } from './packages/components/full-edit-screen-wizard/full-edit-screen-wizard.component';
 import { SettingsComponent } from './settings/settings.component';
+import { SupportComponent } from './support/support.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'ajustes',
     component: SettingsComponent,
+  },
+  {
+    path: 'soporte',
+    component: SupportComponent,
   },
 ];
 

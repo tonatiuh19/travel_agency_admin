@@ -79,6 +79,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['ajustes']);
   }
 
+  goToSupport() {
+    this.router.navigate(['soporte']);
+  }
+
   logOut() {
     this.store.dispatch(LoginActions.signOff());
   }
