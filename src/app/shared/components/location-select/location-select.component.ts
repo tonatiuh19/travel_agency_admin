@@ -199,6 +199,7 @@ export class LocationSelectComponent implements OnInit {
   onContinentChange(event: any) {
     const continentId = event.target.value;
     this.selectedContinent = continentId;
+    console.log('continentId', continentId, this.data.countries);
     this.filteredCountries = this.data.countries.filter((c) => {
       return c.contID == continentId;
     });

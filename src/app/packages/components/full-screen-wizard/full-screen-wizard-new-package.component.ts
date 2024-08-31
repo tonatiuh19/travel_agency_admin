@@ -96,7 +96,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
             { label: 'No', value: '0' },
           ],
           validators: [Validators.required],
-          error: 'Gender is required.',
+          error: 'La descripción del transporte es requerida.',
         },
         {
           name: 'hosting',
@@ -108,7 +108,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
             { label: 'No', value: '0' },
           ],
           validators: [Validators.required],
-          error: 'Gender is required.',
+          error: 'La descripción del alojamiento es requerida.',
         },
         {
           name: 'limit',
@@ -145,7 +145,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
           hint: 'Ejemplo: Paquete para conocer Guadalajara donde se incluye el transporte en avión y cuando llegues al destino se incluye el transporte en autobús.',
           type: 'text-area',
           validators: [Validators.required],
-          error: 'Name is required.',
+          error: 'La descripción del transporte es requerida.',
         },
       ],
     },
@@ -176,7 +176,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
           hint: 'Ejemplo: Paquete para conocer Guadalajara donde se incluye el hospedaje en hoteles de 5 estrellas.',
           type: 'text-area',
           validators: [Validators.required],
-          error: 'Name is required.',
+          error: 'La descripción del alojamiento es requerida.',
         },
       ],
     },
@@ -189,7 +189,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
           hint: 'Ejemplo: Paquete para conocer Guadalajara donde se incluye el transporte en avión y cuando llegues al destino se incluye el transporte en autobús. Además se incluye el hospedaje en hoteles de 5 estrellas.',
           type: 'text-area',
           validators: [Validators.required],
-          error: 'Name is required.',
+          error: 'La descripción total del paquete es requerida.',
         },
       ],
     },
@@ -312,6 +312,10 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
 
   choosedCity(event: any) {
     this.wizardForm.get('location')?.setValue(event);
+  }
+
+  chossedEditorText(event: any, name: string) {
+    this.wizardForm.get(name)?.setValue(event);
   }
 
   onFileSelected(event: any): void {

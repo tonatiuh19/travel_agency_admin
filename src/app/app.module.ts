@@ -15,7 +15,6 @@ import { PackagesModule } from './packages/packages.module';
 import { FullScreenWizardNewPackageModule } from './packages/components/full-screen-wizard/full-screen-wizard-new-package.module';
 import { FullEditScreenWizardModule } from './packages/components/full-edit-screen-wizard/full-edit-screen-wizard.module';
 import { SettingsModule } from './settings/settings.module';
-import { SupportComponent } from './support/support.component';
 import { SupportModule } from './support/support.module';
 
 @NgModule({

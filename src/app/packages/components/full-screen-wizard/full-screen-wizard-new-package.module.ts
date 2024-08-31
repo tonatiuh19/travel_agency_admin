@@ -6,7 +6,7 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { LocationSelectModule } from '../../../shared/components/location-select/location-select.module';
 import { PackageStoreModule } from '../../store/package.store.module';
 import { FullLoadingMaskModule } from '../../../shared/components/full-loading-mask/full-loading-mask.module';
-import { NgxEditorModule } from 'ngx-editor';
+import { RichEditorModule } from '../../../shared/components/rich-editor/rich-editor.module';
 
 @NgModule({
   declarations: [FullScreenWizardNewPackageComponent],
@@ -18,7 +18,7 @@ import { NgxEditorModule } from 'ngx-editor';
     LocationSelectModule,
     PackageStoreModule,
     FullLoadingMaskModule,
-    NgxEditorModule,
+    RichEditorModule,
   ],
   exports: [FullScreenWizardNewPackageComponent],
   providers: [],

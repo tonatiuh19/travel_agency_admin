@@ -7,6 +7,7 @@ import { LocationSelectModule } from '../../../shared/components/location-select
 import { PackageStoreModule } from '../../store/package.store.module';
 import { FullLoadingMaskModule } from '../../../shared/components/full-loading-mask/full-loading-mask.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RichEditorModule } from '../../../shared/components/rich-editor/rich-editor.module';
 
 @NgModule({
   declarations: [FullEditScreenWizardComponent],
@@ -19,6 +20,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PackageStoreModule,
     FullLoadingMaskModule,
     FontAwesomeModule,
+    RichEditorModule,
   ],
   exports: [FullEditScreenWizardComponent],
   providers: [],

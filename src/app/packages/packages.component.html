@@ -61,9 +61,10 @@
               <div class="col-md-8 d-flex flex-column">
                 <div class="card-body flex-grow-1">
                   <h5 class="card-title">{{ package.packTitle }}</h5>
-                  <p class="card-text">
-                    {{ truncateText(package.packDescription, 50) }}
-                  </p>
+                  <div
+                    class="card-text"
+                    [innerHTML]="truncateText(package.packDescription, 50)"
+                  ></div>
                   <p class="card-text">
                     <button
                       class="btn btn-primary btn-sm m-1"

@@ -54,17 +54,16 @@
             <label [for]="field.name"
               ><strong>{{ field.label }}</strong></label
             >
-            <textarea
-              [class]="
-                wizardForm.get(field.name)?.status === 'VALID'
-                  ? 'form-control my-2'
-                  : 'form-control my-2 border-danger'
-              "
-              [id]="field.name"
-              [formControlName]="field.name"
-              rows="7"
+            <small
+              *ngIf="wizardForm.get(field.name)?.status !== 'VALID'"
+              class="d-block my-2 text-danger"
+              >{{ field.error }}</small
+            >
+            <app-rich-editor
               [placeholder]="field.hint"
-            ></textarea>
+              [editorDataInput]="wizardForm.get(field.name)?.value"
+              (editorData)="chossedEditorText($event, field.name)"
+            ></app-rich-editor>
           </div>
 
           <div *ngIf="field.type === 'select'" class="my-2">
@@ -192,8 +191,13 @@
                 <td>{{ wizardForm.get("limit")?.value }}</td>
               </tr>
               <tr>
-                <th scope="row">Descripción del paquete:</th>
-                <td>{{ wizardForm.get("generalDescription")?.value }}</td>
+                <td scope="row">
+                  <strong>Descripción del paquete: </strong><br />
+                  <div
+                    class="my-2"
+                    [innerHTML]="wizardForm.get('generalDescription')?.value"
+                  ></div>
+                </td>
               </tr>
               <tr *ngIf="wizardForm.get('transport')?.value !== '0'">
                 <th scope="row">Transporte:</th>
@@ -204,8 +208,13 @@
                 </td>
               </tr>
               <tr *ngIf="wizardForm.get('transport')?.value !== '0'">
-                <th scope="row">Descripción del transporte:</th>
-                <td>{{ wizardForm.get("transportDescription")?.value }}</td>
+                <td scope="row">
+                  <strong>Descripción del transporte: </strong><br />
+                  <div
+                    class="my-2"
+                    [innerHTML]="wizardForm.get('transportDescription')?.value"
+                  ></div>
+                </td>
               </tr>
               <tr class="mt-2" *ngIf="wizardForm.get('hosting')?.value !== '0'">
                 <th scope="row">Hospedaje:</th>
@@ -214,8 +223,13 @@
                 </td>
               </tr>
               <tr *ngIf="wizardForm.get('hosting')?.value !== '0'">
-                <th scope="row">Descripción del hospedaje:</th>
-                <td>{{ wizardForm.get("hotelDescription")?.value }}</td>
+                <td scope="row">
+                  <strong>Descripción del hospedaje: </strong><br />
+                  <div
+                    class="my-2"
+                    [innerHTML]="wizardForm.get('hotelDescription')?.value"
+                  ></div>
+                </td>
               </tr>
             </tbody>
           </table>
