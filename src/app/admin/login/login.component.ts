@@ -44,9 +44,9 @@ export class LoginComponent implements OnInit {
         this.isLoading = !loginState.isLoading;
         this.isError = !loginState.isError;
         if (loginState.isAuthenticated) {
-          this.router.navigate(['bienvenido']);
+          this.router.navigate(['admin/bienvenido']);
         } else {
-          this.router.navigate(['']);
+          this.router.navigate(['admin']);
         }
       });
   }

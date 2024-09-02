@@ -56,7 +56,7 @@ export class PackagesComponent implements OnInit {
   }
 
   goToNewPackage() {
-    this.router.navigate(['paquetes', 'nuevo-paquete']);
+    this.router.navigate(['admin/paquetes', 'nuevo-paquete']);
   }
 
   getPackageImage(images: string[]): string {
@@ -85,6 +85,6 @@ export class PackagesComponent implements OnInit {
   }
 
   goToEditPackage(id: number) {
-    this.router.navigate(['paquetes', 'editar-paquete', id]);
+    this.router.navigate(['admin/paquetes', 'editar-paquete', id]);
   }
 }

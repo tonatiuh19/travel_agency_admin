@@ -61,7 +61,7 @@ export class HeaderComponent implements OnInit {
         if (loginState.isAuthenticated) {
           this.isAuth = true;
         } else {
-          this.router.navigate(['']);
+          this.router.navigate(['admin']);
         }
       });
   }
@@ -72,15 +72,15 @@ export class HeaderComponent implements OnInit {
   }
 
   goToPackages() {
-    this.router.navigate(['paquetes']);
+    this.router.navigate(['admin/paquetes']);
   }
 
   goToSettings() {
-    this.router.navigate(['ajustes']);
+    this.router.navigate(['admin/ajustes']);
   }
 
   goToSupport() {
-    this.router.navigate(['soporte']);
+    this.router.navigate(['admin/soporte']);
   }
 
   logOut() {

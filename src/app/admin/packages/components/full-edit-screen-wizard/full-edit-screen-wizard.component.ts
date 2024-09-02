@@ -1,23 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { getTodayDate } from '../../../shared/utils/get-date';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { PackageActions } from '../../store/actions';
 import { fromPackage } from '../../store/selectors';
 import { fromLogin } from '../../../login/store/selectors';
 import { Subject, take, takeUntil } from 'rxjs';
-import { ImageUploadService } from '../../../shared/services/image-upload.service';
-import { Editor } from 'ngx-editor';
-import { SettingsActions } from '../../../settings/store/actions';
+import { PackageActions } from '../../store/actions';
+import { getTodayDate } from '../../../shared/utils/get-date';
+import { PackageModel } from '../../package.model';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { fromSettings } from '../../../settings/store/selectors';
+import { SettingsActions } from '../../../settings/store/actions';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-full-screen-wizard-new-package',
-  templateUrl: './full-screen-wizard-new-package.component.html',
-  styleUrl: './full-screen-wizard-new-package.component.css',
+  selector: 'app-full-edit-screen-wizard',
+  templateUrl: './full-edit-screen-wizard.component.html',
+  styleUrl: './full-edit-screen-wizard.component.css',
 })
-export class FullScreenWizardNewPackageComponent implements OnInit {
+export class FullEditScreenWizardComponent implements OnInit {
+  public sanitizer!: DomSanitizer;
+  public selectPackages$ = this.store.select(fromPackage.selectPackageState);
   public selectIsLoading$ = this.store.select(fromPackage.selectIsLoading);
 
   public selectHostings$ = this.store.select(fromSettings.selectHostings);
@@ -27,6 +30,19 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
 
   public hostings = [] as any;
   public transports = [] as any;
+
+  public enableRichEditor = true;
+
+  public locationEntity = {
+    id: 0,
+    name: '',
+  };
+  public isLocationEditedSelected = false;
+
+  public dateRangeLabel = '';
+  public isDateRangeEditedSelected = false;
+
+  public packageId: string | null = null;
 
   wizardForm: FormGroup = new FormGroup({});
 
@@ -40,6 +56,8 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
 
   selectedFile: File | null = null;
 
+  faPencilAlt = faPencilAlt;
+
   steps = [
     {
       title: 'Información del paquete',
@@ -52,15 +70,6 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
           validators: [Validators.required],
           error: 'Name is required.',
         },
-        /* {
-          name: 'image',
-          label: 'Inserta una imagen del paquete:',
-          hint: 'Ejemplo: Paquete para conocer Lagos de Moreno',
-          type: 'file',
-          validators: [Validators.required],
-          error:
-            'Una imagen es requerida. Solo se permiten archivos PNG, JPG y JPEG.',
-        },*/
         {
           name: 'price',
           label: '¿Cual es el precio del paquete?',
@@ -96,7 +105,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
             { label: 'No', value: '0' },
           ],
           validators: [Validators.required],
-          error: 'La descripción del transporte es requerida.',
+          error: 'Gender is required.',
         },
         {
           name: 'hosting',
@@ -108,7 +117,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
             { label: 'No', value: '0' },
           ],
           validators: [Validators.required],
-          error: 'La descripción del alojamiento es requerida.',
+          error: 'Gender is required.',
         },
         {
           name: 'limit',
@@ -145,7 +154,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
           hint: 'Ejemplo: Paquete para conocer Guadalajara donde se incluye el transporte en avión y cuando llegues al destino se incluye el transporte en autobús.',
           type: 'text-area',
           validators: [Validators.required],
-          error: 'La descripción del transporte es requerida.',
+          error: 'Name is required.',
         },
       ],
     },
@@ -168,7 +177,7 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
             { label: 'Villas', value: '8' },
           ],
           validators: [Validators.required],
-          error: 'Gender is required.',
+          error: 'La descripción del transporte es requerida.',
         },
         {
           name: 'hotelDescription',
@@ -199,17 +208,16 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     },
   ];
 
-  editor!: Editor;
-  html = '';
-
   private unsubscribe$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private store: Store,
-    private imageUploadService: ImageUploadService
-  ) {}
+    private route: ActivatedRoute
+  ) {
+    this.unsubscribe$ = new Subject<void>();
+  }
 
   ngOnInit(): void {
     this.store.dispatch(SettingsActions.getHostings());
@@ -257,6 +265,28 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
             transportTypeField.options = transportOptions;
           }
         }
+      });
+
+    this.route.paramMap.pipe(take(1)).subscribe((params) => {
+      const packID = params.get('id');
+      this.packageId = packID;
+      if (packID) {
+        this.selectUserId$.pipe(take(1)).subscribe((userId) => {
+          this.store.dispatch(
+            PackageActions.getPackageById({
+              userId: userId.toString(),
+              packID: +packID,
+            })
+          );
+        });
+      } else {
+        this.goBackToNewPackage();
+      }
+    });
+    this.selectPackages$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((packages) => {
+        this.editStepFields(packages.packages[0]);
       });
 
     this.wizardForm = this.fb.group({
@@ -318,6 +348,10 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     this.wizardForm.get(name)?.setValue(event);
   }
 
+  toggleRichEditor(enable: boolean): void {
+    this.enableRichEditor = enable;
+  }
+
   onFileSelected(event: any): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -334,39 +368,23 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     }
   }
 
-  /*onUpload(): void {
-    if (this.selectedFile) {
-      this.imageUploadService.uploadImage(this.selectedFile).subscribe(
-        (response) => {
-          console.log('Upload successful', response);
-        },
-        (error) => {
-          console.error('Upload failed', error);
-        }
-      );
-    } else {
-      console.error('No file selected');
-    }
-  }*/
-
   onSubmit(): void {
-    //if (this.wizardForm.valid) {
     this.selectUserId$.pipe(take(1)).subscribe((userId) => {
       this.store.dispatch(
-        PackageActions.newPackage({
+        PackageActions.updatePackage({
           packageEntity: {
             ...this.wizardForm.value,
             id_user: userId,
+            packID: this.packageId,
           },
         })
       );
       this.goBackToNewPackage();
     });
-    //}
   }
 
   goBackToNewPackage() {
-    this.router.navigate(['paquetes']);
+    this.router.navigate(['admin/paquetes']);
   }
 
   filterTransportSteps(transportValue: string): void {
@@ -481,8 +499,72 @@ export class FullScreenWizardNewPackageComponent implements OnInit {
     return hostingTypes[type] || '';
   }
 
+  getCityValue(id: string) {
+    this.store.dispatch(PackageActions.getCityById({ citID: Number(id) }));
+  }
+
+  toogleEdition(fieldName: string): void {
+    if (fieldName === 'location') {
+      this.isLocationEditedSelected = true;
+      this.wizardForm.get('location')?.setValue(null);
+    } else if (fieldName === 'date') {
+      this.isDateRangeEditedSelected = true;
+      this.wizardForm.get('date')?.setValue(null);
+    }
+  }
+
+  toggleCancelEdition(fieldName: string): void {
+    if (fieldName === 'location') {
+      this.isLocationEditedSelected = false;
+      this.wizardForm.get('location')?.setValue(this.locationEntity.id);
+      this.getCityValue(this.locationEntity.id.toString());
+    } else if (fieldName === 'date') {
+      this.isDateRangeEditedSelected = false;
+      this.wizardForm.get('date')?.setValue(this.dateRangeLabel);
+    }
+  }
+
   private isValidFileType(fileType: string): boolean {
     const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
     return allowedTypes.includes(fileType);
+  }
+
+  private editStepFields(packageData: PackageModel): void {
+    console.log('packageData', packageData);
+    this.wizardForm.get('name')?.setValue(packageData.packTitle);
+    this.wizardForm.get('price')?.setValue(packageData.packPrice);
+
+    this.wizardForm.get('location')?.setValue(packageData.packLocationID);
+    this.locationEntity.id = packageData.packLocationID;
+    this.locationEntity.name = packageData.citName || '';
+
+    this.wizardForm.get('date')?.setValue(packageData.packDateRange);
+    this.dateRangeLabel = packageData.packDateRange;
+
+    this.wizardForm.get('limit')?.setValue(packageData.packLimit);
+    this.wizardForm
+      .get('generalDescription')
+      ?.setValue(packageData.packDescription);
+    if (packageData.packHotelID !== 0) {
+      this.wizardForm.get('hosting')?.setValue('1');
+      this.wizardForm.get('hostingType')?.setValue(packageData.packHotelID);
+      this.wizardForm
+        .get('hotelDescription')
+        ?.setValue(packageData.packHotelDescription);
+    } else {
+      this.wizardForm.get('hosting')?.setValue('0');
+    }
+
+    if (packageData.packTransportId !== 0) {
+      this.wizardForm.get('transport')?.setValue('1');
+      this.wizardForm
+        .get('transportType')
+        ?.setValue(packageData.packTransportId);
+      this.wizardForm
+        .get('transportDescription')
+        ?.setValue(packageData.packTransportDescription);
+    } else {
+      this.wizardForm.get('transport')?.setValue('0');
+    }
   }
 }
