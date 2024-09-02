@@ -1,7 +1,14 @@
-<ckeditor
-  [editor]="Editor"
-  [config]="config"
-  [data]="editorDataInput"
-  (change)="onChange($event)"
-  tagName="textarea"
-></ckeditor>
+<quill-editor
+  [placeholder]="placeholder"
+  [readOnly]="isDisabled"
+  (onContentChanged)="onContentChanged($event)"
+  [styles]="{ height: '50vh', width: '50vw' }"
+  [modules]="{
+    toolbar: [
+      [{ header: 1 }, { header: 2 }],
+      ['bold', 'italic', 'underline'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['link', 'image']
+    ]
+  }"
+></quill-editor>

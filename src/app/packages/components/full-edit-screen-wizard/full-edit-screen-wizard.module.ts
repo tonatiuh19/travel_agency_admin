@@ -8,9 +8,10 @@ import { PackageStoreModule } from '../../store/package.store.module';
 import { FullLoadingMaskModule } from '../../../shared/components/full-loading-mask/full-loading-mask.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RichEditorModule } from '../../../shared/components/rich-editor/rich-editor.module';
+import { SanitizeHtmlPipePipe } from '../../../shared/pipes/sanitize-html-pipe.pipe';
 
 @NgModule({
-  declarations: [FullEditScreenWizardComponent],
+  declarations: [FullEditScreenWizardComponent, SanitizeHtmlPipePipe],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -51,7 +51,7 @@
             />
           </div>
           <div *ngIf="field.type === 'text-area'" class="my-2">
-            <label [for]="field.name"
+            <label [for]="field.name" class="mb-2"
               ><strong>{{ field.label }}</strong></label
             >
             <small
@@ -59,6 +59,7 @@
               class="d-block my-2 text-danger"
               >{{ field.error }}</small
             >
+            <br />
             <app-rich-editor
               [placeholder]="field.hint"
               (editorData)="chossedEditorText($event, field.name)"

@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RichEditorComponent } from './rich-editor.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { QuillEditorComponent, QuillModule } from 'ngx-quill';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [RichEditorComponent],
-  imports: [CommonModule, CKEditorModule],
+  imports: [CommonModule, FormsModule, QuillModule.forRoot()],
   exports: [RichEditorComponent],
 })
 export class RichEditorModule {}

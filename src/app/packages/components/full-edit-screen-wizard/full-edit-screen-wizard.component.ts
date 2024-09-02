@@ -11,6 +11,7 @@ import { PackageModel } from '../../package.model';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { fromSettings } from '../../../settings/store/selectors';
 import { SettingsActions } from '../../../settings/store/actions';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-full-edit-screen-wizard',
@@ -18,6 +19,7 @@ import { SettingsActions } from '../../../settings/store/actions';
   styleUrl: './full-edit-screen-wizard.component.css',
 })
 export class FullEditScreenWizardComponent implements OnInit {
+  public sanitizer!: DomSanitizer;
   public selectPackages$ = this.store.select(fromPackage.selectPackageState);
   public selectIsLoading$ = this.store.select(fromPackage.selectIsLoading);
 
@@ -28,6 +30,8 @@ export class FullEditScreenWizardComponent implements OnInit {
 
   public hostings = [] as any;
   public transports = [] as any;
+
+  public enableRichEditor = true;
 
   public locationEntity = {
     id: 0,
@@ -342,6 +346,10 @@ export class FullEditScreenWizardComponent implements OnInit {
 
   chossedEditorText(event: any, name: string) {
     this.wizardForm.get(name)?.setValue(event);
+  }
+
+  toggleRichEditor(enable: boolean): void {
+    this.enableRichEditor = enable;
   }
 
   onFileSelected(event: any): void {
