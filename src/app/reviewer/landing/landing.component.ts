@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { fromPackage } from '../../admin/packages/store/selectors';
-import { PackageActions } from '../../admin/packages/store/actions';
 import { Subject, takeUntil } from 'rxjs';
 import { PackageModel } from './landing.model';
+import { LandingActions } from './store/actions';
+import { fromLanding } from './store/selectors';
 
 @Component({
   selector: 'app-landing',
@@ -11,7 +11,7 @@ import { PackageModel } from './landing.model';
   styleUrl: './landing.component.css',
 })
 export class LandingComponent implements OnInit {
-  public selectPackages$ = this.store.select(fromPackage.selectPackageState);
+  public selectPackages$ = this.store.select(fromLanding.selectLandingState);
   public isLoading = false;
   public packages: PackageModel[] = [];
   public quotes: string[] = [
@@ -28,7 +28,7 @@ export class LandingComponent implements OnInit {
 
   ngOnInit() {
     this.typeQuote();
-    this.store.dispatch(PackageActions.getPackages({ userId: '1' }));
+    this.store.dispatch(LandingActions.getFullPackages());
     this.selectPackages$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((packages) => {

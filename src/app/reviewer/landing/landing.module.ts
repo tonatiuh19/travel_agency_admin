@@ -7,6 +7,7 @@ import { PlaceCardModule } from '../shared/components/place-card/place-card.modu
 import { PackageImageCardModule } from '../shared/components/package-image-card/package-image-card.module';
 import { HeaderReviewerModule } from '../shared/components/header-reviewer/header-reviewer.module';
 import { FooterReviewerModule } from '../shared/components/footer-reviewer/footer-reviewer.module';
+import { LandingStoreModule } from './store/landing.store.module';
 
 @NgModule({
   declarations: [LandingComponent],
@@ -18,6 +19,7 @@ import { FooterReviewerModule } from '../shared/components/footer-reviewer/foote
     PackageCardModule,
     PlaceCardModule,
     PackageImageCardModule,
+    LandingStoreModule,
   ],
   exports: [LandingComponent],
 })
