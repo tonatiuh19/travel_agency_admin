@@ -1,0 +1,76 @@
+.page-heading {
+  background-color: #fff;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+
+.page-heading h3 {
+  font-size: 48px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.fixed-card {
+  position: sticky;
+  top: 15vh; /* Adjust this value as needed */
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* Ensure the background color is set */
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  margin-bottom: 15px;
+  font-weight: 900;
+}
+
+.card-subtitle {
+  margin-bottom: 10px;
+}
+
+.card-text {
+  margin-bottom: 10px;
+}
+
+.date-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+.custom-list-group {
+  background-color: #d4edda; /* Light green background */
+  border: 1px solid #d4edda; /* Border with a slightly darker green */
+  border-radius: 5px; /* Optional: Add border radius for rounded corners */
+}
+
+.review-stars {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem; /* Adjust the font size as needed */
+}
+
+.review-stars fa-icon {
+  font-size: 0.8rem; /* Adjust the icon size as needed */
+  margin-right: 5px;
+}
+
+.average-rating {
+  font-size: 0.8rem; /* Adjust the font size as needed */
+}
+
+.title-section {
+  font-weight: 900;
+  text-transform: uppercase;
+}

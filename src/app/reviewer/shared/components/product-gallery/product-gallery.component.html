@@ -1,0 +1,14 @@
+<div class="product-gallery">
+  <div class="main-image">
+    <img [src]="selectedImage" alt="Product Image" class="fade-in" />
+  </div>
+  <div class="image-previews">
+    <img
+      *ngFor="let image of images"
+      [src]="image"
+      alt="Product Image"
+      (click)="selectImage(image)"
+      [class.selected]="image === selectedImage"
+    />
+  </div>
+</div>

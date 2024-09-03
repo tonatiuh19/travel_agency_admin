@@ -1,0 +1,57 @@
+/* product-gallery.component.css */
+.product-gallery {
+  display: flex;
+  align-items: flex-start;
+}
+
+.image-previews {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 20px;
+}
+
+.image-previews img {
+  width: 30px; /* Set a fixed width for preview images */
+  height: 30px; /* Set a fixed height for preview images */
+  object-fit: cover; /* Ensure the image covers the entire area */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s, opacity 0.5s ease-in-out;
+}
+
+.image-previews img.selected {
+  border-color: #3498db;
+  opacity: 0.5;
+}
+
+.main-image {
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  width: 100%; /* Ensure the main image container takes up available width */
+  max-width: 600px; /* Set a maximum width for the main image container */
+  height: 300px; /* Set a fixed height for the main image container */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden; /* Hide any overflow */
+  background-color: white; /* Set background color to white */
+}
+
+.main-image img {
+  max-width: 100%; /* Ensure the main image fits within the container */
+  max-height: 100%; /* Ensure the main image fits within the container */
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

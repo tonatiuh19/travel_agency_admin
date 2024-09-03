@@ -31,6 +31,7 @@
     "igniteui-angular": "^18.1.6",
     "ngx-daterangepicker-material": "^6.0.4",
     "ngx-editor": "^17.5.4",
+    "ngx-owl-carousel-o": "^18.0.0",
     "ngx-quill": "^26.0.8",
     "quill": "^2.0.2",
     "rxjs": "~7.8.0",
