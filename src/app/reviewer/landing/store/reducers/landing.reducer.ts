@@ -97,5 +97,36 @@ export const LandingReducer = createRehydrateReducer(
         isError: true,
       };
     }
+  ),
+  on(
+    LandingActions.getFullPackageById,
+    (state: LandingState, { packID }: any) => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+  ),
+  on(
+    LandingActions.getFullPackageByIdSuccess,
+    (state: LandingState, { packageByIdResponse }: any) => {
+      return {
+        ...state,
+        package: packageByIdResponse,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    LandingActions.getFullPackageByIdFailure,
+    (state: LandingState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialLandingState,
+        isLoading: false,
+        isError: true,
+      };
+    }
   )
 );

@@ -19,7 +19,7 @@
   max-width: 300px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: #fff; /* Ensure the background color is set */
 }
 
@@ -47,6 +47,14 @@
   border-radius: 5px;
   padding: 10px;
   background-color: #f8f9fa;
+}
+
+.date-text {
+  font-size: 0.8rem;
+}
+
+.date-text-value {
+  font-weight: 500;
 }
 
 .custom-list-group {

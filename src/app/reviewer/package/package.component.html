@@ -1,10 +1,13 @@
 <main class="main" id="top">
+  <app-loading-reviewer-mask
+    [isLoading]="!isLoading"
+  ></app-loading-reviewer-mask>
   <app-header-reviewer [isMain]="false"></app-header-reviewer>
   <section class="page-heading header-text pt-5">
     <div class="container my-5">
       <div class="row">
         <div class="col-sm-12 py-4">
-          <h3>Single Property</h3>
+          <h3>{{ package[0].packTitle }}</h3>
         </div>
       </div>
     </div>
@@ -16,12 +19,12 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="review-stars mb-2">
-                <fa-icon [icon]="faStar" class="text-warning"></fa-icon>
-                <fa-icon [icon]="faStar" class="text-warning"></fa-icon>
-                <fa-icon [icon]="faStar" class="text-warning"></fa-icon>
-                <fa-icon [icon]="faStar" class="text-warning"></fa-icon>
-                <fa-icon [icon]="faStarHalfAlt" class="text-warning"></fa-icon>
-                <span class="average-rating ms-2">4.5</span>
+                <ng-container *ngFor="let star of stars">
+                  <fa-icon [icon]="star" class="text-warning"></fa-icon>
+                </ng-container>
+                <span class="average-rating ms-2">{{
+                  package[0].averageRating
+                }}</span>
               </div>
             </div>
             <div class="col-sm-12">
@@ -42,11 +45,17 @@
             <div class="col-sm-12 mt-2">
               <div class="text-muted">
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
+                  <li
+                    class="list-group-item"
+                    *ngIf="package[0].packTransportId !== 0"
+                  >
                     <fa-icon [icon]="faCar" class="text-muted"></fa-icon>
                     Transporte incluido
                   </li>
-                  <li class="list-group-item">
+                  <li
+                    class="list-group-item"
+                    *ngIf="package[0].packHotelID !== 0"
+                  >
                     <fa-icon [icon]="faHotel" class="text-muted"></fa-icon>
                     Alojamiento incluido
                   </li>
@@ -55,7 +64,7 @@
                       [icon]="faCommentDots"
                       class="text-muted"
                     ></fa-icon>
-                    Ofrecido en Español, Inglés, Frances
+                    Ofrecido en Español
                   </li>
                 </ul>
               </div>
@@ -63,15 +72,31 @@
             <div class="col-sm-12 mt-5">
               <h5 class="title-section">Descripción:</h5>
             </div>
-            <div class="col-sm-12 mt-2">Descripcion aqui</div>
-            <div class="col-sm-12 mt-5">
+            <div
+              class="col-sm-12 mt-2"
+              [innerHTML]="package[0].packDescription"
+            ></div>
+            <div
+              class="col-sm-12 mt-5"
+              *ngIf="package[0].packTransportId !== 0"
+            >
               <h5 class="title-section">Transporte:</h5>
             </div>
-            <div class="col-sm-12 mt-2">Transporte aqui</div>
+            <div
+              *ngIf="package[0].packTransportId !== 0"
+              class="col-sm-12 mt-2"
+              [innerHTML]="package[0].packTransportDescription"
+            ></div>
             <div class="col-sm-12 mt-5">
-              <h5 class="title-section">Alojamiento:</h5>
+              <h5 class="title-section" *ngIf="package[0].packHotelID !== 0">
+                Alojamiento:
+              </h5>
             </div>
-            <div class="col-sm-12 mt-2">Alojamiento aqui</div>
+            <div
+              *ngIf="package[0].packHotelID !== 0"
+              class="col-sm-12 mt-2"
+              [innerHTML]="package[0].packHotelDescription"
+            ></div>
             <div class="col-sm-12 mt-5">
               <h5 class="title-section">Información importante:</h5>
             </div>
@@ -82,16 +107,26 @@
           <div class="card fixed-card">
             <div class="card-body">
               <h4 class="card-title">
-                $4,500
+                {{ package[0].packPrice | currency }}
                 <button class="btn btn-outline-dark btn-sm ms-2 float-end">
                   <fa-icon [icon]="faShareSquare"></fa-icon>
                 </button>
               </h4>
               <h6 class="card-subtitle mb-2 text-muted">Por persona</h6>
               <div class="row">
-                <div class="date-container col-sm-12 mb-2">
-                  <fa-icon [icon]="faCalendarAlt"></fa-icon>
-                  <span class="date-text ms-1">12 de Octubre, 2023</span>
+                <div
+                  class="date-container col-sm-12 mb-2 d-flex justify-content-center align-items-center"
+                >
+                  <fa-icon [icon]="faCalendarAlt" class="date-text"></fa-icon>
+                  <span class="date-text ms-1">
+                    <span class="date-text-value">{{
+                      extractFirstDate(package[0].packDateRange)
+                    }}</span>
+                    al
+                    <span class="date-text-value">{{
+                      extractSecondDate(package[0].packDateRange)
+                    }}</span>
+                  </span>
                 </div>
               </div>
               <div class="row">

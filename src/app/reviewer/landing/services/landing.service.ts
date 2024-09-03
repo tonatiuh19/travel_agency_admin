@@ -8,7 +8,7 @@ import { DOMAIN } from '../landing.model';
 })
 export class LandingService {
   public GET_FULL_PACKAGES = `${DOMAIN}/getFullPackages.php`;
-  public GET_PACKAGES_BY_ID = `${DOMAIN}/getPackagesById.php`;
+  public GET_FULL_PACKAGES_BY_ID = `${DOMAIN}/getFullPackagesById.php`;
   public GET_CITIES_WITH_COUNT_OF_PACKAGES = `${DOMAIN}/getCitiesWithCountOfPackages.php`;
   public GET_REVIEWS = `${DOMAIN}/getReviews.php`;
 
@@ -20,6 +20,18 @@ export class LandingService {
         return response;
       })
     );
+  }
+
+  public getFullPackagesById(packID: number): Observable<any> {
+    return this.httpClient
+      .post(this.GET_FULL_PACKAGES_BY_ID, {
+        packID: packID,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
   }
 
   public getCitiesWithCountOfPackages(): Observable<any> {

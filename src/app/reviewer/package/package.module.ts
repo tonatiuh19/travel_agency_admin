@@ -5,6 +5,7 @@ import { HeaderReviewerModule } from '../shared/components/header-reviewer/heade
 import { FooterReviewerModule } from '../shared/components/footer-reviewer/footer-reviewer.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProductGalleryModule } from '../shared/components/product-gallery/product-gallery.module';
+import { LoadingReviewerMaskModule } from '../shared/components/loading-reviewer-mask/loading-reviewer-mask.module';
 
 @NgModule({
   declarations: [PackageComponent],
@@ -14,6 +15,7 @@ import { ProductGalleryModule } from '../shared/components/product-gallery/produ
     FooterReviewerModule,
     FontAwesomeModule,
     ProductGalleryModule,
+    LoadingReviewerMaskModule,
   ],
   exports: [PackageComponent],
 })

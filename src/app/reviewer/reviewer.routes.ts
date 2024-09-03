@@ -4,5 +4,5 @@ import { PackageComponent } from './package/package.component';
 
 export const ReviewerRoutes: Routes = [
   { path: '', component: LandingComponent },
-  { path: 'paquete', component: PackageComponent },
+  { path: 'paquete/:id', component: PackageComponent },
 ];

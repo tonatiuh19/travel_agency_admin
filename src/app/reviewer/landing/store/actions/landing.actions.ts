@@ -39,3 +39,18 @@ export const getReviewsFailure = createAction(
   `${actor} Get Reviews Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const getFullPackageById = createAction(
+  `${actor} Get Package By Id`,
+  props<{ packID: number }>()
+);
+
+export const getFullPackageByIdSuccess = createAction(
+  `${actor} Get Package By Id Success`,
+  props<{ packageByIdResponse: any }>()
+);
+
+export const getFullPackageByIdFailure = createAction(
+  `${actor} Get Package By Id Failure`,
+  props<{ errorResponse: any }>()
+);

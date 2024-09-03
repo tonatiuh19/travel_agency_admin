@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LandingActions } from '../actions';
 import { LandingService } from '../../services/landing.service';
+import { fromPackage } from '../../../../admin/packages/store/selectors';
 
 @Injectable()
 export class LandingEffects {
@@ -66,6 +67,37 @@ export class LandingEffects {
             );
           })
         );
+      })
+    );
+  });
+
+  gettingPackageById$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.getFullPackageById),
+      withLatestFrom(this.store.select(fromPackage.selectPackageState)),
+      switchMap(([packageEntity]) => {
+        return this.landingService
+          .getFullPackagesById(packageEntity.packID)
+          .pipe(
+            map((response) => {
+              if (response) {
+                return LandingActions.getFullPackageByIdSuccess({
+                  packageByIdResponse: response,
+                });
+              } else {
+                return LandingActions.getFullPackageByIdFailure({
+                  errorResponse: 'Invalid credentials',
+                });
+              }
+            }),
+            catchError((error) => {
+              return of(
+                LandingActions.getFullPackageByIdFailure({
+                  errorResponse: error,
+                })
+              );
+            })
+          );
       })
     );
   });

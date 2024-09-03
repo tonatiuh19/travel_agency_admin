@@ -2,6 +2,7 @@ export const DOMAIN = 'http://localhost:8015/api';
 
 export interface LandingState {
   packages: PackageModel[];
+  package?: FullPackageModel;
   cities?: CitiesWithCountOfPackagesModel[];
   reviews?: ReviewsModel[];
   isLoading?: boolean;
@@ -23,6 +24,24 @@ export interface PackageModel {
   hotLabel: string;
   imageUrls: string[];
   citName?: string;
+}
+
+export interface FullPackageModel {
+  packID: number;
+  packTitle: string;
+  packDescription: string;
+  packLocationID: number;
+  packHotelID: number;
+  packHotelDescription: string;
+  packLimit: number;
+  packPrice: number;
+  packTransportId: number;
+  packTransportDescription: string;
+  packDateRange: string;
+  hotLabel: string;
+  citName: string;
+  totalReviews: number;
+  averageRating: number;
 }
 
 export interface CitiesWithCountOfPackagesModel {

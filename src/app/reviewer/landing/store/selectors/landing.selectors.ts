@@ -24,3 +24,8 @@ export const selectReviewers = createSelector(
   selectLandingState,
   (state: LandingState) => state
 );
+
+export const selectFullPackageById = createSelector(
+  selectLandingState,
+  (state: LandingState) => state
+);

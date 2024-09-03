@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { PackageModel } from '../../../landing/landing.model';
 import { faCalendar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-package-image-card',
@@ -12,6 +13,8 @@ export class PackageImageCardComponent {
 
   faCalendar = faCalendar;
   faMapMarkerAlt = faMapMarkerAlt;
+
+  constructor(private router: Router) {}
 
   calculateDaysBetweenDates(dateRange: string): number {
     // Split the date range string into start and end dates
@@ -40,5 +43,9 @@ export class PackageImageCardComponent {
 
     // If the dates are the same, return 1
     return diffDays === 0 ? 1 : diffDays;
+  }
+
+  goToPackage(id: number): void {
+    this.router.navigate(['paquete', id]);
   }
 }
