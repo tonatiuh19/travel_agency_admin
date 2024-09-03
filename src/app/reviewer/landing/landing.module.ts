@@ -8,6 +8,7 @@ import { PackageImageCardModule } from '../shared/components/package-image-card/
 import { HeaderReviewerModule } from '../shared/components/header-reviewer/header-reviewer.module';
 import { FooterReviewerModule } from '../shared/components/footer-reviewer/footer-reviewer.module';
 import { LandingStoreModule } from './store/landing.store.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [LandingComponent],
@@ -20,6 +21,7 @@ import { LandingStoreModule } from './store/landing.store.module';
     PlaceCardModule,
     PackageImageCardModule,
     LandingStoreModule,
+    FontAwesomeModule,
   ],
   exports: [LandingComponent],
 })

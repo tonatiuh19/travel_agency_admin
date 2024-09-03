@@ -81,21 +81,15 @@
   <section class="mb-5" id="paquetes">
     <div class="container-fluid">
       <div class="row gx-2">
-        <div class="col-sm-6 col-lg-4 order-1 order-lg-0 gy-2 gy-lg-0">
-          <app-package-image-card></app-package-image-card>
-        </div>
-        <div class="col-sm-6 col-lg-4 order-2 order-lg-0 gy-2 gy-lg-0">
-          <app-package-image-card></app-package-image-card>
-        </div>
         <div class="col-12 col-lg-4">
-          <div class="bg-dark h-100 bg-offcanvas-right">
+          <div class="bg-dark h-100 rounded">
             <div class="row g-0 h-100">
               <div class="col-12 h-100">
                 <div
                   class="d-flex flex-column justify-content-center h-100 text-light p-4"
                 >
                   <h2 class="mb-2 text-light">
-                    <i class="fas fa-gift"></i> Los mejores paquetes
+                    <fa-icon [icon]="faGift"></fa-icon> Los mejores paquetes
                   </h2>
                   <p>Elige entre los paquetes más populares.</p>
                 </div>
@@ -103,36 +97,27 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-6 col-lg-4 gy-2">
-          <app-package-image-card></app-package-image-card>
+        <div class="col-sm-6 col-lg-4" *ngFor="let package of packages">
+          <app-package-image-card [package]="package"></app-package-image-card>
         </div>
-        <div class="col-sm-6 col-lg-4 gy-2">
-          <app-package-image-card></app-package-image-card>
-        </div>
-        <div class="col-sm-6 col-lg-4 gy-2">
-          <app-package-image-card></app-package-image-card>
-        </div>
-        <div class="col-12 col-lg-8 gy-2 order-3 order-lg-0">
-          <div class="bg-dark h-100">
-            <div class="row h-100">
-              <div class="col-12">
+        <div class="col-12 col-lg-4">
+          <div class="bg-dark h-100 rounded">
+            <div class="row g-0 h-100">
+              <div class="col-12 h-100">
                 <div
-                  class="d-flex flex-column flex-center h-100 text-light p-4"
+                  class="d-flex flex-column justify-content-center h-100 text-light p-4"
                 >
-                  <p class="fs-1 p-4 mb-5">
+                  <h2 class="mb-2 text-light">
                     Los paquetes más exclusivos están listos para ti. ¡A solo un
                     clic de distancia!
+                  </h2>
+                  <p>
+                    Entrar <fa-icon [icon]="faArrowAltCircleRight"></fa-icon>
                   </p>
-                  <a class="btn btn-lg text-light fs-3" href="#!" role="button"
-                    >Entrar <i class="fas fa-arrow-alt-circle-right"></i
-                  ></a>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-sm-6 col-lg-4 gy-2">
-          <app-package-image-card></app-package-image-card>
         </div>
       </div>
     </div>
@@ -146,7 +131,7 @@
               <div class="col-12">
                 <div class="p-5 text-light">
                   <h2 class="mb-2 text-light mt-5">
-                    <i class="fas fa-map-marker-alt"></i> Lugares magicos
+                    <fa-icon [icon]="faMapMarkerAlt"></fa-icon> Lugares magicos
                   </h2>
                   <p class="p-2">
                     Disfruta de los beneficios de nuestros paquetes para los
@@ -194,7 +179,7 @@
                 montón de sorpresas preparadas para ti.
               </p>
               <a class="btn btn-lg text-light fs-2" href="#!" role="button"
-                >Saber más <i class="fas fa-arrow-alt-circle-right"></i>
+                >Saber más <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
               </a>
             </div>
           </div>

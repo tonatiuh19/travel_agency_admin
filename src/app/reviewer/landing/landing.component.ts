@@ -4,6 +4,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { PackageModel } from './landing.model';
 import { LandingActions } from './store/actions';
 import { fromLanding } from './store/selectors';
+import {
+  faGift,
+  faArrowAltCircleRight,
+  faMapMarkerAlt,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-landing',
@@ -21,6 +26,10 @@ export class LandingComponent implements OnInit {
   ];
 
   public currentQuoteIndex: number = 0;
+
+  faGift = faGift;
+  faArrowAltCircleRight = faArrowAltCircleRight;
+  faMapMarkerAlt = faMapMarkerAlt;
 
   private unsubscribe$ = new Subject<void>();
 

@@ -12,3 +12,11 @@
   display: inline-block;
   animation: bump 0.9s infinite;
 }
+
+.footer-svg-icon {
+  fill: #fff; /* Change this to your desired color */
+}
+
+.footer-svg-icon:hover {
+  fill: #000; /* Change this to your desired color */
+}

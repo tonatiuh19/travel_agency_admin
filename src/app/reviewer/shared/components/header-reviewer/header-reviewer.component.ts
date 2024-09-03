@@ -1,4 +1,5 @@
 import { Component, HostListener, Input } from '@angular/core';
+import { faPlane, faBolt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-header-reviewer',
@@ -8,6 +9,9 @@ import { Component, HostListener, Input } from '@angular/core';
 export class HeaderReviewerComponent {
   @Input() isMain = true;
   public isColorDark = true;
+
+  faPlane = faPlane;
+  faBolt = faBolt;
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
