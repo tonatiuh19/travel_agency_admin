@@ -1,7 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { LoginComponent } from './login/login.component';
 import { PackagesComponent } from './packages/packages.component';
 import { FullScreenWizardNewPackageComponent } from './packages/components/full-screen-wizard/full-screen-wizard-new-package.component';
 import { FullEditScreenWizardComponent } from './packages/components/full-edit-screen-wizard/full-edit-screen-wizard.component';

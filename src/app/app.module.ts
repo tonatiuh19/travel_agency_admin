@@ -8,6 +8,7 @@ import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { AdminModule } from './admin/admin.module';
+import { ReviewerModule } from './reviewer/reviewer.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { AdminModule } from './admin/admin.module';
       maxAge: 25,
     }),
     AdminModule,
+    ReviewerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

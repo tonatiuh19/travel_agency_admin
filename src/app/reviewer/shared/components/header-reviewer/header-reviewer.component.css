@@ -1,0 +1,16 @@
+.navbar {
+  background-color: transparent;
+  color: black;
+  transition: background-color 0.3s ease;
+}
+
+/*#navbar {
+  background-color: transparent !important;
+  transition: background-color 0.3s ease;
+}*/
+
+/* Navbar styles when scrolled to target element */
+.navbar.scrolled {
+  background-color: black !important;
+  color: white;
+}
