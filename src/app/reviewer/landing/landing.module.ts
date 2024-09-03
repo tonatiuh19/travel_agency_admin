@@ -10,6 +10,7 @@ import { FooterReviewerModule } from '../shared/components/footer-reviewer/foote
 import { LandingStoreModule } from './store/landing.store.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReviewsCarouselModule } from './reviews-carousel/reviews-carousel.module';
+import { LoadingReviewerMaskModule } from '../shared/components/loading-reviewer-mask/loading-reviewer-mask.module';
 
 @NgModule({
   declarations: [LandingComponent],
@@ -24,6 +25,7 @@ import { ReviewsCarouselModule } from './reviews-carousel/reviews-carousel.modul
     LandingStoreModule,
     FontAwesomeModule,
     ReviewsCarouselModule,
+    LoadingReviewerMaskModule,
   ],
   exports: [LandingComponent],
 })

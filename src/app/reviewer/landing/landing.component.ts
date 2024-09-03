@@ -50,7 +50,6 @@ export class LandingComponent implements OnInit {
     this.selectPackages$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((packages) => {
-        console.log(packages);
         this.isLoading = !packages.isLoading;
         this.packages = packages.packages;
         this.cities = packages.cities ? packages.cities : [];

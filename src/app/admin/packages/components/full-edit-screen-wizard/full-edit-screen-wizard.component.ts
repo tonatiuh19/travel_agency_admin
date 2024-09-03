@@ -530,7 +530,6 @@ export class FullEditScreenWizardComponent implements OnInit {
   }
 
   private editStepFields(packageData: PackageModel): void {
-    console.log('packageData', packageData);
     this.wizardForm.get('name')?.setValue(packageData.packTitle);
     this.wizardForm.get('price')?.setValue(packageData.packPrice);
 
