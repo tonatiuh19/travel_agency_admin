@@ -9,6 +9,7 @@ import { HeaderReviewerModule } from '../shared/components/header-reviewer/heade
 import { FooterReviewerModule } from '../shared/components/footer-reviewer/footer-reviewer.module';
 import { LandingStoreModule } from './store/landing.store.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ReviewsCarouselModule } from './reviews-carousel/reviews-carousel.module';
 
 @NgModule({
   declarations: [LandingComponent],
@@ -22,6 +23,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PackageImageCardModule,
     LandingStoreModule,
     FontAwesomeModule,
+    ReviewsCarouselModule,
   ],
   exports: [LandingComponent],
 })

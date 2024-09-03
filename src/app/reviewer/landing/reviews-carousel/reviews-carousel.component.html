@@ -1,0 +1,24 @@
+<div>
+  <div class="carousel">
+    <button (click)="prevReview()">&#10094;</button>
+    <div class="review col-sm-10">
+      <app-review-card
+        [rating]="reviews[currentIndex].rating"
+        [comment]="reviews[currentIndex].comment"
+        [dateTimestamp]="reviews[currentIndex].reviewDate"
+        [reviewerName]="reviews[currentIndex].custName"
+        [reviewerSurName]="reviews[currentIndex].custSurname"
+      ></app-review-card>
+      <!--<h3>Review #{{ reviews[currentIndex].reviewID }}</h3>
+      <p>Rating: {{ reviews[currentIndex].rating }}</p>
+      <p>{{ reviews[currentIndex].comment }}</p>
+      <p>
+        <small>{{ reviews[currentIndex].reviewDate }}</small>
+      </p>-->
+    </div>
+    <button (click)="nextReview()">&#10095;</button>
+  </div>
+</div>
+<div *ngIf="reviews.length === 0">
+  <p>No reviews available.</p>
+</div>

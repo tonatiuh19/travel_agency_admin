@@ -9,9 +9,13 @@
     class="card-img-overlay ps-0 d-flex flex-column justify-content-between bg-voyage-gradient"
   >
     <div class="mt-auto px-4 mb-1">
-      <h3 class="fs-1 fs-md-2 text-white">Agra</h3>
-      <span class="text-light fs--1 me-1"><i class="fas fa-gift"></i></span
-      ><span class="text-light me-3">10 Packages</span>
+      <h3 class="fs-1 fs-md-2 text-white">{{ place.citName }}</h3>
+      <span class="text-light fs--1 me-1"
+        ><fa-icon [icon]="faGift"></fa-icon></span
+      ><span class="text-light me-3"
+        >{{ place.packageCount }}
+        {{ place.packageCount === 1 ? "Paquete" : "Paquetes" }}</span
+      >
     </div>
   </div>
   <a class="stretched-link" href="#!"></a>

@@ -38,5 +38,64 @@ export const LandingReducer = createRehydrateReducer(
         isError: true,
       };
     }
+  ),
+  on(
+    LandingActions.getCitiesWithCountOfPackages,
+    (state: LandingState, { userId }: any) => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+  ),
+  on(
+    LandingActions.getCitiesWithCountOfPackagesSuccess,
+    (state: LandingState, { citiesResponse }: any) => {
+      return {
+        ...state,
+        cities: citiesResponse,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    LandingActions.getCitiesWithCountOfPackagesFailure,
+    (state: LandingState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialLandingState,
+        isLoading: false,
+        isError: true,
+      };
+    }
+  ),
+  on(LandingActions.getReviews, (state: LandingState, { userId }: any) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    LandingActions.getReviewsSuccess,
+    (state: LandingState, { reviewsResponse }: any) => {
+      return {
+        ...state,
+        reviews: reviewsResponse,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    LandingActions.getReviewsFailure,
+    (state: LandingState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialLandingState,
+        isLoading: false,
+        isError: true,
+      };
+    }
   )
 );

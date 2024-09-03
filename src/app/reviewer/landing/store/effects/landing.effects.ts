@@ -28,6 +28,48 @@ export class LandingEffects {
     );
   });
 
+  getCitiesWithCountOfPackages$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.getCitiesWithCountOfPackages),
+      switchMap(() => {
+        return this.landingService.getCitiesWithCountOfPackages().pipe(
+          map((response) => {
+            return LandingActions.getCitiesWithCountOfPackagesSuccess({
+              citiesResponse: response,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              LandingActions.getCitiesWithCountOfPackagesFailure({
+                errorResponse: error,
+              })
+            );
+          })
+        );
+      })
+    );
+  });
+
+  getReviews$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.getReviews),
+      switchMap(() => {
+        return this.landingService.getReviews().pipe(
+          map((response) => {
+            return LandingActions.getReviewsSuccess({
+              reviewsResponse: response,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              LandingActions.getReviewsFailure({ errorResponse: error })
+            );
+          })
+        );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store: Store,

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
-import { PackageModel } from './landing.model';
+import {
+  CitiesWithCountOfPackagesModel,
+  PackageModel,
+  ReviewsModel,
+} from './landing.model';
 import { LandingActions } from './store/actions';
 import { fromLanding } from './store/selectors';
 import {
@@ -19,6 +23,8 @@ export class LandingComponent implements OnInit {
   public selectPackages$ = this.store.select(fromLanding.selectLandingState);
   public isLoading = false;
   public packages: PackageModel[] = [];
+  public cities: CitiesWithCountOfPackagesModel[] = [];
+  public reviews: ReviewsModel[] = [];
   public quotes: string[] = [
     'Descubre lo hermoso',
     'Descubre la belleza',
@@ -38,12 +44,17 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
     this.typeQuote();
     this.store.dispatch(LandingActions.getFullPackages());
+    this.store.dispatch(LandingActions.getCitiesWithCountOfPackages());
+    this.store.dispatch(LandingActions.getReviews());
+
     this.selectPackages$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((packages) => {
         console.log(packages);
         this.isLoading = !packages.isLoading;
         this.packages = packages.packages;
+        this.cities = packages.cities ? packages.cities : [];
+        this.reviews = packages.reviews ? packages.reviews : [];
       });
   }
 

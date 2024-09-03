@@ -9,11 +9,31 @@ import { DOMAIN } from '../landing.model';
 export class LandingService {
   public GET_FULL_PACKAGES = `${DOMAIN}/getFullPackages.php`;
   public GET_PACKAGES_BY_ID = `${DOMAIN}/getPackagesById.php`;
+  public GET_CITIES_WITH_COUNT_OF_PACKAGES = `${DOMAIN}/getCitiesWithCountOfPackages.php`;
+  public GET_REVIEWS = `${DOMAIN}/getReviews.php`;
 
   constructor(private httpClient: HttpClient) {}
 
   public getFullPackages(): Observable<any> {
     return this.httpClient.post(this.GET_FULL_PACKAGES, {}).pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  public getCitiesWithCountOfPackages(): Observable<any> {
+    return this.httpClient
+      .post(this.GET_CITIES_WITH_COUNT_OF_PACKAGES, {})
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public getReviews(): Observable<any> {
+    return this.httpClient.post(this.GET_REVIEWS, {}).pipe(
       map((response) => {
         return response;
       })

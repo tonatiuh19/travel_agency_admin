@@ -143,46 +143,8 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-6 col-lg-4">
-          <app-place-card></app-place-card>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-          <app-place-card></app-place-card>
-        </div>
-      </div>
-      <div class="row g-2">
-        <div class="col-sm-6 col-lg-4">
-          <div class="row g-2">
-            <div class="col-12">
-              <app-place-card></app-place-card>
-            </div>
-            <div class="col-12">
-              <app-place-card></app-place-card>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-4">
-          <div class="row g-2">
-            <div class="col-12">
-              <app-place-card></app-place-card>
-            </div>
-            <div class="col-12">
-              <app-place-card></app-place-card>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-12 col-lg-4">
-          <div class="bg-dark ps-1 h-100 d-flex align-items-center">
-            <div class="text-light p-4">
-              <p class="fs-2 px-4 mb-6">
-                ¿Quieres viajar al lugar más emocionante del planeta? Tenemos un
-                montón de sorpresas preparadas para ti.
-              </p>
-              <a class="btn btn-lg text-light fs-2" href="#!" role="button"
-                >Saber más <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-              </a>
-            </div>
-          </div>
+        <div class="col-sm-6 col-lg-4" *ngFor="let city of cities">
+          <app-place-card [place]="city"></app-place-card>
         </div>
       </div>
     </div>
@@ -190,15 +152,7 @@
   <section class="py-0 pb-8 my-5">
     <div class="container-fluid container-lg">
       <div class="row h-100 g-2 justify-content-center">
-        <div class="col-sm-9 col-md-4 mb-3 mb-md-0 h-100">
-          <app-review-card></app-review-card>
-        </div>
-        <div class="col-sm-9 col-md-4 mb-3 mb-md-0 h-100">
-          <app-review-card></app-review-card>
-        </div>
-        <div class="col-sm-9 col-md-4 mb-3 mb-md-0 h-100">
-          <app-review-card></app-review-card>
-        </div>
+        <app-reviews-carousel [reviews]="reviews"></app-reviews-carousel>
       </div>
     </div>
   </section>

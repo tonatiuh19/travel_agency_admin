@@ -14,3 +14,13 @@ export const selectFullPackages = createSelector(
   selectLandingState,
   (state: LandingState) => state.packages
 );
+
+export const selectCitiesWithCountOfPackages = createSelector(
+  selectLandingState,
+  (state: LandingState) => state
+);
+
+export const selectReviewers = createSelector(
+  selectLandingState,
+  (state: LandingState) => state
+);
