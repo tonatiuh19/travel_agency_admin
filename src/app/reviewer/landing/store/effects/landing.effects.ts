@@ -102,6 +102,43 @@ export class LandingEffects {
     );
   });
 
+  authenticateUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.authenticateUser),
+      withLatestFrom(this.store.select(fromPackage.selectPackageState)),
+      switchMap(([packageEntity]) => {
+        return this.landingService
+          .authenticateUser(
+            packageEntity.user.email,
+            packageEntity.user.given_name,
+            packageEntity.user.family_name,
+            packageEntity.user.picture,
+            packageEntity.user.email_verified
+          )
+          .pipe(
+            map((response) => {
+              if (response) {
+                return LandingActions.authenticateUserSuccess({
+                  user: response,
+                });
+              } else {
+                return LandingActions.authenticateUserFailure({
+                  errorResponse: 'Invalid credentials',
+                });
+              }
+            }),
+            catchError((error) => {
+              return of(
+                LandingActions.authenticateUserFailure({
+                  errorResponse: error,
+                })
+              );
+            })
+          );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store: Store,

@@ -29,3 +29,8 @@ export const selectFullPackageById = createSelector(
   selectLandingState,
   (state: LandingState) => state
 );
+
+export const selectUser = createSelector(
+  selectLandingState,
+  (state: LandingState) => state.user
+);

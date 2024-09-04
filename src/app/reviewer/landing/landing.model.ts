@@ -5,6 +5,7 @@ export interface LandingState {
   package?: FullPackageModel;
   cities?: CitiesWithCountOfPackagesModel[];
   reviews?: ReviewsModel[];
+  user?: UserModel;
   isLoading?: boolean;
   isError?: boolean;
 }
@@ -61,4 +62,13 @@ export interface ReviewsModel {
   reviewDate: Date;
   custName: string;
   custSurname: string;
+}
+
+export interface UserModel {
+  custID: string;
+  custEmail: string;
+  custEmailVerified: string;
+  custName: string;
+  custSurname: string;
+  picture: string;
 }

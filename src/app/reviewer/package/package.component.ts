@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import {
   faCalendar,
   faCalendarAlt,
@@ -54,6 +54,11 @@ export class PackageComponent implements OnInit {
     private store: Store,
     private route: ActivatedRoute
   ) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+    });
     this.unsubscribe$ = new Subject<void>();
   }
 
@@ -74,8 +79,6 @@ export class PackageComponent implements OnInit {
         this.package = packageById.package
           ? (packageById.package as unknown as FullPackageModel[])
           : [];
-
-        console.log(this.package[0]);
         this.calculateStars(this.package[0].averageRating);
       });
   }

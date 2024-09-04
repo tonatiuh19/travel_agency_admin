@@ -128,5 +128,47 @@ export const LandingReducer = createRehydrateReducer(
         isError: true,
       };
     }
-  )
+  ),
+  on(LandingActions.authenticateUser, (state: LandingState, { user }: any) => {
+    return {
+      ...state,
+      user: user,
+      isLoading: true,
+    };
+  }),
+  on(
+    LandingActions.authenticateUserSuccess,
+    (state: LandingState, { user }: any) => {
+      return {
+        ...state,
+        user: user,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    LandingActions.authenticateUserFailure,
+    (state: LandingState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialLandingState,
+        isLoading: false,
+        isError: true,
+      };
+    }
+  ),
+  on(LandingActions.logoutUser, (state: LandingState) => {
+    return {
+      ...state,
+      user: {
+        custID: '',
+        custEmail: '',
+        custEmailVerified: '',
+        custName: '',
+        custSurname: '',
+        picture: '',
+      },
+    };
+  })
 );

@@ -7,12 +7,35 @@ import { DOMAIN } from '../landing.model';
   providedIn: 'root',
 })
 export class LandingService {
+  public GET_LOGIN = `${DOMAIN}/getLogin.php`;
   public GET_FULL_PACKAGES = `${DOMAIN}/getFullPackages.php`;
   public GET_FULL_PACKAGES_BY_ID = `${DOMAIN}/getFullPackagesById.php`;
   public GET_CITIES_WITH_COUNT_OF_PACKAGES = `${DOMAIN}/getCitiesWithCountOfPackages.php`;
   public GET_REVIEWS = `${DOMAIN}/getReviews.php`;
 
   constructor(private httpClient: HttpClient) {}
+
+  public authenticateUser(
+    email: string,
+    given_name: string,
+    family_name: string,
+    picture: string,
+    email_verified: boolean
+  ): Observable<any> {
+    return this.httpClient
+      .post(this.GET_LOGIN, {
+        custEmail: email,
+        custEmailVerified: email_verified,
+        custName: given_name,
+        custSurname: family_name,
+        picture: picture,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
 
   public getFullPackages(): Observable<any> {
     return this.httpClient.post(this.GET_FULL_PACKAGES, {}).pipe(

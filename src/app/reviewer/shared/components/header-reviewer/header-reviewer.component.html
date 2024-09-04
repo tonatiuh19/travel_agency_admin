@@ -169,15 +169,55 @@
       </ul>
       <div>
         <button
+          *ngIf="!isLogged"
           class="btn btn-sm text-white order-1-0 me-2"
           type="button"
           id="btnCrearCuenta"
+          (click)="login()"
         >
           Crear cuenta
         </button>
-        <button class="btn btn-sm btn-outline-light order-0" type="submit">
+        <button
+          *ngIf="!isLogged"
+          class="btn btn-sm btn-outline-light order-0"
+          (click)="login()"
+        >
           Iniciar sesión
         </button>
+        <div class="dropdown">
+          <button
+            *ngIf="isLogged"
+            class="btn btn-sm btn-outline-link dropdown-toggle text-white"
+            type="button"
+            id="dropdownMenuButton"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              *ngIf="isLogged"
+              [src]="user.picture"
+              alt="Profile"
+              class="rounded-circle"
+              width="30"
+              height="30"
+            />
+            <span *ngIf="isLogged">
+              {{ user.custName }} {{ user.custSurname }}</span
+            >
+          </button>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+          >
+            <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <button class="dropdown-item" (click)="logOut()">
+                Cerrar sesión
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
