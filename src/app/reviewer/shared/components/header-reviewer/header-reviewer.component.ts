@@ -37,17 +37,6 @@ export class HeaderReviewerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.auth.handleRedirectCallback().subscribe({
-      next: (result) => {
-        const targetUrl = result.appState?.target || '/';
-        this.router.navigate([targetUrl]);
-      },
-      error: (error) => {
-        console.error(error);
-        this.router.navigate(['/']);
-      },
-    });*/
-
     this.auth.user$.subscribe((profile) => {
       this.profile = profile;
       if (profile) {
@@ -79,9 +68,9 @@ export class HeaderReviewerComponent implements OnInit {
   }
 
   logOut(): void {
-    this.auth.logout();
     this.isLogged = false;
     this.store.dispatch(LandingActions.logoutUser());
+    this.auth.logout();
   }
 
   @HostListener('window:scroll', [])

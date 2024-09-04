@@ -1,0 +1,39 @@
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  margin-bottom: 15px;
+  font-weight: 900;
+}
+
+.card-subtitle {
+  margin-bottom: 10px;
+}
+
+.card-text {
+  margin-bottom: 10px;
+}
+
+.date-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+.date-text {
+  font-size: 0.8rem;
+}
+
+.date-text-value {
+  font-weight: 500;
+}
+
+.custom-list-group {
+  background-color: #d4edda; /* Light green background */
+  border: 1px solid #d4edda; /* Border with a slightly darker green */
+  border-radius: 5px; /* Optional: Add border radius for rounded corners */
+}

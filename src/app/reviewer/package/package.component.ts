@@ -99,6 +99,10 @@ export class PackageComponent implements OnInit {
     }
   }
 
+  buyPackage(packID: number): void {
+    this.router.navigate(['checkout', packID]);
+  }
+
   public extractFirstDate(dateRange: string): string {
     const parts = dateRange.split(' ');
     const firstDatePart = parts[0].trim();
