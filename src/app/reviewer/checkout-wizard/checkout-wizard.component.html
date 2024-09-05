@@ -148,7 +148,20 @@
       *ngIf="isLogged"
     >
       <div class="row">
-        <div class="col-sm-12 text-center">Form</div>
+        <div class="col-sm-12 text-center">
+          <form (submit)="handlePayment()">
+            <div class="wizard-step mb-4">
+              <h3>Step 3: Payment Information</h3>
+              <div class="mb-3">
+                <label for="card-element" class="form-label"
+                  >Credit or Debit Card</label
+                >
+                <div id="card-element" class="form-control"></div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
       </div>
     </div>
     <div class="col-md-4 p-4 d-flex justify-content-center align-items-center">

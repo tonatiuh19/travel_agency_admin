@@ -12,6 +12,8 @@ import {
 import { FullPackageModel } from '../landing/landing.model';
 import { LandingActions } from '../landing/store/actions';
 import { AuthService } from '@auth0/auth0-angular';
+import { StripeService } from '../landing/services/stripe.service';
+import { Stripe, StripeElements, StripeCardElement } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-checkout-wizard',
@@ -34,11 +36,16 @@ export class CheckoutWizardComponent implements OnInit {
 
   private unsubscribe$ = new Subject<void>();
 
+  private stripe: Stripe | null = null;
+  private elements: StripeElements | null = null;
+  private card: StripeCardElement | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private store: Store,
     public auth: AuthService,
-    private router: Router
+    private router: Router,
+    private stripeService: StripeService
   ) {
     this.unsubscribe$ = new Subject<void>();
   }
@@ -79,9 +86,37 @@ export class CheckoutWizardComponent implements OnInit {
       });
   }
 
+  ngAfterViewInit(): void {
+    this.setupStripe();
+  }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  async setupStripe() {
+    this.stripe = await this.stripeService.getStripe();
+    if (this.stripe) {
+      this.elements = this.stripe.elements();
+      this.card = this.elements.create('card');
+      this.card.mount('#card-element');
+    }
+  }
+
+  async handlePayment() {
+    if (!this.stripe || !this.card) {
+      return;
+    }
+
+    const { token, error } = await this.stripe.createToken(this.card);
+
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('Token:', token);
+      // Send the token to your server for processing the payment
+    }
   }
 
   login(): void {
