@@ -11,6 +11,7 @@ export const initialLandingState: LandingState = {
     custName: '',
     custSurname: '',
     picture: '',
+    custStripeID: '',
   },
   isLoading: false,
   isError: false,

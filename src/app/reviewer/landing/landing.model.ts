@@ -71,4 +71,5 @@ export interface UserModel {
   custName: string;
   custSurname: string;
   picture: string;
+  custStripeID?: string;
 }

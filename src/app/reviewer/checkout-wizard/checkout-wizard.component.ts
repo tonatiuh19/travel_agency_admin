@@ -106,6 +106,7 @@ export class CheckoutWizardComponent implements OnInit {
 
   async handlePayment() {
     if (!this.stripe || !this.card) {
+      console.error('Stripe.js has not loaded yet');
       return;
     }
 
