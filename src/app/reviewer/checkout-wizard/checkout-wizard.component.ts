@@ -118,6 +118,7 @@ export class CheckoutWizardComponent implements OnInit {
 
   onNumPassengersChange(): void {
     this.passengerForm.get('numPassengers')?.valueChanges.subscribe((num) => {
+      this.updatePrice(num);
       this.updatePassengerInputs(num);
     });
   }
@@ -191,6 +192,10 @@ export class CheckoutWizardComponent implements OnInit {
     this.auth.loginWithRedirect({
       appState: { target: urlSegment },
     });
+  }
+
+  updatePrice(passengers: number): void {
+    this.pricePackage = this.package[0].packPrice * passengers;
   }
 
   public extractFirstDate(dateRange: string): string {
