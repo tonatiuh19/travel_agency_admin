@@ -138,10 +138,27 @@ export class CheckoutWizardComponent implements OnInit {
   }
 
   async setupStripe() {
+    const style = {
+      base: {
+        color: '#32325d',
+        fontSmoothing: 'antialiased',
+        fontSize: '18px',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      invalid: {
+        color: '#dc3545',
+        iconColor: '#dc3545',
+      },
+    };
     this.stripe = await this.stripeService.getStripe();
     if (this.stripe) {
-      this.elements = this.stripe.elements();
-      this.card = this.elements.create('card');
+      this.elements = this.stripe.elements({
+        locale: 'es', // Set the locale to Spanish
+      });
+      this.card = this.elements.create('card', { style });
+      //this.card = this.elements.create('card');
       this.card.mount('#card-element');
     }
   }
