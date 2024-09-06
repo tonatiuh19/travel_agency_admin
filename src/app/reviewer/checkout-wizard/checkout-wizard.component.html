@@ -148,29 +148,198 @@
       *ngIf="isLogged"
     >
       <div class="row">
-        <div class="col-sm-12 text-center">
-          <form (submit)="handlePayment()">
+        <div class="col-sm-12">
+          <form [formGroup]="passengerForm" (submit)="handlePayment()">
             <div class="wizard-step mb-4">
-              <h3>Step 3: Payment Information</h3>
+              <div class="mb-4">
+                <label for="numPassengers" class="form-label"
+                  >¿Cuantos pasajeros son?</label
+                >
+                <select
+                  id="numPassengers"
+                  class="form-select"
+                  [ngClass]="{
+                    'is-invalid':
+                      passengerForm.get('numPassengers')?.status === 'INVALID',
+                    'is-valid':
+                      passengerForm.get('numPassengers')?.status === 'VALID'
+                  }"
+                  formControlName="numPassengers"
+                >
+                  <option
+                    *ngFor="
+                      let num of [
+                        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+                      ]
+                    "
+                    [value]="num"
+                  >
+                    {{ num }}
+                  </option>
+                </select>
+              </div>
+              <div formArrayName="passengers" class="mb-3">
+                <div class="accordion" id="passengerAccordion">
+                  <div
+                    *ngFor="let passenger of passengers.controls; let i = index"
+                    [formGroupName]="i"
+                    class="accordion-item"
+                  >
+                    <h2 class="accordion-header" id="heading-{{ i }}">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#collapse-' + i"
+                        aria-expanded="true"
+                      >
+                        Pasajero {{ i + 1 }}
+                      </button>
+                    </h2>
+                    <span
+                      *ngIf="
+                        (passengerForm.get(['passengers', i, 'nombre'])
+                          ?.invalid &&
+                          passengerForm.get(['passengers', i, 'nombre'])
+                            ?.touched) ||
+                        (passengerForm.get(['passengers', i, 'apellido'])
+                          ?.invalid &&
+                          passengerForm.get(['passengers', i, 'apellido'])
+                            ?.touched) ||
+                        (passengerForm.get(['passengers', i, 'edad'])
+                          ?.invalid &&
+                          passengerForm.get(['passengers', i, 'edad'])?.touched)
+                      "
+                      class="badge bg-danger m-2"
+                      ><fa-icon [icon]="faExclamationTriangle"></fa-icon>
+                      Completa los datos de los pasajeros</span
+                    >
+                    <div
+                      id="collapse-{{ i }}"
+                      class="accordion-collapse collapse"
+                      data-bs-parent="#passengerAccordion"
+                    >
+                      <div class="accordion-body">
+                        <div class="mb-3">
+                          <label for="nombre-{{ i }}" class="form-label"
+                            >Nombre:</label
+                          >
+                          <input
+                            type="text"
+                            id="nombre-{{ i }}"
+                            class="form-control"
+                            formControlName="nombre"
+                            [ngClass]="{
+                              'is-invalid':
+                                passengerForm.get(['passengers', i, 'nombre'])
+                                  ?.invalid &&
+                                passengerForm.get(['passengers', i, 'nombre'])
+                                  ?.touched,
+                              'is-valid':
+                                passengerForm.get(['passengers', i, 'nombre'])
+                                  ?.valid &&
+                                passengerForm.get(['passengers', i, 'nombre'])
+                                  ?.touched
+                            }"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="apellido-{{ i }}" class="form-label"
+                            >Apellido:</label
+                          >
+                          <input
+                            type="text"
+                            id="apellido-{{ i }}"
+                            class="form-control"
+                            formControlName="apellido"
+                            [ngClass]="{
+                              'is-invalid':
+                                passengerForm.get(['passengers', i, 'apellido'])
+                                  ?.invalid &&
+                                passengerForm.get(['passengers', i, 'apellido'])
+                                  ?.touched,
+                              'is-valid':
+                                passengerForm.get(['passengers', i, 'apellido'])
+                                  ?.valid &&
+                                passengerForm.get(['passengers', i, 'apellido'])
+                                  ?.touched
+                            }"
+                          />
+                        </div>
+                        <div class="mb-3">
+                          <label for="edad-{{ i }}" class="form-label"
+                            >Edad:</label
+                          >
+                          <input
+                            type="number"
+                            id="edad-{{ i }}"
+                            class="form-control"
+                            formControlName="edad"
+                            [ngClass]="{
+                              'is-invalid':
+                                passengerForm.get(['passengers', i, 'edad'])
+                                  ?.invalid &&
+                                passengerForm.get(['passengers', i, 'edad'])
+                                  ?.touched,
+                              'is-valid':
+                                passengerForm.get(['passengers', i, 'edad'])
+                                  ?.valid &&
+                                passengerForm.get(['passengers', i, 'edad'])
+                                  ?.touched
+                            }"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="mb-3">
                 <label for="card-element" class="form-label"
-                  >Credit or Debit Card</label
+                  >Ingresa los datos de tu tarjeta:</label
                 >
                 <div id="card-element" class="form-control"></div>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="wizard-step mb-2 text-center">
+              <small>Al pagar acepto los términos y condiciones</small>
+            </div>
+            <div class="wizard-step mb-2 text-center">
+              <button type="submit" class="btn btn-success w-100">
+                <fa-icon [icon]="faLock" class="me-1"></fa-icon> Pagar
+              </button>
+            </div>
+            <div
+              class="wizard-step text-center custom-list-group p-2 encryption-title"
+            >
+              <fa-icon [icon]="faKey" class="me-1"></fa-icon> Tus pagos se
+              realizan de forma segura con encriptación de 256 bits.
+            </div>
           </form>
         </div>
       </div>
     </div>
     <div class="col-md-4 p-4 d-flex justify-content-center align-items-center">
-      <div class="card fixed-card">
+      <div class="card fixed-card no-border-card">
         <div class="card-body">
-          <h4 class="card-title">
-            {{ pricePackage | currency }}
-          </h4>
-          <h6 class="card-subtitle mb-2 text-muted">Por persona</h6>
+          <div class="row mb-2">
+            <div
+              class="col-sm-12 d-flex justify-content-center align-items-center"
+            >
+              <h3 class="card-title text-primary">
+                {{ package[0].packTitle }}
+              </h3>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div
+              class="col-sm-12 d-flex justify-content-center align-items-center"
+            >
+              <h4 class="card-title">
+                {{ pricePackage | currency }}
+              </h4>
+            </div>
+          </div>
           <div class="row">
             <div
               class="date-container col-sm-12 mb-2 d-flex justify-content-center align-items-center"
@@ -186,11 +355,6 @@
                 }}</span>
               </span>
             </div>
-          </div>
-          <div class="row">
-            <button class="btn btn-success w-100 col-sm-12">
-              <fa-icon [icon]="faLock"></fa-icon> Pagar
-            </button>
           </div>
           <div class="mt-2 custom-list-group row">
             <small class="col-sm-12 mt-2">

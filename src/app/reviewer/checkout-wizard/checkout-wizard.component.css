@@ -25,7 +25,7 @@
 }
 
 .date-text {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 .date-text-value {
@@ -36,4 +36,26 @@
   background-color: #d4edda; /* Light green background */
   border: 1px solid #d4edda; /* Border with a slightly darker green */
   border-radius: 5px; /* Optional: Add border radius for rounded corners */
+}
+
+.no-border-card {
+  border: none;
+}
+
+.wizard-step {
+  width: 50vw;
+}
+
+.encryption-title {
+  font-size: 0.7rem;
+}
+
+.accordion-button:not(.collapsed) {
+  font-weight: 500;
+  background-color: #fff;
+  border-color: aqua;
+}
+
+.accordion-button-invalid {
+  color: #dc3545;
 }

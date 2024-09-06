@@ -8,12 +8,15 @@ import {
   faCalendarAlt,
   faCheckCircle,
   faLock,
+  faKey,
+  faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FullPackageModel } from '../landing/landing.model';
 import { LandingActions } from '../landing/store/actions';
 import { AuthService } from '@auth0/auth0-angular';
 import { StripeService } from '../landing/services/stripe.service';
 import { Stripe, StripeElements, StripeCardElement } from '@stripe/stripe-js';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-checkout-wizard',
@@ -30,9 +33,13 @@ export class CheckoutWizardComponent implements OnInit {
   public isLogged = false;
   public pricePackage = 0;
 
+  public passengerForm: FormGroup;
+
   faCalendarAlt = faCalendarAlt;
   faCheckCircle = faCheckCircle;
   faLock = faLock;
+  faKey = faKey;
+  faExclamationTriangle = faExclamationTriangle;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -45,8 +52,14 @@ export class CheckoutWizardComponent implements OnInit {
     private store: Store,
     public auth: AuthService,
     private router: Router,
-    private stripeService: StripeService
+    private stripeService: StripeService,
+    private fb: FormBuilder
   ) {
+    this.passengerForm = this.fb.group({
+      numPassengers: ['', Validators.required],
+      passengers: this.fb.array([]),
+      terms: [false, Validators.requiredTrue],
+    });
     this.unsubscribe$ = new Subject<void>();
   }
 
@@ -84,15 +97,44 @@ export class CheckoutWizardComponent implements OnInit {
           : [];
         this.pricePackage = this.package[0].packPrice;
       });
+
+    this.onNumPassengersChange();
   }
 
   ngAfterViewInit(): void {
-    this.setupStripe();
+    if (this.isLogged) {
+      this.setupStripe();
+    }
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  get passengers(): FormArray {
+    return this.passengerForm.get('passengers') as FormArray;
+  }
+
+  onNumPassengersChange(): void {
+    this.passengerForm.get('numPassengers')?.valueChanges.subscribe((num) => {
+      this.updatePassengerInputs(num);
+    });
+  }
+
+  updatePassengerInputs(num: number): void {
+    while (this.passengers.length !== 0) {
+      this.passengers.removeAt(0);
+    }
+    for (let i = 0; i < num; i++) {
+      this.passengers.push(
+        this.fb.group({
+          nombre: ['', Validators.required],
+          apellido: ['', Validators.required],
+          edad: ['', [Validators.required, Validators.min(0)]],
+        })
+      );
+    }
   }
 
   async setupStripe() {
@@ -111,6 +153,12 @@ export class CheckoutWizardComponent implements OnInit {
     }
 
     const { token, error } = await this.stripe.createToken(this.card);
+
+    if (this.passengerForm.valid) {
+      console.log(this.passengerForm.value);
+    } else {
+      this.passengerForm.markAllAsTouched(); // Mark all fields as touched to show validation errors
+    }
 
     if (error) {
       console.error(error);
