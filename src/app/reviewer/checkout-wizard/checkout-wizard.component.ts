@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, take, takeUntil } from 'rxjs';
@@ -10,6 +10,8 @@ import {
   faLock,
   faKey,
   faExclamationTriangle,
+  faUserCheck,
+  faIdCardAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FullPackageModel } from '../landing/landing.model';
 import { LandingActions } from '../landing/store/actions';
@@ -40,6 +42,8 @@ export class CheckoutWizardComponent implements OnInit {
   faLock = faLock;
   faKey = faKey;
   faExclamationTriangle = faExclamationTriangle;
+  faUserCheck = faUserCheck;
+  faIdCardAlt = faIdCardAlt;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -59,6 +63,10 @@ export class CheckoutWizardComponent implements OnInit {
       numPassengers: ['', Validators.required],
       passengers: this.fb.array([]),
       terms: [false, Validators.requiredTrue],
+      contactName: ['', Validators.required],
+      contatSurname: ['', Validators.required],
+      contactEmail: ['', [Validators.required, Validators.email]],
+      contactPhone: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
     });
     this.unsubscribe$ = new Subject<void>();
   }

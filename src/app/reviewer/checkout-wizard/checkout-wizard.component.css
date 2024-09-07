@@ -44,6 +44,14 @@
 
 .wizard-step {
   width: 50vw;
+  background-color: #ecf0ee; /* Light green background */
+  border: 1px solid #ecf0ee; /* Border with a slightly darker green */
+  border-radius: 5px;
+  padding: 1em;
+}
+
+.wizard-step-no-background {
+  width: 50vw;
 }
 
 .encryption-title {
@@ -58,4 +66,22 @@
 
 .accordion-button-invalid {
   color: #dc3545;
+}
+
+.step-list-wizard {
+  background-color: #d4edda; /* Light green background */
+  border: 1px solid #d4edda; /* Border with a slightly darker green */
+  border-radius: 5px; /* Optional: Add border radius for rounded corners */
+}
+
+.fixed-card-container {
+  position: fixed;
+  right: 0;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.scrollable-content {
+  margin-right: 25%; /* Adjust margin to match the fixed card width */
+  overflow-y: auto;
 }
