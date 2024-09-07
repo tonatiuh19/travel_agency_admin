@@ -406,6 +406,10 @@
               <div #cardElement>
                 <app-cards></app-cards>
               </div>
+              <span *ngIf="isStripeError" class="badge bg-danger"
+                ><fa-icon [icon]="faExclamationTriangle"></fa-icon>
+                {{ stripeErrorMessage }}</span
+              >
               <div id="card-element" class="form-control mt-2"></div>
             </div>
             <div class="wizard-step-no-background mb-2 text-center">

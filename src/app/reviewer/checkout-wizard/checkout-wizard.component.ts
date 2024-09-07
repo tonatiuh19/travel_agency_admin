@@ -37,6 +37,9 @@ export class CheckoutWizardComponent implements OnInit {
 
   public passengerForm: FormGroup;
 
+  public isStripeError = false;
+  public stripeErrorMessage = '';
+
   faCalendarAlt = faCalendarAlt;
   faCheckCircle = faCheckCircle;
   faLock = faLock;
@@ -188,6 +191,8 @@ export class CheckoutWizardComponent implements OnInit {
 
     if (error) {
       console.error(error);
+      this.isStripeError = true;
+      this.stripeErrorMessage = error.message || '';
     } else {
       console.log('Token:', token);
       // Send the token to your server for processing the payment
