@@ -12,6 +12,8 @@ import {
   faExclamationTriangle,
   faUserCheck,
   faIdCardAlt,
+  faGlobeAmericas,
+  faCircleNotch,
 } from '@fortawesome/free-solid-svg-icons';
 import { FullPackageModel } from '../landing/landing.model';
 import { LandingActions } from '../landing/store/actions';
@@ -29,9 +31,11 @@ export class CheckoutWizardComponent implements OnInit {
   public selectUser$ = this.store.select(fromLanding.selectUser);
   public selectPackage$ = this.store.select(fromLanding.selectFullPackageById);
   public isLoading = false;
+  public isLoadingCheckout = false;
 
   public package: FullPackageModel[] = [];
   public user: any = {};
+  public booking: any = {};
   public isLogged = false;
   public pricePackage = 0;
 
@@ -47,6 +51,8 @@ export class CheckoutWizardComponent implements OnInit {
   faExclamationTriangle = faExclamationTriangle;
   faUserCheck = faUserCheck;
   faIdCardAlt = faIdCardAlt;
+  faGlobeAmericas = faGlobeAmericas;
+  faCircleNotch = faCircleNotch;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -65,9 +71,8 @@ export class CheckoutWizardComponent implements OnInit {
     this.passengerForm = this.fb.group({
       numPassengers: ['', Validators.required],
       passengers: this.fb.array([]),
-      terms: [false, Validators.requiredTrue],
       contactName: ['', Validators.required],
-      contatSurname: ['', Validators.required],
+      contactSurname: ['', Validators.required],
       contactEmail: ['', [Validators.required, Validators.email]],
       contactPhone: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
     });
@@ -96,12 +101,24 @@ export class CheckoutWizardComponent implements OnInit {
 
     this.selectUser$.pipe(takeUntil(this.unsubscribe$)).subscribe((user) => {
       this.user = user;
+      this.user.custName
+        ? this.passengerForm.get('contactName')?.setValue(this.user.custName)
+        : this.passengerForm.get('contactName')?.setValue('');
+      this.user.custSurname
+        ? this.passengerForm
+            .get('contactSurname')
+            ?.setValue(this.user.custSurname)
+        : this.passengerForm.get('contactSurname')?.setValue('');
+      this.user.custEmail
+        ? this.passengerForm.get('contactEmail')?.setValue(this.user.custEmail)
+        : this.passengerForm.get('contactEmail')?.setValue('');
       this.isLogged = !!(user && this.user.custID !== '');
     });
 
     this.selectPackage$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((packageById) => {
+        console.log('Package by ID:', packageById);
         this.isLoading = !packageById.isLoading;
         this.package = packageById.package
           ? (packageById.package as unknown as FullPackageModel[])
@@ -147,6 +164,12 @@ export class CheckoutWizardComponent implements OnInit {
         })
       );
     }
+    if (this.passengers.length > 0) {
+      this.passengers.controls[0].get('nombre')?.setValue(this.user.custName);
+      this.passengers.controls[0]
+        .get('apellido')
+        ?.setValue(this.user.custSurname);
+    }
   }
 
   async setupStripe() {
@@ -176,6 +199,7 @@ export class CheckoutWizardComponent implements OnInit {
   }
 
   async handlePayment() {
+    this.isLoadingCheckout = true;
     if (!this.stripe || !this.card) {
       console.error('Stripe.js has not loaded yet');
       return;
@@ -183,19 +207,35 @@ export class CheckoutWizardComponent implements OnInit {
 
     const { token, error } = await this.stripe.createToken(this.card);
 
+    this.booking = {
+      ...this.passengerForm.value,
+      packID: this.package[0].packID,
+      packPrice: this.pricePackage,
+      bookCustomerID: this.user.custID,
+      custStripeID: this.user.custStripeID,
+    };
+
     if (this.passengerForm.valid) {
       console.log(this.passengerForm.value);
+      if (error) {
+        console.error(error);
+        this.isLoadingCheckout = false;
+        this.isStripeError = true;
+        this.stripeErrorMessage = error.message || '';
+      } else {
+        this.store.dispatch(
+          LandingActions.paying({
+            paymentData: {
+              ...this.booking,
+              token: token.id,
+            },
+          })
+        );
+        // Send the token to your server for processing the payment
+      }
     } else {
+      this.isLoadingCheckout = false;
       this.passengerForm.markAllAsTouched(); // Mark all fields as touched to show validation errors
-    }
-
-    if (error) {
-      console.error(error);
-      this.isStripeError = true;
-      this.stripeErrorMessage = error.message || '';
-    } else {
-      console.log('Token:', token);
-      // Send the token to your server for processing the payment
     }
   }
 

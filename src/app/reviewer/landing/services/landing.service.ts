@@ -12,6 +12,7 @@ export class LandingService {
   public GET_FULL_PACKAGES_BY_ID = `${DOMAIN}/getFullPackagesById.php`;
   public GET_CITIES_WITH_COUNT_OF_PACKAGES = `${DOMAIN}/getCitiesWithCountOfPackages.php`;
   public GET_REVIEWS = `${DOMAIN}/getReviews.php`;
+  public PAYING = `${DOMAIN}/paying.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -85,5 +86,39 @@ export class LandingService {
     const parts = dateRange.split(' ');
     const dateAfterSecondSpace = parts[2].trim();
     return dateAfterSecondSpace;
+  }
+
+  public payingPackage(
+    numPassengers: number,
+    passengers: any,
+    contactName: string,
+    contactSurname: string,
+    contactEmail: string,
+    contactPhone: string,
+    bookCustomerID: number,
+    packID: number,
+    packPrice: string,
+    custStripeID: string,
+    token: string
+  ): Observable<any> {
+    return this.httpClient
+      .post(this.PAYING, {
+        numPassengers: numPassengers,
+        passengers: passengers,
+        contactName: contactName,
+        contactSurname: contactSurname,
+        contactEmail: contactEmail,
+        contactPhone: contactPhone,
+        bookCustomerID: bookCustomerID,
+        packID: packID,
+        packPrice: packPrice,
+        custStripeID: custStripeID,
+        token: token,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
   }
 }

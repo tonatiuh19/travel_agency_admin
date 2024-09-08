@@ -3,6 +3,7 @@ export const DOMAIN = 'http://localhost:8015/api';
 export interface LandingState {
   packages: PackageModel[];
   package?: FullPackageModel;
+  payment?: PaymentModel;
   cities?: CitiesWithCountOfPackagesModel[];
   reviews?: ReviewsModel[];
   user?: UserModel;
@@ -72,4 +73,10 @@ export interface UserModel {
   custSurname: string;
   picture: string;
   custStripeID?: string;
+}
+
+export interface PaymentModel {
+  message: string;
+  paymentSuccess: boolean;
+  errorCode?: string;
 }

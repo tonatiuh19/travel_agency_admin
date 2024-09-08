@@ -341,7 +341,7 @@
                     id="contactName"
                     type="text"
                     placeholder="Ingresa tu nombre:"
-                    class="form-control"
+                    class="form-control m-1"
                     formControlName="contactName"
                     [ngClass]="{
                       'is-invalid':
@@ -355,15 +355,15 @@
                   <input
                     type="text"
                     placeholder="Ingresa tu apellido:"
-                    class="form-control"
-                    id="contatSurname"
-                    formControlName="contatSurname"
+                    class="form-control m-1"
+                    id="contactSurname"
+                    formControlName="contactSurname"
                     [ngClass]="{
                       'is-invalid':
-                        passengerForm.get('contatSurname')?.status ===
+                        passengerForm.get('contactSurname')?.status ===
                         'INVALID',
                       'is-valid':
-                        passengerForm.get('contatSurname')?.status === 'VALID'
+                        passengerForm.get('contactSurname')?.status === 'VALID'
                     }"
                   />
                 </div>
@@ -371,7 +371,7 @@
                   <input
                     type="email"
                     placeholder="Ingresa tu email:"
-                    class="form-control"
+                    class="form-control m-1"
                     id="contactEmail"
                     formControlName="contactEmail"
                     [ngClass]="{
@@ -386,7 +386,7 @@
                   <input
                     type="text"
                     placeholder="Ingresa tu teléfono:"
-                    class="form-control"
+                    class="form-control m-1"
                     id="contactPhone"
                     formControlName="contactPhone"
                     [ngClass]="{
@@ -416,8 +416,20 @@
               <small>Al pagar acepto los términos y condiciones</small>
             </div>
             <div class="wizard-step-no-background mb-2 text-center">
-              <button type="submit" class="btn btn-success w-100">
+              <button
+                *ngIf="!isLoadingCheckout"
+                type="submit"
+                class="btn btn-success w-100"
+              >
                 <fa-icon [icon]="faLock" class="me-1"></fa-icon> Pagar
+              </button>
+              <button
+                *ngIf="isLoadingCheckout"
+                class="btn btn-success w-100"
+                disabled
+              >
+                <fa-icon [icon]="faCircleNotch" class="me-1 spin"></fa-icon>
+                Pagando
               </button>
             </div>
             <div
@@ -564,7 +576,7 @@
             <div
               class="col-sm-12 d-flex justify-content-center align-items-center"
             >
-              <h3 class="card-title text-primary">
+              <h3 class="card-title text-primary text-center">
                 {{ package[0].packTitle }}
               </h3>
             </div>
@@ -597,15 +609,15 @@
           <div class="mt-2 custom-list-group row">
             <small class="col-sm-12 mt-2">
               <fa-icon [icon]="faCheckCircle" class="text-success"></fa-icon>
-              Pago seguro
+              Pago seguro, viaja tranquilo, paga seguro
             </small>
-            <small class="col-sm-12 mt-2">
+            <small class="col-sm-12 mt-3">
               <fa-icon [icon]="faCheckCircle" class="text-success"></fa-icon>
-              Garantía de satisfacción
+              Garantía de satisfacción, tu viaje, tu felicidad garantizada
             </small>
-            <small class="col-sm-12 mt-2">
+            <small class="col-sm-12 mt-3">
               <fa-icon [icon]="faCheckCircle" class="text-success"></fa-icon>
-              Soporte 24/7
+              oporte 24/7, estamos contigo, siempre
             </small>
           </div>
         </div>

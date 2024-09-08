@@ -170,5 +170,33 @@ export const LandingReducer = createRehydrateReducer(
         picture: '',
       },
     };
-  })
+  }),
+  on(LandingActions.paying, (state: LandingState, { paymentData }: any) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  }),
+  on(
+    LandingActions.payingSuccess,
+    (state: LandingState, { paymentResponse }: any) => {
+      return {
+        ...state,
+        payment: paymentResponse,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    LandingActions.payingFailure,
+    (state: LandingState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialLandingState,
+        isLoading: false,
+        isError: true,
+      };
+    }
+  )
 );

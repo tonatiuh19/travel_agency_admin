@@ -85,3 +85,17 @@
   margin-right: 25%; /* Adjust margin to match the fixed card width */
   overflow-y: auto;
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  display: inline-block; /* Ensure the element is inline-block to apply transform */
+  animation: spin 1s linear infinite;
+}

@@ -71,3 +71,18 @@ export const authenticateUserFailure = createAction(
 );
 
 export const logoutUser = createAction(`${actor} Logout User`);
+
+export const paying = createAction(
+  `${actor} Paying`,
+  props<{ paymentData: any }>()
+);
+
+export const payingSuccess = createAction(
+  `${actor} Paying Success`,
+  props<{ paymentResponse: any }>()
+);
+
+export const payingFailure = createAction(
+  `${actor} Paying Failure`,
+  props<{ errorResponse: any }>()
+);

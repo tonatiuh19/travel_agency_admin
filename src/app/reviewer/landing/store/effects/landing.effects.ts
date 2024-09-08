@@ -139,6 +139,38 @@ export class LandingEffects {
     );
   });
 
+  $paying = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.paying),
+      switchMap(({ paymentData }) => {
+        return this.landingService
+          .payingPackage(
+            paymentData.numPassengers,
+            paymentData.passengers,
+            paymentData.contactName,
+            paymentData.contactSurname,
+            paymentData.contactEmail,
+            paymentData.contactPhone,
+            paymentData.bookCustomerID,
+            paymentData.packID,
+            paymentData.packPrice,
+            paymentData.custStripeID,
+            paymentData.token
+          )
+          .pipe(
+            map((response) => {
+              return LandingActions.payingSuccess({
+                paymentResponse: response,
+              });
+            }),
+            catchError((error) => {
+              return of(LandingActions.payingFailure({ errorResponse: error }));
+            })
+          );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store: Store,
