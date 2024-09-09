@@ -410,6 +410,10 @@
                 ><fa-icon [icon]="faExclamationTriangle"></fa-icon>
                 {{ stripeErrorMessage }}</span
               >
+              <div *ngIf="isPaymentError" class="text-danger my-3">
+                <fa-icon [icon]="faExclamationTriangle"></fa-icon> Tu pago no
+                pudo ser procesado, por favor intenta de nuevo.
+              </div>
               <div id="card-element" class="form-control mt-2"></div>
             </div>
             <div class="wizard-step-no-background mb-2 text-center">

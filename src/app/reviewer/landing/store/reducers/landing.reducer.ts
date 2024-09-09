@@ -198,5 +198,36 @@ export const LandingReducer = createRehydrateReducer(
         isError: true,
       };
     }
+  ),
+  on(
+    LandingActions.getBookingById,
+    (state: LandingState, { bookingID }: any) => {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+  ),
+  on(
+    LandingActions.getBookingByIdSuccess,
+    (state: LandingState, { bookingResponse }: any) => {
+      return {
+        ...state,
+        booking: bookingResponse,
+        isLoading: false,
+        isError: false,
+      };
+    }
+  ),
+  on(
+    LandingActions.getBookingByIdFailure,
+    (state: LandingState, { errorResponse }: any) => {
+      return {
+        ...state,
+        ...initialLandingState,
+        isLoading: false,
+        isError: true,
+      };
+    }
   )
 );

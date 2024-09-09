@@ -2,6 +2,7 @@ export const DOMAIN = 'http://localhost:8015/api';
 
 export interface LandingState {
   packages: PackageModel[];
+  booking?: BookingModel[];
   package?: FullPackageModel;
   payment?: PaymentModel;
   cities?: CitiesWithCountOfPackagesModel[];
@@ -79,4 +80,23 @@ export interface PaymentModel {
   message: string;
   paymentSuccess: boolean;
   errorCode?: string;
+}
+
+export interface BookingModel {
+  bookID: number;
+  bookCustomerID: number;
+  bookPackageID: number;
+  bookPaid: number;
+  bookDate: Date;
+  contactName: string;
+  contactSurName: string;
+  contactEmail: string;
+  contactPhone: number;
+  passengerName: string;
+  passengerSurname: string;
+  passengerAge: number;
+  packTitle: string;
+  packPrice: number;
+  packTransportId: number;
+  packHotelID: number;
 }

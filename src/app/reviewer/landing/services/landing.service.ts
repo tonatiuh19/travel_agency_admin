@@ -13,6 +13,7 @@ export class LandingService {
   public GET_CITIES_WITH_COUNT_OF_PACKAGES = `${DOMAIN}/getCitiesWithCountOfPackages.php`;
   public GET_REVIEWS = `${DOMAIN}/getReviews.php`;
   public PAYING = `${DOMAIN}/paying.php`;
+  public GET_BOOKING_BY_ID = `${DOMAIN}/getBookingById.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -114,6 +115,18 @@ export class LandingService {
         packPrice: packPrice,
         custStripeID: custStripeID,
         token: token,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public getBookingById(bookID: number): Observable<any> {
+    return this.httpClient
+      .post(this.GET_BOOKING_BY_ID, {
+        bookingID: bookID,
       })
       .pipe(
         map((response) => {

@@ -139,7 +139,7 @@ export class LandingEffects {
     );
   });
 
-  $paying = createEffect(() => {
+  paying$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(LandingActions.paying),
       switchMap(({ paymentData }) => {
@@ -167,6 +167,26 @@ export class LandingEffects {
               return of(LandingActions.payingFailure({ errorResponse: error }));
             })
           );
+      })
+    );
+  });
+
+  getBookingById$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.getBookingById),
+      switchMap(({ bookingID }) => {
+        return this.landingService.getBookingById(bookingID).pipe(
+          map((response) => {
+            return LandingActions.getBookingByIdSuccess({
+              bookingResponse: response,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              LandingActions.getBookingByIdFailure({ errorResponse: error })
+            );
+          })
+        );
       })
     );
   });

@@ -1,0 +1,172 @@
+<main class="main" id="top">
+  <app-loading-reviewer-mask
+    [isLoading]="!isLoading"
+  ></app-loading-reviewer-mask>
+  <app-header-reviewer [isMain]="false"></app-header-reviewer>
+  <section class="pt-5">
+    <div class="container my-5 h-100">
+      <div class="row">
+        <div class="col-sm-12 py-4 text-center">
+          <div class="row">
+            <div class="col-sm-12">
+              <h2>
+                <fa-icon [icon]="faCheckCircle" class="text-success"></fa-icon>
+                ¡Tu pago ha sido procesado exitosamente!
+              </h2>
+            </div>
+            <div class="col-sm-12">
+              <h4>
+                Numero de reserva: <strong>{{ booking[0].bookID }}</strong>
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-12">
+              <button class="btn btn-primary w-100">
+                <fa-icon [icon]="faTicket"></fa-icon>
+                Descargar comprobante de pago
+              </button>
+            </div>
+            <div class="col-sm-12 mt-3">
+              <button class="btn btn-primary w-100">
+                <fa-icon [icon]="faPlane"></fa-icon>
+                Ir a detalles del paquete
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="card mt-5 shadow-sm">
+                <div class="card-header">
+                  <h5 class="mb-0">Detalles del Pago</h5>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <h5>
+                        Monto pagado:
+                        <strong>{{
+                          booking[0].packPrice * booking.length | currency
+                        }}</strong>
+                      </h5>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                      <h6>
+                        Fecha de pago:
+                        <strong
+                          >{{ booking[0].bookDate | date : "fullDate" : "es" }}
+                          {{
+                            booking[0].bookDate | date : "shortTime" : "es"
+                          }}</strong
+                        >
+                      </h6>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                      <h6>
+                        Pagado con: <strong>Tarjeta debito/credito</strong>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Datos de los pasajeros</h5>
+                </div>
+                <div class="card-body">
+                  <div
+                    *ngFor="let passenger of booking; let i = index"
+                    class="mb-4"
+                  >
+                    <h6 class="card-subtitle mb-2 text-muted">
+                      Pasajero {{ i + 1 }}:
+                    </h6>
+                    <div class="mb-2">
+                      <strong>Nombre: </strong>
+                      <span>{{ passenger.passengerName }}</span>
+                    </div>
+                    <div class="mb-2">
+                      <strong>Apellido: </strong>
+                      <span>{{ passenger.passengerSurname }}</span>
+                    </div>
+                    <div class="mb-2">
+                      <strong>Edad: </strong>
+                      <span>{{ passenger.passengerAge }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card">
+            <img
+              src="https://garbrix.com/assets/img/gallery/hero-section-2.png"
+              class="card-img-top"
+            />
+            <div class="card-body">
+              <h4 class="card-title">{{ booking[0].packTitle }}</h4>
+              <div class="text-muted">
+                <ul class="list-group list-group-flush">
+                  <li
+                    class="list-group-item"
+                    *ngIf="booking[0].packTransportId !== 0"
+                  >
+                    <fa-icon [icon]="faCar" class="text-muted"></fa-icon>
+                    Transporte incluido
+                  </li>
+                  <li
+                    class="list-group-item"
+                    *ngIf="booking[0].packHotelID !== 0"
+                  >
+                    <fa-icon [icon]="faHotel" class="text-muted"></fa-icon>
+                    Alojamiento incluido
+                  </li>
+                  <li class="list-group-item">
+                    <fa-icon
+                      [icon]="faCommentDots"
+                      class="text-muted"
+                    ></fa-icon>
+                    Ofrecido en Español
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card mt-3">
+            <div class="card-header">
+              <h5 class="mb-0">Datos de contacto</h5>
+            </div>
+            <div class="card-body text-muted">
+              <div class="mb-2">
+                <strong>Nombre: </strong>
+                <span>{{
+                  booking[0].contactName + " " + booking[0].contactSurName
+                }}</span>
+              </div>
+              <div class="mb-2">
+                <strong>Correo: </strong>
+                <span>{{ booking[0].contactEmail }}</span>
+              </div>
+              <div class="mb-2">
+                <strong>Telefono: </strong>
+                <span>{{ booking[0].contactPhone }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="mt-5"></section>
+  <app-footer-reviewer></app-footer-reviewer>
+</main>

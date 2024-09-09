@@ -86,3 +86,18 @@ export const payingFailure = createAction(
   `${actor} Paying Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const getBookingById = createAction(
+  `${actor} Get Booking By Id`,
+  props<{ bookingID: number }>()
+);
+
+export const getBookingByIdSuccess = createAction(
+  `${actor} Get Booking By Id Success`,
+  props<{ bookingResponse: any }>()
+);
+
+export const getBookingByIdFailure = createAction(
+  `${actor} Get Booking By Id Failure`,
+  props<{ errorResponse: any }>()
+);

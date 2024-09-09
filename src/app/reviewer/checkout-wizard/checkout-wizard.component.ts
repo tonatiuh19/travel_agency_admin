@@ -44,6 +44,8 @@ export class CheckoutWizardComponent implements OnInit {
   public isStripeError = false;
   public stripeErrorMessage = '';
 
+  public isPaymentError = false;
+
   faCalendarAlt = faCalendarAlt;
   faCheckCircle = faCheckCircle;
   faLock = faLock;
@@ -119,6 +121,13 @@ export class CheckoutWizardComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((packageById) => {
         console.log('Package by ID:', packageById);
+        if (!packageById.payment?.paymentSuccess) {
+          this.isPaymentError = true;
+          this.isLoadingCheckout = false;
+        } else {
+          this.isPaymentError = false;
+          this.isLoadingCheckout = false;
+        }
         this.isLoading = !packageById.isLoading;
         this.package = packageById.package
           ? (packageById.package as unknown as FullPackageModel[])
