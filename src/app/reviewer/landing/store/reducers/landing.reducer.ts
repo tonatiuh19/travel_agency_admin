@@ -161,6 +161,13 @@ export const LandingReducer = createRehydrateReducer(
   on(LandingActions.logoutUser, (state: LandingState) => {
     return {
       ...state,
+      booking: [],
+      payment: {
+        bookingID: 0,
+        message: '',
+        paymentSuccess: false,
+        errorCode: '',
+      },
       user: {
         custID: '',
         custEmail: '',
@@ -199,6 +206,17 @@ export const LandingReducer = createRehydrateReducer(
       };
     }
   ),
+  on(LandingActions.cleanPayment, (state: LandingState) => {
+    return {
+      ...state,
+      payment: {
+        bookingID: 0,
+        message: '',
+        paymentSuccess: false,
+        errorCode: '',
+      },
+    };
+  }),
   on(
     LandingActions.getBookingById,
     (state: LandingState, { bookingID }: any) => {

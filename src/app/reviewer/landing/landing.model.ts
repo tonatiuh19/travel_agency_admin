@@ -77,6 +77,7 @@ export interface UserModel {
 }
 
 export interface PaymentModel {
+  bookingID?: number;
   message: string;
   paymentSuccess: boolean;
   errorCode?: string;

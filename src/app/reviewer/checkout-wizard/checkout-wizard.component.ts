@@ -82,25 +82,6 @@ export class CheckoutWizardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(take(1)).subscribe((params) => {
-      const id = params.get('id');
-      this.store.dispatch(
-        LandingActions.getFullPackageById({
-          packID: id ? parseInt(id, 10) : 0,
-        })
-      );
-    });
-
-    this.auth.user$.subscribe((profile) => {
-      if (profile) {
-        this.store.dispatch(
-          LandingActions.authenticateUser({
-            user: profile,
-          })
-        );
-      }
-    });
-
     this.selectUser$.pipe(takeUntil(this.unsubscribe$)).subscribe((user) => {
       this.user = user;
       this.user.custName
@@ -121,18 +102,29 @@ export class CheckoutWizardComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((packageById) => {
         console.log('Package by ID:', packageById);
-        if (!packageById.payment?.paymentSuccess) {
-          this.isPaymentError = true;
-          this.isLoadingCheckout = false;
-        } else {
-          this.isPaymentError = false;
-          this.isLoadingCheckout = false;
-        }
         this.isLoading = !packageById.isLoading;
         this.package = packageById.package
           ? (packageById.package as unknown as FullPackageModel[])
           : [];
         this.pricePackage = this.package[0].packPrice;
+
+        if (
+          !packageById.payment?.paymentSuccess &&
+          packageById.payment?.message !== ''
+        ) {
+          this.isPaymentError = true;
+          this.isLoadingCheckout = false;
+        } else if (
+          packageById.payment?.paymentSuccess &&
+          packageById.payment?.bookingID !== 0
+        ) {
+          this.isPaymentError = false;
+          this.isLoadingCheckout = false;
+          this.router.navigate([
+            'tuexperiencia',
+            packageById.payment?.bookingID,
+          ]);
+        }
       });
 
     this.onNumPassengersChange();
@@ -147,6 +139,7 @@ export class CheckoutWizardComponent implements OnInit {
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    this.store.dispatch(LandingActions.cleanPayment());
   }
 
   get passengers(): FormArray {

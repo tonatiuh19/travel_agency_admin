@@ -7,6 +7,7 @@ import {
   faCommentDots,
   faTicket,
   faPlane,
+  faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { Subject, take, takeUntil } from 'rxjs';
 import { fromLanding } from '../landing/store/selectors';
@@ -33,6 +34,7 @@ export class PaymentStatusComponent implements OnInit {
   faCommentDots = faCommentDots;
   faTicket = faTicket;
   faPlane = faPlane;
+  faTimesCircle = faTimesCircle;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -51,13 +53,12 @@ export class PaymentStatusComponent implements OnInit {
     this.selectPackage$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((thePackage) => {
+        console.log(thePackage);
         this.isLoading = !thePackage.isLoading;
         this.booking = thePackage.booking
           ? (thePackage.booking as unknown as BookingModel[])
           : [];
-        console.log(this.booking);
         this.bookingPaid = this.booking[0].bookPaid;
-        console.log(this.bookingPaid);
       });
   }
 

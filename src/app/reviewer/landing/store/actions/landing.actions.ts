@@ -82,6 +82,8 @@ export const payingSuccess = createAction(
   props<{ paymentResponse: any }>()
 );
 
+export const cleanPayment = createAction(`${actor} Clean Payment`);
+
 export const payingFailure = createAction(
   `${actor} Paying Failure`,
   props<{ errorResponse: any }>()

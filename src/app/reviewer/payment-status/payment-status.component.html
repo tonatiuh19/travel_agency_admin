@@ -4,14 +4,33 @@
   ></app-loading-reviewer-mask>
   <app-header-reviewer [isMain]="false"></app-header-reviewer>
   <section class="pt-5">
-    <div class="container my-5 h-100">
+    <div
+      [class]="
+        bookingPaid
+          ? 'container my-5 h-100'
+          : 'container vh-100 d-flex justify-content-center align-items-center'
+      "
+    >
       <div class="row">
         <div class="col-sm-12 py-4 text-center">
           <div class="row">
             <div class="col-sm-12">
               <h2>
-                <fa-icon [icon]="faCheckCircle" class="text-success"></fa-icon>
-                ¡Tu pago ha sido procesado exitosamente!
+                <fa-icon
+                  [icon]="faCheckCircle"
+                  class="text-success"
+                  *ngIf="bookingPaid"
+                ></fa-icon>
+                <fa-icon
+                  [icon]="faTimesCircle"
+                  class="text-danger"
+                  *ngIf="!bookingPaid"
+                ></fa-icon>
+                {{
+                  bookingPaid
+                    ? "¡Tu pago ha sido procesado exitosamente!"
+                    : "¡Tu pago ha sido rechazado!"
+                }}
               </h2>
             </div>
             <div class="col-sm-12">
@@ -19,10 +38,15 @@
                 Numero de reserva: <strong>{{ booking[0].bookID }}</strong>
               </h4>
             </div>
+            <div class="col-sm-12 text-center" *ngIf="!bookingPaid">
+              <button class="btn btn-primary">
+                <fa-icon [icon]="faPlane"></fa-icon> Ir a paquetes
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="bookingPaid">
         <div class="col-sm-6">
           <div class="row">
             <div class="col-sm-12">

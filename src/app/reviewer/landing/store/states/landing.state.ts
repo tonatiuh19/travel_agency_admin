@@ -4,6 +4,13 @@ export const LANDING_FEATURE_KEY = 'landing';
 
 export const initialLandingState: LandingState = {
   packages: [],
+  booking: [],
+  payment: {
+    bookingID: 0,
+    message: '',
+    paymentSuccess: false,
+    errorCode: '',
+  },
   user: {
     custID: '',
     custEmail: '',

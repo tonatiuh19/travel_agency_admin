@@ -8,5 +8,5 @@ export const ReviewerRoutes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'paquete/:id', component: PackageComponent },
   { path: 'checkout/:id', component: CheckoutWizardComponent },
-  { path: 'gracias/:id', component: PaymentStatusComponent },
+  { path: 'tuexperiencia/:id', component: PaymentStatusComponent },
 ];
