@@ -27,6 +27,8 @@ export class PaymentStatusComponent implements OnInit {
   public booking: any = {};
   public bookingPaid = false;
 
+  public isProcessing = false;
+
   faCheckCircle = faCheckCircle;
   faCalendarAlt = faCalendarAlt;
   faCar = faCar;
@@ -59,11 +61,49 @@ export class PaymentStatusComponent implements OnInit {
           ? (thePackage.booking as unknown as BookingModel[])
           : [];
         this.bookingPaid = this.booking[0].bookPaid;
+        this.isProcessing = true;
       });
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  transformDateToSpanish(dateString: string): string {
+    const date = new Date(dateString);
+
+    const daysOfWeek = [
+      'Domingo',
+      'Lunes',
+      'Martes',
+      'Miércoles',
+      'Jueves',
+      'Viernes',
+      'Sábado',
+    ];
+    const monthsOfYear = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ];
+
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    const day = date.getDate();
+    const month = monthsOfYear[date.getMonth()];
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${dayOfWeek}, ${day} de ${month}, ${year}, ${hours}:${minutes}`;
   }
 }

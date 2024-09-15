@@ -3,7 +3,8 @@
     [isLoading]="!isLoading"
   ></app-loading-reviewer-mask>
   <app-header-reviewer [isMain]="false"></app-header-reviewer>
-  <section class="pt-5">
+  <section class="vh-100" *ngIf="!isProcessing"></section>
+  <section class="pt-5" *ngIf="isProcessing">
     <div
       [class]="
         bookingPaid
@@ -74,19 +75,24 @@
                       <h5>
                         Monto pagado:
                         <strong>{{
-                          booking[0].packPrice * booking.length | currency
+                          booking[0].bookPaidPrice | currency
                         }}</strong>
                       </h5>
                     </div>
                     <div class="col-sm-12 mt-2">
                       <h6>
+                        Fecha reserva:
+                        <strong>{{
+                          transformDateToSpanish(booking[0].bookDateFor)
+                        }}</strong>
+                      </h6>
+                    </div>
+                    <div class="col-sm-12 mt-2">
+                      <h6>
                         Fecha de pago:
                         <strong
-                          >{{ booking[0].bookDate | date : "fullDate" : "es" }}
-                          {{
-                            booking[0].bookDate | date : "shortTime" : "es"
-                          }}</strong
-                        >
+                          >{{ transformDateToSpanish(booking[0].bookDate) }}
+                        </strong>
                       </h6>
                     </div>
                     <div class="col-sm-12 mt-2">

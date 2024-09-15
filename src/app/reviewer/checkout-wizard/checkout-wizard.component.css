@@ -99,3 +99,12 @@
   display: inline-block; /* Ensure the element is inline-block to apply transform */
   animation: spin 1s linear infinite;
 }
+
+:host ::ng-deep .p-button {
+  background-color: #198754;
+  border: 1px solid #198754;
+}
+
+:host ::ng-deep .p-calendar {
+  width: 100%;
+}

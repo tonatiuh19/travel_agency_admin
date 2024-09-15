@@ -6,6 +6,7 @@ import { LoadingReviewerMaskModule } from '../shared/components/loading-reviewer
 import { AuthModule } from '@auth0/auth0-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CardsModule } from './cards/cards.module';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [CheckoutWizardComponent],
@@ -23,6 +24,7 @@ import { CardsModule } from './cards/cards.module';
         ui_locales: 'es-MX',
       },
     }),
+    CalendarModule,
   ],
   exports: [CheckoutWizardComponent],
 })

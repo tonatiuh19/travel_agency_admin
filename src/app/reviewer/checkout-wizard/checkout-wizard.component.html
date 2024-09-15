@@ -153,6 +153,32 @@
             <div class="mb-4 wizard-step">
               <div class="row">
                 <div class="col-sm-12">
+                  <strong class="form-label"
+                    >¿Para que fecha y hora deseas reservar?</strong
+                  >
+                </div>
+                <div class="col-sm-12">
+                  <p></p>
+                  <p-calendar
+                    [minDate]="todayDate"
+                    [readonlyInput]="true"
+                    [showTime]="true"
+                    [hourFormat]="'12'"
+                    dateFormat="dd/mm/yy"
+                    [showIcon]="true"
+                    [class]="
+                      passengerForm.get('bookingDate')?.status === 'INVALID'
+                        ? 'ng-invalid ng-dirty'
+                        : ''
+                    "
+                    formControlName="bookingDate"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="mb-4 wizard-step">
+              <div class="row">
+                <div class="col-sm-12">
                   <strong for="numPassengers strong-title" class="form-label">
                     ¿Cuantos pasajeros son?
                   </strong>
@@ -589,31 +615,31 @@
             <div
               class="col-sm-12 d-flex justify-content-center align-items-center"
             >
-              <h4 class="card-title">
-                {{ pricePackage | currency }}
+              <h4 *ngIf="pricePackageForm !== 0" class="card-title">
+                {{ pricePackageForm | currency }} /eur
               </h4>
             </div>
           </div>
           <div class="row">
             <div
+              *ngIf="passengerForm.get('bookingDate')?.status === 'VALID'"
               class="date-container col-sm-12 mb-2 d-flex justify-content-center align-items-center"
             >
-              <fa-icon [icon]="faCalendarAlt" class="date-text"></fa-icon>
               <span class="date-text ms-1">
-                <span class="date-text-value">{{
-                  extractFirstDate(package[0].packDateRange)
-                }}</span>
-                al
-                <span class="date-text-value">{{
-                  extractSecondDate(package[0].packDateRange)
-                }}</span>
+                <h5>
+                  {{
+                    transformDateToSpanish(
+                      passengerForm.get("bookingDate")?.value
+                    )
+                  }}
+                </h5>
               </span>
             </div>
           </div>
           <div class="mt-2 custom-list-group row">
             <small class="col-sm-12 mt-2">
               <fa-icon [icon]="faCheckCircle" class="text-success"></fa-icon>
-              Pago seguro, viaja tranquilo, paga seguro
+              Pago seguro, viaja tranquilo
             </small>
             <small class="col-sm-12 mt-3">
               <fa-icon [icon]="faCheckCircle" class="text-success"></fa-icon>
@@ -621,7 +647,7 @@
             </small>
             <small class="col-sm-12 mt-3">
               <fa-icon [icon]="faCheckCircle" class="text-success"></fa-icon>
-              oporte 24/7, estamos contigo, siempre
+              Soporte 24/7, estamos contigo, siempre
             </small>
           </div>
         </div>

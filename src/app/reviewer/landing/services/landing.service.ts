@@ -100,6 +100,7 @@ export class LandingService {
     packID: number,
     packPrice: string,
     custStripeID: string,
+    bookDateFor: string,
     token: string
   ): Observable<any> {
     return this.httpClient
@@ -114,6 +115,7 @@ export class LandingService {
         packID: packID,
         packPrice: packPrice,
         custStripeID: custStripeID,
+        bookDateFor: bookDateFor,
         token: token,
       })
       .pipe(

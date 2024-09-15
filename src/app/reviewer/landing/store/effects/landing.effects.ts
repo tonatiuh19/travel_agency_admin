@@ -155,6 +155,7 @@ export class LandingEffects {
             paymentData.packID,
             paymentData.packPrice,
             paymentData.custStripeID,
+            paymentData.bookingDate,
             paymentData.token
           )
           .pipe(

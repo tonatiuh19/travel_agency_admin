@@ -21,9 +21,11 @@ export interface PackageModel {
   packHotelDescription: number | string;
   packLimit: number;
   packPrice: number;
+  packPriceMax: number;
   packTransportId: number;
   packTransportDescription: number | string;
   packDateRange: string;
+  packDateRangeOff: boolean;
   hotLabel: string;
   imageUrls: string[];
   citName?: string;
@@ -38,6 +40,7 @@ export interface FullPackageModel {
   packHotelDescription: string;
   packLimit: number;
   packPrice: number;
+  packPriceMax: number;
   packTransportId: number;
   packTransportDescription: string;
   packDateRange: string;
@@ -81,6 +84,7 @@ export interface PaymentModel {
   message: string;
   paymentSuccess: boolean;
   errorCode?: string;
+  isProcessing?: boolean;
 }
 
 export interface BookingModel {
@@ -89,6 +93,8 @@ export interface BookingModel {
   bookPackageID: number;
   bookPaid: number;
   bookDate: Date;
+  bookDateFor: string;
+  bookPaidPrice: number;
   contactName: string;
   contactSurName: string;
   contactEmail: string;

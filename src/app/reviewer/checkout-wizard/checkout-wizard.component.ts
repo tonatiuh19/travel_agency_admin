@@ -21,6 +21,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { StripeService } from '../landing/services/stripe.service';
 import { Stripe, StripeElements, StripeCardElement } from '@stripe/stripe-js';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { getTodayDate } from '../../admin/shared/utils/get-date';
 
 @Component({
   selector: 'app-checkout-wizard',
@@ -37,7 +38,10 @@ export class CheckoutWizardComponent implements OnInit {
   public user: any = {};
   public booking: any = {};
   public isLogged = false;
+
+  public pricePackageForm = 0;
   public pricePackage = 0;
+  public pricePackageMax = 0;
 
   public passengerForm: FormGroup;
 
@@ -55,6 +59,8 @@ export class CheckoutWizardComponent implements OnInit {
   faIdCardAlt = faIdCardAlt;
   faGlobeAmericas = faGlobeAmericas;
   faCircleNotch = faCircleNotch;
+
+  todayDate!: Date;
 
   private unsubscribe$ = new Subject<void>();
 
@@ -77,11 +83,13 @@ export class CheckoutWizardComponent implements OnInit {
       contactSurname: ['', Validators.required],
       contactEmail: ['', [Validators.required, Validators.email]],
       contactPhone: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+      bookingDate: ['', Validators.required],
     });
     this.unsubscribe$ = new Subject<void>();
   }
 
   ngOnInit(): void {
+    this.todayDate = new Date();
     this.selectUser$.pipe(takeUntil(this.unsubscribe$)).subscribe((user) => {
       this.user = user;
       this.user.custName
@@ -101,12 +109,14 @@ export class CheckoutWizardComponent implements OnInit {
     this.selectPackage$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((packageById) => {
-        console.log('Package by ID:', packageById);
         this.isLoading = !packageById.isLoading;
         this.package = packageById.package
           ? (packageById.package as unknown as FullPackageModel[])
           : [];
+
+        console.log('Package by ID:', this.package[0]);
         this.pricePackage = this.package[0].packPrice;
+        this.pricePackageMax = this.package[0].packPriceMax;
 
         if (
           !packageById.payment?.paymentSuccess &&
@@ -171,6 +181,8 @@ export class CheckoutWizardComponent implements OnInit {
       this.passengers.controls[0]
         .get('apellido')
         ?.setValue(this.user.custSurname);
+
+      this.setPricePackage(this.passengers.length);
     }
   }
 
@@ -212,12 +224,16 @@ export class CheckoutWizardComponent implements OnInit {
     this.booking = {
       ...this.passengerForm.value,
       packID: this.package[0].packID,
-      packPrice: this.pricePackage,
+      packPrice: this.pricePackageForm,
       bookCustomerID: this.user.custID,
       custStripeID: this.user.custStripeID,
     };
 
     if (this.passengerForm.valid) {
+      const transformedDate = this.transformDate(
+        this.passengerForm.value.bookingDate
+      );
+      this.passengerForm.get('bookingDate')?.setValue(transformedDate);
       console.log(this.passengerForm.value);
       if (error) {
         console.error(error);
@@ -225,6 +241,7 @@ export class CheckoutWizardComponent implements OnInit {
         this.isStripeError = true;
         this.stripeErrorMessage = error.message || '';
       } else {
+        this.isStripeError = false;
         this.store.dispatch(
           LandingActions.paying({
             paymentData: {
@@ -233,7 +250,6 @@ export class CheckoutWizardComponent implements OnInit {
             },
           })
         );
-        // Send the token to your server for processing the payment
       }
     } else {
       this.isLoadingCheckout = false;
@@ -251,6 +267,96 @@ export class CheckoutWizardComponent implements OnInit {
 
   updatePrice(passengers: number): void {
     this.pricePackage = this.package[0].packPrice * passengers;
+  }
+
+  transformDate(dateString: string): string {
+    const date = new Date(dateString);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  }
+
+  transformDateToSpanish(dateString: string): string {
+    const date = new Date(dateString);
+
+    const daysOfWeek = [
+      'Domingo',
+      'Lunes',
+      'Martes',
+      'Miércoles',
+      'Jueves',
+      'Viernes',
+      'Sábado',
+    ];
+    const monthsOfYear = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ];
+
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    const day = date.getDate();
+    const month = monthsOfYear[date.getMonth()];
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${dayOfWeek}, ${day} de ${month}, ${year}, ${hours}:${minutes}`;
+  }
+
+  setPricePackage(passengers: number): void {
+    const vehicleInfo = this.calculateVehicles(passengers);
+    /*console.log('Cars for four:', vehicleInfo.carsForFour);
+    console.log('Cars for six:', vehicleInfo.carsForSix);
+    console.log('Total cost:', vehicleInfo.totalCost);*/
+    this.pricePackageForm = vehicleInfo.totalCost;
+  }
+
+  calculateVehicles(passengers: number): {
+    carsForFour: number;
+    carsForSix: number;
+    totalCost: number;
+  } {
+    const costForFour = 550;
+    const costForSix = 650;
+
+    let carsForFour = 0;
+    let carsForSix = 0;
+    let remainingPassengers = passengers;
+
+    // Special case: if there are 5 passengers, it's cheaper to use one car for six people
+    if (remainingPassengers === 5) {
+      carsForSix = 1;
+      remainingPassengers = 0;
+    } else {
+      // Use cars for six people first to minimize the number of vehicles
+      carsForSix = Math.floor(remainingPassengers / 6);
+      remainingPassengers %= 6;
+
+      // Use cars for four people for the remaining passengers
+      if (remainingPassengers > 0) {
+        carsForFour = Math.ceil(remainingPassengers / 4);
+      }
+    }
+
+    const totalCost = carsForFour * costForFour + carsForSix * costForSix;
+
+    return { carsForFour, carsForSix, totalCost };
   }
 
   public extractFirstDate(dateRange: string): string {

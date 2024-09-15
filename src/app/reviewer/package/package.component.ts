@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import {
@@ -81,6 +81,8 @@ export class PackageComponent implements OnInit {
           : [];
         this.calculateStars(this.package[0].averageRating);
       });
+
+    this.checkScroll();
   }
 
   ngOnDestroy(): void {
@@ -113,5 +115,28 @@ export class PackageComponent implements OnInit {
     const parts = dateRange.split(' ');
     const dateAfterSecondSpace = parts[2].trim();
     return dateAfterSecondSpace;
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    this.checkScroll();
+  }
+
+  checkScroll(): void {
+    const priceContainer = document.getElementById('price-container');
+    const footer = document.querySelector('app-footer-reviewer');
+
+    if (priceContainer && footer) {
+      const footerRect = footer.getBoundingClientRect();
+      const priceContainerRect = priceContainer.getBoundingClientRect();
+
+      if (footerRect.top <= window.innerHeight) {
+        priceContainer.classList.remove('fixed-bottom');
+        priceContainer.classList.add('static-bottom');
+      } else {
+        priceContainer.classList.remove('static-bottom');
+        priceContainer.classList.add('fixed-bottom');
+      }
+    }
   }
 }
