@@ -14,6 +14,7 @@ export class LandingService {
   public GET_REVIEWS = `${DOMAIN}/getReviews.php`;
   public PAYING = `${DOMAIN}/paying.php`;
   public GET_BOOKING_BY_ID = `${DOMAIN}/getBookingById.php`;
+  public GET_BOOKING_BY_CUST_ID = `${DOMAIN}/getBookingsByUserId.php`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -129,6 +130,19 @@ export class LandingService {
     return this.httpClient
       .post(this.GET_BOOKING_BY_ID, {
         bookingID: bookID,
+      })
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  public getBookingsByUserId(custID: number): Observable<any> {
+    console.log('sss', custID);
+    return this.httpClient
+      .post(this.GET_BOOKING_BY_CUST_ID, {
+        userID: custID,
       })
       .pipe(
         map((response) => {

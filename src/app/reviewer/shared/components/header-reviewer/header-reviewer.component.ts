@@ -24,6 +24,8 @@ export class HeaderReviewerComponent implements OnInit {
   public user: any = {};
   public isLogged = false;
 
+  public hasBooking = false;
+
   public isColorDark = true;
 
   profile: any = null;
@@ -55,6 +57,7 @@ export class HeaderReviewerComponent implements OnInit {
 
     this.selectUser$.pipe(takeUntil(this.unsubscribe$)).subscribe((user) => {
       this.user = user;
+      this.hasBooking = this.user.hasBookings == 1;
       this.isLogged = !!(user && this.user.custID !== '');
     });
   }
@@ -76,6 +79,10 @@ export class HeaderReviewerComponent implements OnInit {
     this.isLogged = false;
     this.store.dispatch(LandingActions.logoutUser());
     this.auth.logout();
+  }
+
+  goToTrips(): void {
+    this.router.navigate(['misviajes']);
   }
 
   @HostListener('window:scroll', [])

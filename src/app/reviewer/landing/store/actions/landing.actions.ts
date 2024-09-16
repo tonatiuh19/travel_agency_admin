@@ -103,3 +103,18 @@ export const getBookingByIdFailure = createAction(
   `${actor} Get Booking By Id Failure`,
   props<{ errorResponse: any }>()
 );
+
+export const getBookingsByUserId = createAction(
+  `${actor} Get Bookings By User Id`,
+  props<{ custID: number }>()
+);
+
+export const getBookingsByUserIdSuccess = createAction(
+  `${actor} Get Bookings By User Id Success`,
+  props<{ bookingsResponse: any }>()
+);
+
+export const getBookingsByUserIdFailure = createAction(
+  `${actor} Get Bookings By User Id Failure`,
+  props<{ errorResponse: any }>()
+);

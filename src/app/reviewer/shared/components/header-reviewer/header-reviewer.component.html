@@ -135,7 +135,11 @@
 
     <div class="d-sm-block d-md-none">
       <div class="text-center">
-        <button *ngIf="isLogged" class="btn btn-outline-light btn-sm">
+        <button
+          *ngIf="hasBooking"
+          class="btn btn-outline-light btn-sm"
+          (click)="goToTrips()"
+        >
           Mis viajes
         </button>
         <button
@@ -167,8 +171,6 @@
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="dropdownMenuButton"
           >
-            <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
-            <li><hr class="dropdown-divider" /></li>
             <li>
               <button class="dropdown-item" (click)="logOut()">
                 Cerrar sesión
@@ -183,7 +185,11 @@
         Paquetes
       </a>
 
-      <button *ngIf="isLogged" class="btn btn-sm btn-outline-light order-0">
+      <button
+        *ngIf="hasBooking"
+        class="btn btn-sm btn-outline-light order-0"
+        (click)="goToTrips()"
+      >
         Mis Viajes
       </button>
       <button
@@ -218,8 +224,6 @@
           class="dropdown-menu dropdown-menu-end"
           aria-labelledby="dropdownMenuButton"
         >
-          <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
-          <li><hr class="dropdown-divider" /></li>
           <li>
             <button class="dropdown-item" (click)="logOut()">
               Cerrar sesión

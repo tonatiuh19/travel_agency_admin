@@ -192,6 +192,28 @@ export class LandingEffects {
     );
   });
 
+  getBookingsByUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LandingActions.getBookingsByUserId),
+      switchMap(({ custID }) => {
+        return this.landingService.getBookingsByUserId(custID).pipe(
+          map((response) => {
+            return LandingActions.getBookingsByUserIdSuccess({
+              bookingsResponse: response,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              LandingActions.getBookingsByUserIdFailure({
+                errorResponse: error,
+              })
+            );
+          })
+        );
+      })
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private store: Store,

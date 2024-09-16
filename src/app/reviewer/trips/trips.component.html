@@ -1,0 +1,65 @@
+<main class="main" id="top">
+  <app-loading-reviewer-mask
+    [isLoading]="!isLoading"
+  ></app-loading-reviewer-mask>
+  <app-header-reviewer [isMain]="false"></app-header-reviewer>
+  <section class="page-heading header-text pt-5">
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-sm-12 py-4">
+          <h3>Mis Viajes</h3>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-md-4 d-flex align-items-stretch"
+          *ngFor="let trip of packages"
+        >
+          <div class="card mb-4" (click)="onCardClick(trip.bookID)">
+            <img
+              src="https://garbrix.com/assets/img/gallery/hero-section-2.png"
+              class="card-img-top"
+              alt="{{ trip.packTitle }}"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ trip.packTitle }}</h5>
+
+              <div class="text-muted">
+                <ul class="list-group list-group-flush">
+                  <li
+                    class="list-group-item"
+                    *ngIf="trip.packTransportId !== 0"
+                  >
+                    <fa-icon [icon]="faCar" class="text-muted"></fa-icon>
+                    Transporte incluido
+                  </li>
+                  <li class="list-group-item" *ngIf="trip.packHotelID !== 0">
+                    <fa-icon [icon]="faHotel" class="text-muted"></fa-icon>
+                    Alojamiento incluido
+                  </li>
+                  <li class="list-group-item">
+                    <fa-icon
+                      [icon]="faCommentDots"
+                      class="text-muted"
+                    ></fa-icon>
+                    Ofrecido en Español
+                  </li>
+                </ul>
+              </div>
+
+              <p class="card-text">
+                <small class="">
+                  {{ transformDateToSpanish(trip.bookDateFor) }}</small
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="mt-5"></section>
+  <app-footer-reviewer></app-footer-reviewer>
+</main>
