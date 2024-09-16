@@ -13,9 +13,34 @@
     </div>
   </section>
   <section class="single-property section mb-5">
-    <div class="container-fluid fixed-bottom" id="price-container">
+    <div
+      class="container-fluid fixed-bottom d-sm-block d-md-none"
+      id="price-container"
+    >
       <div class="row">
-        <div class="col-sm-12 text-center">price</div>
+        <div class="col-sm-12 text-center">
+          <h4 class="no-padding-margin-bottom">
+            {{ package[0].packPrice | currency }}
+          </h4>
+        </div>
+        <div class="col-sm-12 text-center mb-1">
+          <fa-icon [icon]="faCalendarAlt" class="date-text"></fa-icon>
+          <span class="date-text ms-1"> Cualquier dia </span>
+        </div>
+        <div class="col-sm-12 text-center">
+          <button
+            class="btn btn-success w-50"
+            (click)="buyPackage(package[0].packID)"
+          >
+            <fa-icon [icon]="faLock"></fa-icon> Comprar ahora
+          </button>
+        </div>
+        <div class="col-sm-12 text-center mt-2">
+          <small class="small-text">
+            <fa-icon [icon]="faCheckCircle" class="text-success"></fa-icon>
+            Garantía de satisfacción
+          </small>
+        </div>
       </div>
     </div>
     <div class="container-sm">
@@ -123,15 +148,7 @@
                   class="date-container col-sm-12 mb-2 d-flex justify-content-center align-items-center"
                 >
                   <fa-icon [icon]="faCalendarAlt" class="date-text"></fa-icon>
-                  <span class="date-text ms-1">
-                    <span class="date-text-value">{{
-                      extractFirstDate(package[0].packDateRange)
-                    }}</span>
-                    al
-                    <span class="date-text-value">{{
-                      extractSecondDate(package[0].packDateRange)
-                    }}</span>
-                  </span>
+                  <span class="date-text ms-1"> Cualquier dia </span>
                 </div>
               </div>
               <div class="row">

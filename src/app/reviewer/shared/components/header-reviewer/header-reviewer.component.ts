@@ -1,5 +1,9 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { faPlane, faBolt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlane,
+  faBolt,
+  faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '@auth0/auth0-angular';
 import { Store } from '@ngrx/store';
 import { LandingActions } from '../../../landing/store/actions';
@@ -25,6 +29,7 @@ export class HeaderReviewerComponent implements OnInit {
   profile: any = null;
   faPlane = faPlane;
   faBolt = faBolt;
+  faUserCircle = faUserCircle;
 
   private unsubscribe$ = new Subject<void>();
 

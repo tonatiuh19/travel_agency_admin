@@ -1,8 +1,54 @@
 <app-loading-reviewer-mask [isLoading]="!isLoading"></app-loading-reviewer-mask>
+<div class="container-fluid fixed-bottom d-sm-block d-md-none">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <h4 class="no-padding-margin-bottom text-primary text-center">
+        {{ package[0].packTitle }}
+      </h4>
+    </div>
+    <div class="col-sm-12 text-center mt-1">
+      <h4 *ngIf="pricePackageForm !== 0" class="no-padding-margin-bottom">
+        {{ pricePackageForm | currency }} /eur
+      </h4>
+    </div>
+    <div
+      *ngIf="passengerForm.get('bookingDate')?.status === 'VALID'"
+      class="col-sm-12 text-center mt-1"
+    >
+      <h5>
+        {{ transformDateToSpanish(passengerForm.get("bookingDate")?.value) }}
+      </h5>
+    </div>
+    <div *ngIf="isLogged" class="col-sm-12 text-center mt-2">
+      <small class="small-text"
+        >Al pagar acepto los términos y condiciones</small
+      >
+    </div>
+    <div *ngIf="isLogged" class="col-sm-12 text-center">
+      <button
+        *ngIf="!isLoadingCheckout"
+        class="btn btn-success w-50"
+        (click)="triggerPayment()"
+      >
+        <fa-icon [icon]="faLock" class="me-1"></fa-icon> Pagar
+      </button>
+      <button *ngIf="isLoadingCheckout" class="btn btn-success w-50" disabled>
+        <fa-icon [icon]="faCircleNotch" class="me-1 spin"></fa-icon>
+        Pagando
+      </button>
+    </div>
+    <div *ngIf="isLogged" class="col-sm-12 text-center">
+      <small class="small-text">
+        <fa-icon [icon]="faKey" class="me-1"></fa-icon> Tus pagos se realizan de
+        forma segura con encriptación de 256 bits.</small
+      >
+    </div>
+  </div>
+</div>
 <div class="container-fluid vh-100 d-flex flex-column">
   <div class="row flex-grow-1">
     <div
-      class="col-md-8 p-4 border-end mt-3 mb-3 d-flex justify-content-center align-items-center"
+      class="col-md-8 col-sm-12 p-4 border-end mt-3 mb-3 d-flex justify-content-center align-items-center"
       *ngIf="!isLogged"
     >
       <div class="row">
@@ -144,7 +190,7 @@
       </div>
     </div>
     <div
-      class="scrollable-content col-md-8 p-4 border-end mt-3 mb-3 d-flex justify-content-center align-items-center"
+      class="scrollable-content col-md-8 col-sm-12 p-4 border-end mt-3 mb-3 d-flex justify-content-center align-items-center"
       *ngIf="isLogged"
     >
       <div class="row">
@@ -442,14 +488,19 @@
               </div>
               <div id="card-element" class="form-control mt-2"></div>
             </div>
-            <div class="wizard-step-no-background mb-2 text-center">
+            <div
+              class="wizard-step-no-background mb-2 d-none d-md-block text-center"
+            >
               <small>Al pagar acepto los términos y condiciones</small>
             </div>
-            <div class="wizard-step-no-background mb-2 text-center">
+            <div
+              class="wizard-step-no-background mb-2 text-center d-none d-md-block"
+            >
               <button
                 *ngIf="!isLoadingCheckout"
                 type="submit"
                 class="btn btn-success w-100"
+                #paymentButton
               >
                 <fa-icon [icon]="faLock" class="me-1"></fa-icon> Pagar
               </button>
@@ -463,18 +514,17 @@
               </button>
             </div>
             <div
-              class="wizard-step text-center custom-list-group p-2 encryption-title"
+              class="wizard-step text-center custom-list-group p-2 encryption-title d-none d-md-block"
             >
               <fa-icon [icon]="faKey" class="me-1"></fa-icon> Tus pagos se
               realizan de forma segura con encriptación de 256 bits.
             </div>
+            <div class="d-sm-block d-md-none bottom-space"></div>
           </form>
         </div>
       </div>
     </div>
-    <div
-      class="fixed-card-container col-md-4 p-4 d-flex justify-content-center align-items-center"
-    >
+    <div class="fixed-card-container col-md-4 d-none d-md-block p-4">
       <div class="card fixed-card no-border-card">
         <div class="card-body">
           <div class="row mb-2">

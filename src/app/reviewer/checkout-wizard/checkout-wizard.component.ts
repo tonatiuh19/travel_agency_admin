@@ -29,6 +29,8 @@ import { getTodayDate } from '../../admin/shared/utils/get-date';
   styleUrl: './checkout-wizard.component.css',
 })
 export class CheckoutWizardComponent implements OnInit {
+  @ViewChild('paymentButton') paymentButton!: ElementRef;
+
   public selectUser$ = this.store.select(fromLanding.selectUser);
   public selectPackage$ = this.store.select(fromLanding.selectFullPackageById);
   public isLoading = false;
@@ -213,7 +215,6 @@ export class CheckoutWizardComponent implements OnInit {
   }
 
   async handlePayment() {
-    this.isLoadingCheckout = true;
     if (!this.stripe || !this.card) {
       console.error('Stripe.js has not loaded yet');
       return;
@@ -236,11 +237,11 @@ export class CheckoutWizardComponent implements OnInit {
       this.passengerForm.get('bookingDate')?.setValue(transformedDate);
       console.log(this.passengerForm.value);
       if (error) {
-        console.error(error);
         this.isLoadingCheckout = false;
         this.isStripeError = true;
         this.stripeErrorMessage = error.message || '';
       } else {
+        this.isLoadingCheckout = true;
         this.isStripeError = false;
         this.store.dispatch(
           LandingActions.paying({
@@ -357,6 +358,12 @@ export class CheckoutWizardComponent implements OnInit {
     const totalCost = carsForFour * costForFour + carsForSix * costForSix;
 
     return { carsForFour, carsForSix, totalCost };
+  }
+
+  triggerPayment(): void {
+    if (this.paymentButton) {
+      this.paymentButton.nativeElement.click();
+    }
   }
 
   public extractFirstDate(dateRange: string): string {

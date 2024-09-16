@@ -132,59 +132,20 @@
           />
         </g></svg
     ></a>
-    <button
-      class="navbar-toggler collapsed bg-light"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div
-      class="collapse navbar-collapse border-lg-0 mt-4 mt-lg-0"
-      id="navbarSupportedContent"
-    >
-      <ul class="navbar-nav mx-auto pt-2 ms-2 pt-lg-0 font-base">
-        <li class="nav-item px-2">
-          <a class="nav-link" href="#lugares">
-            <span class="nav-link-icon text-white me-1"
-              ><fa-icon [icon]="faPlane"></fa-icon></span
-            ><span class="nav-link-text text-white" id="lugaresID"
-              >Lugares</span
-            ></a
-          >
-        </li>
-        <li class="nav-item px-2">
-          <a class="nav-link" href="#paquetes"
-            ><span class="nav-link-icon text-white me-1"
-              ><fa-icon [icon]="faBolt"></fa-icon></span
-            ><span class="nav-link-text text-white" id="paquetesID"
-              >Paquetes</span
-            ></a
-          >
-        </li>
-      </ul>
-      <div>
-        <button
-          *ngIf="!isLogged"
-          class="btn btn-sm text-white order-1-0 me-2"
-          type="button"
-          id="btnCrearCuenta"
-          (click)="login()"
-        >
-          Crear cuenta
+
+    <div class="d-sm-block d-md-none">
+      <div class="text-center">
+        <button *ngIf="isLogged" class="btn btn-outline-light btn-sm">
+          Mis viajes
         </button>
         <button
           *ngIf="!isLogged"
-          class="btn btn-sm btn-outline-light order-0"
+          class="btn btn-outline-light btn-sm ms-1"
           (click)="login()"
         >
-          Iniciar sesión
+          <fa-icon [icon]="faUserCircle"></fa-icon>
         </button>
-        <div class="dropdown">
+        <div class="dropdown additional-content">
           <button
             *ngIf="isLogged"
             class="btn btn-sm btn-outline-link dropdown-toggle text-white"
@@ -201,9 +162,6 @@
               width="30"
               height="30"
             />
-            <span *ngIf="isLogged">
-              {{ user.custName }} {{ user.custSurname }}</span
-            >
           </button>
           <ul
             class="dropdown-menu dropdown-menu-end"
@@ -218,6 +176,56 @@
             </li>
           </ul>
         </div>
+      </div>
+    </div>
+    <div class="d-none d-md-block">
+      <a class="btn btn-sm text-white order-1-0 me-2" href="#paquetes">
+        Paquetes
+      </a>
+
+      <button *ngIf="isLogged" class="btn btn-sm btn-outline-light order-0">
+        Mis Viajes
+      </button>
+      <button
+        *ngIf="!isLogged"
+        class="btn btn-sm btn-outline-light order-0"
+        (click)="login()"
+      >
+        Registro / Iniciar Sesión
+      </button>
+      <div class="dropdown additional-content">
+        <button
+          *ngIf="isLogged"
+          class="btn btn-sm btn-outline-link dropdown-toggle text-white"
+          type="button"
+          id="dropdownMenuButton"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            *ngIf="isLogged"
+            [src]="user.picture"
+            alt="Profile"
+            class="rounded-circle"
+            width="30"
+            height="30"
+          />
+          <span *ngIf="isLogged">
+            {{ user.custName }} {{ user.custSurname }}</span
+          >
+        </button>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <button class="dropdown-item" (click)="logOut()">
+              Cerrar sesión
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

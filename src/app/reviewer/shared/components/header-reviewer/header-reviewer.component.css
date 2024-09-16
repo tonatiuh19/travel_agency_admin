@@ -14,3 +14,10 @@
   background-color: black !important;
   color: white;
 }
+
+.additional-content {
+  /* Add your styles here */
+  margin-left: 5px; /* Example: Add some space between the logo and the new div */
+  display: inline-block; /* Ensure it stays next to the logo */
+  vertical-align: middle; /* Align it vertically with the logo */
+}

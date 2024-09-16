@@ -43,6 +43,8 @@ export class PaymentStatusComponent implements OnInit {
   constructor(private store: Store, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
+
     this.route.paramMap.pipe(take(1)).subscribe((params) => {
       const id = params.get('id');
       this.store.dispatch(

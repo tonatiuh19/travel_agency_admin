@@ -87,10 +87,10 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: white; /* Optional: Set background color */
+  background-color: #e9ecef; /* Optional: Set background color */
   z-index: 1000; /* Optional: Ensure it stays above other content */
   padding: 10px 0; /* Optional: Add padding for better appearance */
-  border-top: 1px solid #ddd; /* Optional: Add a top border */
+  border-top: 1px solid #6c757d; /* Optional: Add a top border */
 }
 
 .static-bottom {
@@ -99,4 +99,14 @@
   background-color: white; /* Optional: Set background color */
   padding: 10px 0; /* Optional: Add padding for better appearance */
   border-top: 1px solid #ddd; /* Optional: Add a top border */
+}
+
+.no-padding-margin-bottom {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  font-weight: 900;
+}
+
+.small-text {
+  font-size: 0.7rem; /* Adjust the font size as needed */
 }
