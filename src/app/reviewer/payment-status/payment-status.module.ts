@@ -5,6 +5,7 @@ import { HeaderReviewerModule } from '../shared/components/header-reviewer/heade
 import { FooterReviewerModule } from '../shared/components/footer-reviewer/footer-reviewer.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoadingReviewerMaskModule } from '../shared/components/loading-reviewer-mask/loading-reviewer-mask.module';
+import { BarcodeGeneratorModule } from './barcode-generator/barcode-generator.module';
 
 @NgModule({
   declarations: [PaymentStatusComponent],
@@ -14,6 +15,7 @@ import { LoadingReviewerMaskModule } from '../shared/components/loading-reviewer
     FooterReviewerModule,
     FontAwesomeModule,
     LoadingReviewerMaskModule,
+    BarcodeGeneratorModule,
   ],
   exports: [PaymentStatusComponent],
 })

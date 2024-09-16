@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import {
   faCalendarAlt,
   faCheckCircle,
@@ -15,6 +21,9 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { LandingActions } from '../landing/store/actions';
 import { BookingModel } from '../landing/landing.model';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-status',
@@ -22,12 +31,16 @@ import { BookingModel } from '../landing/landing.model';
   styleUrl: './payment-status.component.css',
 })
 export class PaymentStatusComponent implements OnInit {
+  @ViewChild('content') content!: ElementRef;
+
   public selectPackage$ = this.store.select(fromLanding.selectLandingState);
   public isLoading = false;
   public booking: any = {};
   public bookingPaid = false;
 
   public isProcessing = false;
+
+  public barCodeValue = '';
 
   faCheckCircle = faCheckCircle;
   faCalendarAlt = faCalendarAlt;
@@ -40,13 +53,18 @@ export class PaymentStatusComponent implements OnInit {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private store: Store, private route: ActivatedRoute) {}
+  constructor(
+    private store: Store,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
 
     this.route.paramMap.pipe(take(1)).subscribe((params) => {
       const id = params.get('id');
+      this.barCodeValue = `latinos-${id} `;
       this.store.dispatch(
         LandingActions.getBookingById({
           bookingID: id ? parseInt(id, 10) : 0,
@@ -107,5 +125,25 @@ export class PaymentStatusComponent implements OnInit {
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
     return `${dayOfWeek}, ${day} de ${month}, ${year}, ${hours}:${minutes}`;
+  }
+
+  goToPackage(id: number): void {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['paquete', id])
+    );
+    window.open(url, '_blank');
+  }
+
+  public generatePDF(): void {
+    const data = this.content.nativeElement;
+    html2canvas(data).then((canvas) => {
+      const imgWidth = 208;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const contentDataURL = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.save('payment-status.pdf');
+    });
   }
 }

@@ -106,4 +106,5 @@ export interface BookingModel {
   packPrice: number;
   packTransportId: number;
   packHotelID: number;
+  packID: number;
 }

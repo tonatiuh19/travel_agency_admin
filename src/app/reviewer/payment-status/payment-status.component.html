@@ -4,7 +4,7 @@
   ></app-loading-reviewer-mask>
   <app-header-reviewer [isMain]="false"></app-header-reviewer>
   <section class="vh-100" *ngIf="!isProcessing"></section>
-  <section class="pt-5" *ngIf="isProcessing">
+  <section class="pt-5" *ngIf="isProcessing" #content>
     <div
       [class]="
         bookingPaid
@@ -51,21 +51,29 @@
         <div class="col-sm-6">
           <div class="row">
             <div class="col-sm-12">
-              <button class="btn btn-primary w-100">
+              <button class="btn btn-primary w-100" (click)="generatePDF()">
                 <fa-icon [icon]="faTicket"></fa-icon>
                 Descargar comprobante de pago
               </button>
             </div>
             <div class="col-sm-12 mt-3">
-              <button class="btn btn-primary w-100">
+              <button
+                class="btn btn-primary w-100"
+                (click)="goToPackage(booking[0].packID)"
+              >
                 <fa-icon [icon]="faPlane"></fa-icon>
                 Ir a detalles del paquete
               </button>
             </div>
+            <div class="col-sm-12 mt-3">
+              <app-barcode-generator
+                [barcodeValue]="barCodeValue"
+              ></app-barcode-generator>
+            </div>
           </div>
           <div class="row">
             <div class="col-sm-12">
-              <div class="card mt-5 shadow-sm">
+              <div class="card mt-3 shadow-sm">
                 <div class="card-header">
                   <h5 class="mb-0">Detalles del Pago</h5>
                 </div>
