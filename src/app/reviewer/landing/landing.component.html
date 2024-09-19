@@ -11,7 +11,7 @@
       <div class="row d-flex align-items-center justify-content-center py-vh-5">
         <div class="col-sm-8 mb-2">
           <h1>Hagamos un recorrido</h1>
-          <h1 class="text-white fw-bold">
+          <h1 class="text-white fw-bold responsive-h1">
             <span id="quote" class="typing-effect"></span>
           </h1>
           <div class="pt-3">
@@ -24,7 +24,7 @@
               <div class="row g-3 pb-4 justify-content-center text-center">
                 <div class="col-6 d-grid">
                   <a class="btn btn-primary btn-lg" href="#paquetes">
-                    Buscar Paquetes
+                    Buscar Transportes
                   </a>
                 </div>
               </div>
@@ -82,72 +82,37 @@
     </div>
   </section>
   <section class="mb-5" id="paquetes">
-    <div class="container-sm">
+    <div class="container">
       <div class="row gx-2">
-        <div class="col-12 col-lg-4">
-          <div class="bg-dark h-100 rounded">
-            <div class="row g-0 h-100">
-              <div class="col-12 h-100">
-                <div
-                  class="d-flex flex-column justify-content-center h-100 text-light p-4"
-                >
-                  <h2 class="mb-2 text-light">
-                    <fa-icon [icon]="faGift"></fa-icon> Los mejores paquetes
-                  </h2>
-                  <p>Elige entre los paquetes más populares.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="col-sm-6 col-lg-4" *ngFor="let package of packages">
-          <app-package-image-card [package]="package"></app-package-image-card>
+          <div class="m-1">
+            <app-package-image-card
+              [package]="package"
+            ></app-package-image-card>
+          </div>
         </div>
         <div class="col-12 col-lg-4">
-          <div class="bg-dark h-100 rounded">
-            <div class="row g-0 h-100">
-              <div class="col-12 h-100">
-                <div
-                  class="d-flex flex-column justify-content-center h-100 text-light p-4"
-                >
-                  <h2 class="mb-2 text-light">
-                    Los paquetes más exclusivos están listos para ti. ¡A solo un
-                    clic de distancia!
-                  </h2>
-                  <p>
-                    Entrar <fa-icon [icon]="faArrowAltCircleRight"></fa-icon>
-                  </p>
+          <div class="m-1">
+            <div class="bg-dark h-100 rounded">
+              <div class="row g-0 h-100">
+                <div class="col-12 h-100">
+                  <div
+                    class="d-flex flex-column justify-content-center h-100 text-light p-4"
+                  >
+                    <h2 class="mb-2 text-light">
+                      <fa-icon [icon]="faMapMarkerAlt"></fa-icon> Lugares
+                      magicos
+                    </h2>
+                    <p>
+                      Disfruta de los beneficios de nuestros paquetes para los
+                      sitios donde nuestros visitantes se divierten más. Todo
+                      organizado de manera impecable y con costos accesibles.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="mt-5" id="lugares">
-    <div class="container-sm">
-      <div class="row gx-2 mb-2">
-        <div class="col-12 col-md-12 col-lg-4">
-          <div class="bg-dark bg-offcanvas h-100">
-            <div class="row g-0 justify-content-end">
-              <div class="col-12">
-                <div class="p-5 text-light">
-                  <h2 class="mb-2 text-light mt-5">
-                    <fa-icon [icon]="faMapMarkerAlt"></fa-icon> Lugares magicos
-                  </h2>
-                  <p class="p-2">
-                    Disfruta de los beneficios de nuestros paquetes para los
-                    sitios donde nuestros visitantes se divierten más. Todo
-                    organizado de manera impecable y con costos accesibles.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-4" *ngFor="let city of cities">
-          <app-place-card [place]="city"></app-place-card>
         </div>
       </div>
     </div>
