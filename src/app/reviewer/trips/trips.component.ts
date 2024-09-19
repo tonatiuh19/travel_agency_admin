@@ -56,7 +56,6 @@ export class TripsComponent implements OnInit {
         this.packages = thePackages.bookings
           ? (thePackages.bookings as unknown as BookingModel[])
           : [];
-        console.log(this.packages);
       });
   }
 

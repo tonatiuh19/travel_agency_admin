@@ -75,7 +75,6 @@ export class PaymentStatusComponent implements OnInit {
     this.selectPackage$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((thePackage) => {
-        console.log(thePackage);
         this.isLoading = !thePackage.isLoading;
         this.booking = thePackage.booking
           ? (thePackage.booking as unknown as BookingModel[])

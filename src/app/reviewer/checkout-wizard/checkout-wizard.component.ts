@@ -116,7 +116,6 @@ export class CheckoutWizardComponent implements OnInit {
           ? (packageById.package as unknown as FullPackageModel[])
           : [];
 
-        console.log('Package by ID:', this.package[0]);
         this.pricePackage = this.package[0].packPrice;
         this.pricePackageMax = this.package[0].packPriceMax;
 
@@ -235,7 +234,7 @@ export class CheckoutWizardComponent implements OnInit {
         this.passengerForm.value.bookingDate
       );
       this.passengerForm.get('bookingDate')?.setValue(transformedDate);
-      console.log(this.passengerForm.value);
+
       if (error) {
         this.isLoadingCheckout = false;
         this.isStripeError = true;

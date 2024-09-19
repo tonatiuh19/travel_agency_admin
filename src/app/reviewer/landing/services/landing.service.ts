@@ -139,7 +139,6 @@ export class LandingService {
   }
 
   public getBookingsByUserId(custID: number): Observable<any> {
-    console.log('sss', custID);
     return this.httpClient
       .post(this.GET_BOOKING_BY_CUST_ID, {
         userID: custID,
