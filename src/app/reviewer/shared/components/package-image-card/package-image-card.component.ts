@@ -1,6 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { PackageModel } from '../../../landing/landing.model';
-import { faCalendar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCalendar,
+  faMapMarkerAlt,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +17,7 @@ export class PackageImageCardComponent {
 
   faCalendar = faCalendar;
   faMapMarkerAlt = faMapMarkerAlt;
+  faUsers = faUsers;
 
   constructor(private router: Router) {}
 

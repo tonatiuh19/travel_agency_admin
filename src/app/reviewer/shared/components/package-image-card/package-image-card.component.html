@@ -22,10 +22,16 @@
           }}
         </span>
       </div>
-      <h1 class="my-2 text-light fw-bolder fs-4">
+      <h2 class="my-2 text-light fw-bolder fs-4">
         <span>{{ package.packPrice | currency }}</span
-        ><span class="text-light fs--1 fw-normal">/Por persona</span>
-      </h1>
+        ><span class="text-light fs--1 fw-normal">
+          <small> 1-4 personas</small></span
+        ><br />
+        <span>{{ package.packPriceMax | currency }}</span
+        ><span class="text-light fs--1 fw-normal">
+          <small> 1-6 personas</small></span
+        >
+      </h2>
     </div>
   </div>
   <a

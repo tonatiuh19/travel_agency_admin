@@ -12,6 +12,9 @@ import {
   faGift,
   faArrowAltCircleRight,
   faMapMarkerAlt,
+  faPlaneDeparture,
+  faClock,
+  faTag,
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -36,6 +39,9 @@ export class LandingComponent implements OnInit {
   faGift = faGift;
   faArrowAltCircleRight = faArrowAltCircleRight;
   faMapMarkerAlt = faMapMarkerAlt;
+  faPlaneDeparture = faPlaneDeparture;
+  faClock = faClock;
+  faTag = faTag;
 
   private unsubscribe$ = new Subject<void>();
 

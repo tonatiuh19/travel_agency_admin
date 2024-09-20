@@ -35,46 +35,43 @@
     </div>
   </section>
   <section class="mb-5" id="target-element">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-6 px-0 bg-dark">
-          <img
-            class="img-fluid order-md-0 mb-4 h-100 fit-cover"
-            src="https://garbrix.com/assets/img/gallery/hero-section-2.png"
-            alt="..."
-          />
+    <div class="container-fluid bg-dark">
+      <div
+        class="row justify-content-center align-items-center text-center text-light p-5"
+      >
+        <div class="col-sm-4">
+          <div class="row m-5">
+            <div class="col-12">
+              <h2 class="mb-1">
+                <fa-icon [icon]="faPlaneDeparture"></fa-icon>
+              </h2>
+            </div>
+            <div class="col-12">
+              <h2 class="mb-1 h2-title">Visita los mejores destinos</h2>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-6 px-0 bg-dark">
-          <div class="mx-5 mx-xl-8 my-5">
-            <div class="align-items-center d-block d-flex mb-5">
-              <img
-                class="img-fluid me-3 me-md-2 me-lg-4"
-                src="https://garbrix.com/assets/img/icons/locations.png"
-                alt="..."
-              />
-              <div class="flex-1 align-items-center pt-2">
-                <h5 class="fw-bold text-light">Visita los mejores destinos.</h5>
-              </div>
+        <div class="col-sm-4">
+          <div class="row m-5">
+            <div class="col-12">
+              <h2 class="mb-1">
+                <fa-icon [icon]="faClock"></fa-icon>
+              </h2>
             </div>
-            <div class="align-items-center d-block d-flex mb-5">
-              <img
-                class="img-fluid me-3 me-md-2 me-lg-4"
-                src="https://garbrix.com/assets/img/icons/schedule.png"
-                alt="..."
-              />
-              <div class="flex-1 align-items-center pt-2">
-                <h5 class="fw-bold text-light">Diseña tu propia aventura.</h5>
-              </div>
+            <div class="col-12">
+              <h2 class="mb-1 h2-title">Diseña tu propia aventura</h2>
             </div>
-            <div class="align-items-center d-block d-flex mb-5">
-              <img
-                class="img-fluid me-3 me-md-2 me-lg-4"
-                src="https://garbrix.com/assets/img/icons/save.png"
-                alt="..."
-              />
-              <div class="flex-1 align-items-center pt-2">
-                <h5 class="fw-bold text-light">Ahorra dinero.</h5>
-              </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="row m-5">
+            <div class="col-12">
+              <h2 class="mb-1">
+                <fa-icon [icon]="faTag"></fa-icon>
+              </h2>
+            </div>
+            <div class="col-12">
+              <h2 class="mb-1 h2-title">Ahorra dinero y tiempo</h2>
             </div>
           </div>
         </div>
@@ -82,7 +79,7 @@
     </div>
   </section>
   <section class="mb-5" id="paquetes">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row gx-2">
         <div class="col-sm-6 col-lg-4" *ngFor="let package of packages">
           <div class="m-1">
@@ -91,27 +88,25 @@
             ></app-package-image-card>
           </div>
         </div>
-        <div class="col-12 col-lg-4">
-          <div class="m-1">
-            <div class="bg-dark h-100 rounded">
-              <div class="row g-0 h-100">
-                <div class="col-12 h-100">
-                  <div
-                    class="d-flex flex-column justify-content-center h-100 text-light p-4"
-                  >
-                    <h2 class="mb-2 text-light">
-                      <fa-icon [icon]="faMapMarkerAlt"></fa-icon> Lugares
-                      magicos
-                    </h2>
-                    <p>
-                      Disfruta de los beneficios de nuestros paquetes para los
-                      sitios donde nuestros visitantes se divierten más. Todo
-                      organizado de manera impecable y con costos accesibles.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-5" id="target-element">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12 px-0 bg-dark text-center p-5">
+          <div
+            class="d-flex flex-column justify-content-center h-100 text-light p-5"
+          >
+            <h2 class="mb-4 text-light h2-title">
+              <fa-icon [icon]="faMapMarkerAlt"></fa-icon> Lugares magicos
+            </h2>
+            <p>
+              Disfruta de los beneficios de nuestros paquetes para los sitios
+              donde nuestros visitantes se divierten más. Todo organizado de
+              manera impecable y con costos accesibles.
+            </p>
           </div>
         </div>
       </div>

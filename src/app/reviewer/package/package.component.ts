@@ -63,6 +63,8 @@ export class PackageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
+
     this.route.paramMap.pipe(take(1)).subscribe((params) => {
       const id = params.get('id');
       this.store.dispatch(

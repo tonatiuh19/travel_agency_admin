@@ -20,3 +20,7 @@
 .footer-svg-icon:hover {
   fill: #000; /* Change this to your desired color */
 }
+
+.extra-small {
+  font-size: 0.4rem; /* Adjust the font size as needed */
+}

@@ -18,7 +18,7 @@ import {
 import { Subject, take, takeUntil } from 'rxjs';
 import { fromLanding } from '../landing/store/selectors';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { LandingActions } from '../landing/store/actions';
 import { BookingModel } from '../landing/landing.model';
 import html2canvas from 'html2canvas';
@@ -57,7 +57,13 @@ export class PaymentStatusComponent implements OnInit {
     private store: Store,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+    });
+  }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);

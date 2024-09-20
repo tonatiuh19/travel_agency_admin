@@ -1,4 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject, take, takeUntil } from 'rxjs';
@@ -66,6 +73,8 @@ export class CheckoutWizardComponent implements OnInit {
 
   private unsubscribe$ = new Subject<void>();
 
+  private initialViewportHeight!: number;
+
   private stripe: Stripe | null = null;
   private elements: StripeElements | null = null;
   private card: StripeCardElement | null = null;
@@ -76,7 +85,8 @@ export class CheckoutWizardComponent implements OnInit {
     public auth: AuthService,
     private router: Router,
     private stripeService: StripeService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private renderer: Renderer2
   ) {
     this.passengerForm = this.fb.group({
       numPassengers: ['', Validators.required],
@@ -138,7 +148,9 @@ export class CheckoutWizardComponent implements OnInit {
         }
       });
 
+    this.initialViewportHeight = window.innerHeight;
     this.onNumPassengersChange();
+    this.addViewportResizeListener();
   }
 
   ngAfterViewInit(): void {
@@ -151,6 +163,7 @@ export class CheckoutWizardComponent implements OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
     this.store.dispatch(LandingActions.cleanPayment());
+    this.removeViewportResizeListener();
   }
 
   get passengers(): FormArray {
@@ -185,6 +198,31 @@ export class CheckoutWizardComponent implements OnInit {
 
       this.setPricePackage(this.passengers.length);
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    const viewportHeight = window.innerHeight;
+    const container = document.querySelector('.fixed-bottom');
+    if (viewportHeight < this.initialViewportHeight * 0.7) {
+      // Keyboard is likely open
+      if (container) {
+        this.renderer.setStyle(container, 'display', 'none');
+      }
+    } else {
+      // Keyboard is likely closed
+      if (container) {
+        this.renderer.setStyle(container, 'display', 'block');
+      }
+    }
+  }
+
+  addViewportResizeListener(): void {
+    window.addEventListener('resize', this.onResize.bind(this));
+  }
+
+  removeViewportResizeListener(): void {
+    window.removeEventListener('resize', this.onResize.bind(this));
   }
 
   async setupStripe() {
