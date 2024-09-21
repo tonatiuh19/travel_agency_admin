@@ -5,10 +5,10 @@
   <div class="image-previews">
     <img
       *ngFor="let image of images"
-      [src]="image"
+      [src]="image.source"
       alt="Product Image"
-      (click)="selectImage(image)"
-      [class.selected]="image === selectedImage"
+      (click)="selectImage(image.source)"
+      [class.selected]="image.source === selectedImage"
     />
   </div>
 </div>

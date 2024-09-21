@@ -7,7 +7,7 @@
     <div class="container my-5">
       <div class="row">
         <div class="col-sm-12 py-4">
-          <h3>{{ package[0].packTitle }}</h3>
+          <h3>{{ package.packTitle }}</h3>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <div class="row">
         <div class="col-sm-12 text-center">
           <h4 class="no-padding-margin-bottom">
-            {{ package[0].packPrice | currency }}
+            {{ package.packPrice | currency }}
           </h4>
         </div>
         <div class="col-sm-12 text-center mb-1">
@@ -30,7 +30,7 @@
         <div class="col-sm-12 text-center">
           <button
             class="btn btn-success w-50"
-            (click)="buyPackage(package[0].packID)"
+            (click)="buyPackage(package.packID)"
           >
             <fa-icon [icon]="faLock"></fa-icon> Comprar ahora
           </button>
@@ -53,20 +53,13 @@
                   <fa-icon [icon]="star" class="text-warning"></fa-icon>
                 </ng-container>
                 <span class="average-rating ms-2">{{
-                  package[0].averageRating
+                  package.averageRating
                 }}</span>
               </div>
             </div>
             <div class="col-sm-12">
               <app-product-gallery
-                [images]="[
-                  'https://garbrix.com/assets/img/gallery/hero-section-2.png',
-                  'https://garbrix.com/assets/img/gallery/blog-3.png',
-                  'https://garbrix.com/assets/img/gallery/blog-2.png',
-                  'https://garbrix.com/assets/img/gallery/hero-section-2.png',
-                  'https://garbrix.com/assets/img/gallery/blog-3.png',
-                  'https://garbrix.com/assets/img/gallery/blog-2.png'
-                ]"
+                [images]="package.images"
               ></app-product-gallery>
             </div>
             <div class="col-sm-12 mt-3">
@@ -77,15 +70,12 @@
                 <ul class="list-group list-group-flush">
                   <li
                     class="list-group-item"
-                    *ngIf="package[0].packTransportId !== 0"
+                    *ngIf="package.packTransportId !== 0"
                   >
                     <fa-icon [icon]="faCar" class="text-muted"></fa-icon>
                     Transporte incluido
                   </li>
-                  <li
-                    class="list-group-item"
-                    *ngIf="package[0].packHotelID !== 0"
-                  >
+                  <li class="list-group-item" *ngIf="package.packHotelID !== 0">
                     <fa-icon [icon]="faHotel" class="text-muted"></fa-icon>
                     Alojamiento incluido
                   </li>
@@ -104,28 +94,25 @@
             </div>
             <div
               class="col-sm-12 mt-2"
-              [innerHTML]="package[0].packDescription"
+              [innerHTML]="package.packDescription"
             ></div>
-            <div
-              class="col-sm-12 mt-5"
-              *ngIf="package[0].packTransportId !== 0"
-            >
+            <div class="col-sm-12 mt-5" *ngIf="package.packTransportId !== 0">
               <h5 class="title-section">Transporte:</h5>
             </div>
             <div
-              *ngIf="package[0].packTransportId !== 0"
+              *ngIf="package.packTransportId !== 0"
               class="col-sm-12 mt-2"
-              [innerHTML]="package[0].packTransportDescription"
+              [innerHTML]="package.packTransportDescription"
             ></div>
             <div class="col-sm-12 mt-5">
-              <h5 class="title-section" *ngIf="package[0].packHotelID !== 0">
+              <h5 class="title-section" *ngIf="package.packHotelID !== 0">
                 Alojamiento:
               </h5>
             </div>
             <div
-              *ngIf="package[0].packHotelID !== 0"
+              *ngIf="package.packHotelID !== 0"
               class="col-sm-12 mt-2"
-              [innerHTML]="package[0].packHotelDescription"
+              [innerHTML]="package.packHotelDescription"
             ></div>
             <div class="col-sm-12 mt-5">
               <h5 class="title-section">Información importante:</h5>
@@ -137,7 +124,7 @@
           <div class="card fixed-card">
             <div class="card-body">
               <h4 class="card-title">
-                {{ package[0].packPrice | currency }}
+                {{ package.packPrice | currency }}
                 <button class="btn btn-outline-dark btn-sm ms-2 float-end">
                   <fa-icon [icon]="faShareSquare"></fa-icon>
                 </button>
@@ -154,7 +141,7 @@
               <div class="row">
                 <button
                   class="btn btn-success w-100 col-sm-12"
-                  (click)="buyPackage(package[0].packID)"
+                  (click)="buyPackage(package.packID)"
                 >
                   <fa-icon [icon]="faLock"></fa-icon> Comprar ahora
                 </button>
@@ -174,7 +161,7 @@
                   ></fa-icon>
                   Garantía de satisfacción
                 </small>
-                <small class="col-sm-12 mt-2">
+                <small class="col-sm-12 mt-2 mb-2">
                   <fa-icon
                     [icon]="faCheckCircle"
                     class="text-success"

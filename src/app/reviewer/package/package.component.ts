@@ -29,7 +29,7 @@ import { FullPackageModel } from '../landing/landing.model';
 export class PackageComponent implements OnInit {
   public selectPackage$ = this.store.select(fromLanding.selectFullPackageById);
   public isLoading = false;
-  public package: FullPackageModel[] = [];
+  public package: any;
 
   stars: any[] = [];
 
@@ -78,10 +78,8 @@ export class PackageComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((packageById) => {
         this.isLoading = !packageById.isLoading;
-        this.package = packageById.package
-          ? (packageById.package as unknown as FullPackageModel[])
-          : [];
-        this.calculateStars(this.package[0].averageRating);
+        this.package = packageById.package;
+        this.calculateStars(this.package.averageRating);
       });
 
     this.checkScroll();

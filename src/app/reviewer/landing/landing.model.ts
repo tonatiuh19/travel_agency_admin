@@ -28,6 +28,7 @@ export interface PackageModel {
   packTransportDescription: number | string;
   packDateRange: string;
   packDateRangeOff: boolean;
+  packImage: string;
   hotLabel: string;
   imageUrls: string[];
   citName?: string;
@@ -46,10 +47,17 @@ export interface FullPackageModel {
   packTransportId: number;
   packTransportDescription: string;
   packDateRange: string;
+  packImage: string;
   hotLabel: string;
   citName: string;
   totalReviews: number;
   averageRating: number;
+  images?: PackageImage[];
+}
+
+export interface PackageImage {
+  packageImageID: number;
+  source: string;
 }
 
 export interface CitiesWithCountOfPackagesModel {

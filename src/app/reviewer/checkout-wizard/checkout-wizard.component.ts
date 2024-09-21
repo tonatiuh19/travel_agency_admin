@@ -43,7 +43,7 @@ export class CheckoutWizardComponent implements OnInit {
   public isLoading = false;
   public isLoadingCheckout = false;
 
-  public package: FullPackageModel[] = [];
+  public package: any = {};
   public user: any = {};
   public booking: any = {};
   public isLogged = false;
@@ -122,12 +122,11 @@ export class CheckoutWizardComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((packageById) => {
         this.isLoading = !packageById.isLoading;
-        this.package = packageById.package
-          ? (packageById.package as unknown as FullPackageModel[])
-          : [];
 
-        this.pricePackage = this.package[0].packPrice;
-        this.pricePackageMax = this.package[0].packPriceMax;
+        this.package = packageById.package;
+
+        this.pricePackage = this.package.packPrice;
+        this.pricePackageMax = this.package.packPriceMax;
 
         if (
           !packageById.payment?.paymentSuccess &&
@@ -261,7 +260,7 @@ export class CheckoutWizardComponent implements OnInit {
 
     this.booking = {
       ...this.passengerForm.value,
-      packID: this.package[0].packID,
+      packID: this.package.packID,
       packPrice: this.pricePackageForm,
       bookCustomerID: this.user.custID,
       custStripeID: this.user.custStripeID,
@@ -304,7 +303,7 @@ export class CheckoutWizardComponent implements OnInit {
   }
 
   updatePrice(passengers: number): void {
-    this.pricePackage = this.package[0].packPrice * passengers;
+    this.pricePackage = this.package.packPrice * passengers;
   }
 
   transformDate(dateString: string): string {

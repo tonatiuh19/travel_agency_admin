@@ -5,3 +5,13 @@
 .clickable-link {
   cursor: pointer;
 }
+
+.fixed-size {
+  width: 100%; /* Ensure the image takes up the full width of the card */
+  height: 200px; /* Set a fixed height for the image */
+  object-fit: cover; /* Ensure the image covers the area while maintaining aspect ratio */
+}
+
+.reduced-brightness {
+  filter: brightness(0.6); /* Adjust the value as needed */
+}

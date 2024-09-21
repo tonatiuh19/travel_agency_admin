@@ -7,8 +7,8 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   styleUrl: './product-gallery.component.css',
 })
 export class ProductGalleryComponent implements OnInit {
-  @Input() images: string[] = [];
-  selectedImage!: string;
+  @Input() images: any[] = [];
+  selectedImage: string = '';
 
   customOptions: OwlOptions = {
     loop: true,
@@ -30,7 +30,7 @@ export class ProductGalleryComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.images.length > 0) {
-      this.selectedImage = this.images[0];
+      this.selectedImage = this.images[0].source;
     }
   }
 
