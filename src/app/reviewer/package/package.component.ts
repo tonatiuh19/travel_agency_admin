@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import {
@@ -52,7 +52,8 @@ export class PackageComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private store: Store,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private renderer: Renderer2
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -63,6 +64,8 @@ export class PackageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.renderer.setProperty(document.body, 'scrollTop', 0);
+    this.renderer.setProperty(document.documentElement, 'scrollTop', 0);
     window.scrollTo(0, 0);
 
     this.route.paramMap.pipe(take(1)).subscribe((params) => {
