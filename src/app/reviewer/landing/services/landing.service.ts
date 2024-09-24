@@ -100,6 +100,7 @@ export class LandingService {
     bookCustomerID: number,
     packID: number,
     packPrice: string,
+    packTitle: string,
     custStripeID: string,
     bookDateFor: string,
     token: string
@@ -115,6 +116,7 @@ export class LandingService {
         bookCustomerID: bookCustomerID,
         packID: packID,
         packPrice: packPrice,
+        packTitle: packTitle,
         custStripeID: custStripeID,
         bookDateFor: bookDateFor,
         token: token,

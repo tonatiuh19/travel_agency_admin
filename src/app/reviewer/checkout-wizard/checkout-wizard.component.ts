@@ -262,6 +262,7 @@ export class CheckoutWizardComponent implements OnInit {
       ...this.passengerForm.value,
       packID: this.package.packID,
       packPrice: this.pricePackageForm,
+      packTitle: this.package.packTitle,
       bookCustomerID: this.user.custID,
       custStripeID: this.user.custStripeID,
     };

@@ -154,6 +154,7 @@ export class LandingEffects {
             paymentData.bookCustomerID,
             paymentData.packID,
             paymentData.packPrice,
+            paymentData.packTitle,
             paymentData.custStripeID,
             paymentData.bookingDate,
             paymentData.token
